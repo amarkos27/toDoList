@@ -1,0 +1,19 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "Simple to-do list",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amarkos27/toDoList.git"
+  },
+  "author": "Ari Markos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amarkos27/toDoList/issues"
+  },
+  "homepage": "https://github.com/amarkos27/toDoList#readme"
+}
