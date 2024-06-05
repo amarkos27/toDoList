@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+}
+
+#content {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 5.5fr;
+}
+
+.sidebar {
+    border: 5px solid red;
+}
+
+.items {
+    border: 5px solid blue;
+}
