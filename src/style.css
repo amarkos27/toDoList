@@ -6,41 +6,56 @@
     width: 100vw;
     height: 100vh;
     display: flex;
+    align-items: center;
+    background-color: #b6d0ef;
 }
 
 .sidebar {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 275px;
-    transition: .5s;
-    background-color: #faf1e3;
+    margin-left: 30px;
+    width: 280px;
+    height: 90vh;
+    border-radius: 50px;
+    transition: all .5s, height 0s;
+    border-radius: 50px;
+    background: #90baea;
+    box-shadow:  38px 38px 77px #7a9ec7,
+             -38px -38px 77px #a6d6ff;
 }
 
-.sidebar-swipe {
-    margin-left: -275px;
+.sidebar-swipe-out {
+    margin-left: -280px;
+    box-shadow: none;
 }
 
-.test {
+.sidebar-btn {
     position: absolute;
-    transition: .5s;
-    width: 100px;
     right: 0;
+    transition: .5s;
 }
 
-.button-pushed {
-    right: -100px;
+.sidebar-icon {
+    background: url('../icons/sidebar-svgrepo-com.svg');
+    width: 40px;
+    height: 40px;
+}
+
+.button-out {
+    position: absolute;
+    right: -125px;
 }
 
 .items {
     flex: 1;
 }
 
-/* @keyframes swipe {
+@keyframes swipe-out {
     0% {
         width: initial;
     }
     100% {
         width: 0px;
     }
-} */
+}
