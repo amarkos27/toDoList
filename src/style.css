@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    color: #fff;
 }
 
 #content {
@@ -10,15 +11,19 @@
     background-color: #b6d0ef;
 }
 
+svg {
+    color: white;
+}
+
 .sidebar {
-    position: relative;
     display: flex;
     flex-direction: column;
+    padding: 15px;
     margin-left: 30px;
     width: 280px;
     height: 90vh;
     border-radius: 50px;
-    transition: all .5s, height 0s;
+    transition: all .35s, height 0s;
     border-radius: 50px;
     background: #90baea;
     box-shadow:  38px 38px 77px #7a9ec7,
@@ -26,25 +31,42 @@
 }
 
 .sidebar-swipe-out {
-    margin-left: -280px;
-    box-shadow: none;
+    margin-left: -350px;
+}
+
+.sidebar-header {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .sidebar-btn {
     position: absolute;
     right: 0;
-    transition: .5s;
+    transition: all 0.35s, transform 0s;
+    background: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sidebar-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-btn:active {
+    transform: scale(0.97);
+}
+
+.btn-out {
+    position: absolute;
+    right: -180px;
 }
 
 .sidebar-icon {
     background: url('../icons/sidebar-svgrepo-com.svg');
     width: 40px;
     height: 40px;
-}
-
-.button-out {
-    position: absolute;
-    right: -125px;
 }
 
 .items {
