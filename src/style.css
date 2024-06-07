@@ -1,6 +1,50 @@
+@font-face {
+    font-family: 'Dosis';
+    src: url('../fonts/Dosis-ExtraLight.woff') format('woff'), url('../fonts/Dosis-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: 'Dosis';
+    src: url('../fonts/Dosis-Light.woff') format('woff'), url('../fonts/Dosis-Light.woff2') format('woff2');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Dosis';
+    src: url('../fonts/Dosis-Regular.woff') format('woff'), url('../fonts/Dosis-Regular.woff2') format('woff2');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Dosis';
+    src: url('../fonts/Dosis-Medium.woff') format('woff'), url('../fonts/Dosis-Medium.woff') format('woff2');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Dosis';
+    src: url('../fonts/Dosis-SemiBold.woff') format('woff'), url('../fonts/Dosis-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Dosis';
+    src: url('../fonts/Dosis-Bold.woff') format('woff'), url('../fonts/Dosis-Bold.woff2') format('woff2');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Dosis';
+    src: url('../fonts/Dosis-ExtraBold.woff') format('woff'), url('../fonts/Dosis-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+}
+
 * {
     box-sizing: border-box;
     color: #fff;
+    font-family: 'Dosis';
+    font-weight: 500;
 }
 
 #content {
@@ -24,6 +68,7 @@ h3, p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 40px;
     padding: 30px;
     width: 280px;
     height: 90vh;
@@ -33,6 +78,7 @@ h3, p {
     background: #90baea;
     box-shadow:  38px 38px 77px #7a9ec7,
              -38px -38px 77px #a6d6ff;
+    user-select: none;
 }
 
 .sidebar-swipe-out {
@@ -83,13 +129,13 @@ h3, p {
 .add-task {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
 }
 
 .add-icon {
     background: no-repeat url('../icons/plus-sign-in-a-circle-svgrepo-com.svg');
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 .items {

@@ -1,5 +1,5 @@
-import './style.css';
 import 'normalize.css';
+import './style.css';
 
 const button = document.querySelector('.sidebar-btn');
 const sidebar = document.querySelector('.sidebar');
