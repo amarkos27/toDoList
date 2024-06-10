@@ -64,6 +64,17 @@ h3, p {
     margin: 0;
 }
 
+
+
+.button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.button:active {
+    transform: scale(0.97);
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -103,14 +114,6 @@ h3, p {
     cursor: pointer;
 }
 
-.sidebar-btn:hover {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.sidebar-btn:active {
-    transform: scale(0.97);
-}
-
 .btn-out {
     position: absolute;
     right: -160px;
@@ -125,26 +128,44 @@ h3, p {
 .sidebar-content {
     display: flex;
     flex-direction: column;
-}
-
-.add-task {
-    display: flex;
-    align-items: center;
+    width: 100%;
     gap: 10px;
-    padding: 10px;
-    border-radius: 7px;
-    font-size: 17px;
+    overflow: scroll;
 }
 
-.add-icon {
-    background: no-repeat url('../icons/plus-sign-in-a-circle-svgrepo-com.svg');
+.icon {
     width: 25px;
     height: 25px;
 }
 
-.add-task:hover {
-    background: rgba(0, 0, 0, 0.1);
-    cursor: pointer;
+.add-task, .option {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    gap: 10px;
+    padding: 0 2px;
+    border-radius: 7px;
+    font-size: 17px;
+}
+
+.add-task {
+    justify-content: center;
+}
+
+.add-task .icon {
+    background: no-repeat url('../icons/plus-sign-in-a-circle-svgrepo-com.svg');
+}
+
+.search .icon{
+    background: no-repeat url('../icons/search_24dp_FILL0_wght400_GRAD0_opsz24.svg');
+}
+
+.today .icon {
+    background: no-repeat url('../icons/today_24dp_FILL0_wght400_GRAD0_opsz24.svg')
+}
+
+.upcoming .icon {
+    background: no-repeat url('../icons/event_upcoming_24dp_FILL0_wght400_GRAD0_opsz24.svg');
 }
 
 .items {
