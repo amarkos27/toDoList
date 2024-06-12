@@ -64,14 +64,17 @@ h3, p {
     margin: 0;
 }
 
+button {
+    background: none;
+    border: none;
+}
 
-
-.button:hover {
+button:hover {
     background: rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
-.button:active {
+button:active {
     transform: scale(0.97);
 }
 
@@ -80,7 +83,6 @@ h3, p {
     flex-direction: column;
     align-items: center;
     gap: 40px;
-    /* padding: 30px; */
     width: 280px;
     height: 90vh;
     border-radius: 50px;
@@ -92,6 +94,10 @@ h3, p {
     user-select: none;
 }
 
+.sidebar h3 {
+    font-size: 24px;
+}
+
 .sidebar-swipe-out {
     margin-left: -350px;
 }
@@ -101,7 +107,6 @@ h3, p {
     display: flex;
     align-items: center;
     width: 100%;
-    font-size: 20px;
     padding: 30px 30px 0 30px;
 }
 
@@ -109,8 +114,6 @@ h3, p {
     position: absolute;
     right: 30px;
     transition: all 0.35s, transform 0s, background-color 0s;
-    background: none;
-    border: none;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -129,31 +132,60 @@ h3, p {
 .sidebar-content {
     display: flex;
     flex-direction: column;
-    width: 90%;
     gap: 10px;
     overflow: scroll;
+    width: 100%;
 }
 
-.icon {
-    width: 25px;
-    height: 25px;
+.sidebar-content > * {
+    width: inherit;
 }
 
-.add-task, .option {
+.filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.add-task, .option, .add-project {
     display: flex;
     align-items: center;
     height: 45px;
+    width: 90%;
     gap: 10px;
     padding: 0 5px;
     border-radius: 7px;
     font-size: 17px;
 }
 
-.add-task {
+.add-task,
+.add-project {
     justify-content: center;
+    align-self: center;
 }
 
-.add-task .icon {
+.projects {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.projects-header {
+    padding: 0 30px;
+    width: 100%;
+}
+
+
+.icon {
+    width: 25px;
+    height: 25px;
+}
+
+.add-task .icon,
+.add-project .icon {
     background: no-repeat url('../icons/plus-sign-in-a-circle-svgrepo-com.svg');
 }
 
