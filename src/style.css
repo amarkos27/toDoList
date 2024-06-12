@@ -92,6 +92,7 @@ button:active {
     box-shadow:  38px 38px 77px #7a9ec7,
              -38px -38px 77px #a6d6ff;
     user-select: none;
+    overflow: hidden;
 }
 
 .sidebar h3 {
