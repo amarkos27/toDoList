@@ -50,7 +50,6 @@
 #content {
     width: 100vw;
     height: 100vh;
-    padding: 30px;
     display: flex;
     align-items: center;
     background-color: #b6d0ef;
@@ -81,14 +80,15 @@ button:active {
 .sidebar-wrapper {
     position: relative;
     transition: all 0.35s, height 0s;
+    margin-left: 30px;
 }
 
 .sidebar {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
     width: 280px;
+    gap: 40px;
     height: 90vh;
     border-radius: 50px;
     border-radius: 50px;
@@ -105,6 +105,7 @@ button:active {
 
 .sidebar-swipe-out {
     margin-left: -350px;
+    margin-right: 70px;
 }
 
 .sidebar-header {
@@ -123,7 +124,7 @@ button:active {
 }
 
 .btn-out {
-    right: -130px;
+    right: -150px;
 }
 
 .sidebar-icon {
@@ -204,15 +205,17 @@ button:active {
     background: no-repeat url('../icons/event_upcoming_24dp_FILL0_wght400_GRAD0_opsz24.svg');
 }
 
-.items {
+.task-display {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 90vh;
 }
 
-@keyframes swipe-out {
-    0% {
-        width: initial;
-    }
-    100% {
-        width: 0px;
-    }
+.items {
+    height: 100%;
+    width: 85%;
+    background: #fff;
+    border-radius: 50px;
 }
