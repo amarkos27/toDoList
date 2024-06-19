@@ -89,12 +89,12 @@ button:active {
     align-items: center;
     width: 280px;
     gap: 40px;
-    height: 90vh;
+    height: 95vh;
     border-radius: 50px;
     border-radius: 50px;
     background: #90baea;
-    box-shadow:  38px 38px 77px #7a9ec7,
-             -38px -38px 77px #a6d6ff;
+    box-shadow:  19px 19px 38px #7a9ec7,
+             -19px -19px 38px #a6d6ff;
     user-select: none;
     overflow: hidden;
 }
@@ -213,9 +213,14 @@ button:active {
     height: 90vh;
 }
 
+.todo-header {
+    margin: 0 0 30px;
+}
+
 .items {
     height: 100%;
     width: 85%;
     background: #fff;
+    box-shadow: inset 0px 0px 10px 2px #7a9ec7;
     border-radius: 50px;
 }
