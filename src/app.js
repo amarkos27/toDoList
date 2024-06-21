@@ -1,12 +1,10 @@
 import 'normalize.css';
 import './style.css';
+import { toggle_sidebar } from './display.js';
 
-const button = document.querySelector('.sidebar-btn');
-const sidebar_wrapper = document.querySelector('.sidebar-wrapper');
-const task_display = document.querySelector('.task-display');
+function init() {
+  const sidebar_btn = document.querySelector('.sidebar-btn');
+  sidebar_btn.addEventListener('click', toggle_sidebar);
+}
 
-button.addEventListener('click', () => {
-  sidebar_wrapper.classList.toggle('sidebar-swipe-out');
-  task_display.classList.toggle('full-screen');
-  button.classList.toggle('btn-out');
-});
+init();
