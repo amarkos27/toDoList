@@ -103,7 +103,7 @@ button:active {
     font-size: 24px;
 }
 
-.sidebar-swipe-out {
+.sidebar-closed {
     margin-left: -350px;
     margin-right: 70px;
 }
@@ -123,7 +123,7 @@ button:active {
     cursor: pointer;
 }
 
-.btn-out {
+.sidebar-closed .sidebar-btn {
     right: -150px;
 }
 
