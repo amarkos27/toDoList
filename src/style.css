@@ -220,6 +220,7 @@ button:active {
 .items {
     height: 100%;
     width: 85%;
+    /* min-width: 650px; */
     background: #fff;
     box-shadow: inset 0px 0px 10px 2px #7a9ec7;
     border-radius: 50px;
