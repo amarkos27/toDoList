@@ -4,12 +4,18 @@ class DisplayController {
   #content = document.querySelector('#content');
   #trigger_resize_event = null;
 
+  get #windowSmall() {
+    return window.innerWidth < 1100;
+  }
+
+  get #sidebarClosed() {
+    return this.#sidebar_wrapper.classList.contains('sidebar-closed');
+  }
+
   #toggle_sidebar() {
-    const alreadyClosed =
-      this.#sidebar_wrapper.classList.contains('sidebar-closed');
     this.#sidebar_wrapper.classList.toggle('sidebar-closed');
 
-    if (!alreadyClosed) {
+    if (!this.#sidebarClosed) {
       this.#sidebar_wrapper.classList.add('toggled-off');
     } else {
       this.#sidebar_wrapper.classList.remove('toggled-off');
@@ -37,13 +43,13 @@ class DisplayController {
     this.#content.insertBefore(this.#sidebar_wrapper, this.#content.firstChild);
   }
 
-  #resize_toggle(windowSmall, sidebarClosed) {
+  #resize_toggle() {
     const toggledOff = this.#sidebar_wrapper.classList.contains('toggled-off');
 
-    if (windowSmall && !sidebarClosed) {
+    if (this.#windowSmall && !this.#sidebarClosed) {
       this.#sidebar_wrapper.classList.add('sidebar-closed');
       this.#toggle_btn();
-    } else if (!windowSmall && !toggledOff && sidebarClosed) {
+    } else if (!this.#windowSmall && !toggledOff && this.#sidebarClosed) {
       // Create delay from the DOM manipulation so the CSS transitions are shown
       setTimeout(() => {
         this.#sidebar_wrapper.classList.remove('sidebar-closed');
@@ -55,20 +61,17 @@ class DisplayController {
   #resize_handler() {
     const isOverlay =
       this.#sidebar_wrapper.parentNode.classList.contains('sidebar-overlay');
-    const windowSmall = window.innerWidth < 1100;
-    const sidebarClosed =
-      this.#sidebar_wrapper.classList.contains('sidebar-closed');
 
-    if (!windowSmall && isOverlay) {
+    if (!this.#windowSmall && isOverlay) {
       this.#remove_sidebar_overlay();
     }
 
-    this.#resize_toggle(windowSmall, sidebarClosed);
+    this.#resize_toggle();
 
     // Only create the sidebar overlay when the user is DONE resizing the screen
     clearTimeout(this.#trigger_resize_event);
     this.#trigger_resize_event = setTimeout(() => {
-      if (windowSmall && sidebarClosed && !isOverlay) {
+      if (this.#windowSmall && this.#sidebarClosed && !isOverlay) {
         this.#create_sidebar_overlay();
       }
     }, 200);
