@@ -141,6 +141,10 @@ button:active {
     z-index: 1;
 }
 
+.standAlone {
+    left: 35px
+}
+
 .sidebar-icon {
     background: url('../icons/sidebar-svgrepo-com.svg');
     width: 40px;

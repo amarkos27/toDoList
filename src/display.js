@@ -16,6 +16,14 @@ class DisplayController {
     }
   }
 
+  #toggle_btn() {
+    if (this.#sidebar_wrapper.classList.contains('sidebar-closed')) {
+      this.#sidebar_btn.classList.add('standAlone');
+    } else {
+      this.#sidebar_btn.classList.remove('standAlone');
+    }
+  }
+
   #create_sidebar_overlay() {
     const overlay = document.createElement('div');
     overlay.classList.add('sidebar-overlay');
@@ -34,10 +42,12 @@ class DisplayController {
 
     if (windowSmall && !sidebarClosed) {
       this.#sidebar_wrapper.classList.add('sidebar-closed');
+      this.#toggle_btn();
     } else if (!windowSmall && !toggledOff && sidebarClosed) {
       // Create delay from the DOM manipulation so the CSS transitions are shown
       setTimeout(() => {
         this.#sidebar_wrapper.classList.remove('sidebar-closed');
+        this.#toggle_btn();
       }, 1);
     }
   }
@@ -67,6 +77,7 @@ class DisplayController {
   set_up_listeners() {
     this.#sidebar_btn.addEventListener('click', () => {
       this.#toggle_sidebar();
+      this.#toggle_btn();
     });
 
     window.addEventListener('resize', () => {
