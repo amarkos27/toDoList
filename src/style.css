@@ -87,6 +87,13 @@ button:active {
     background: rgba(0, 0, 0, 0.3);
     opacity: 0;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.show {
+    opacity: 1;
 }
 
 .swipe-in {

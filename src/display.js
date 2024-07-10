@@ -12,6 +12,10 @@ class DisplayController {
     return this.#sidebar_wrapper.classList.contains('sidebar-closed');
   }
 
+  get #overlay() {
+    return document.querySelector('.sidebar-overlay');
+  }
+
   #toggle_sidebar() {
     this.#sidebar_wrapper.classList.toggle('sidebar-closed');
 
@@ -23,10 +27,31 @@ class DisplayController {
   }
 
   #toggle_btn() {
-    if (this.#sidebar_wrapper.classList.contains('sidebar-closed')) {
+    if (this.#sidebarClosed) {
       this.#sidebar_btn.classList.add('standAlone');
     } else {
       this.#sidebar_btn.classList.remove('standAlone');
+    }
+  }
+
+  #btn_click_handler() {
+    if (this.#overlay && this.#sidebarClosed) {
+      this.#overlay.classList.add('show');
+      this.#toggle_sidebar();
+      this.#toggle_btn();
+    } else if (this.#overlay && !this.sidebarClosed) {
+      this.#toggle_sidebar();
+      this.#sidebar_wrapper.addEventListener(
+        'transitionend',
+        () => {
+          this.#overlay.classList.remove('show');
+        },
+        { once: true }
+      );
+      this.#toggle_btn();
+    } else {
+      this.#toggle_sidebar();
+      this.#toggle_btn();
     }
   }
 
@@ -38,8 +63,7 @@ class DisplayController {
   }
 
   #remove_sidebar_overlay() {
-    const overlay = document.querySelector('.sidebar-overlay');
-    this.#content.removeChild(overlay);
+    this.#content.removeChild(this.#overlay);
     this.#content.insertBefore(this.#sidebar_wrapper, this.#content.firstChild);
   }
 
@@ -59,10 +83,7 @@ class DisplayController {
   }
 
   #resize_handler() {
-    const isOverlay =
-      this.#sidebar_wrapper.parentNode.classList.contains('sidebar-overlay');
-
-    if (!this.#windowSmall && isOverlay) {
+    if (!this.#windowSmall && this.#overlay) {
       this.#remove_sidebar_overlay();
     }
 
@@ -71,7 +92,7 @@ class DisplayController {
     // Only create the sidebar overlay when the user is DONE resizing the screen
     clearTimeout(this.#trigger_resize_event);
     this.#trigger_resize_event = setTimeout(() => {
-      if (this.#windowSmall && this.#sidebarClosed && !isOverlay) {
+      if (this.#windowSmall && this.#sidebarClosed && !this.#overlay) {
         this.#create_sidebar_overlay();
       }
     }, 200);
@@ -79,8 +100,7 @@ class DisplayController {
 
   set_up_listeners() {
     this.#sidebar_btn.addEventListener('click', () => {
-      this.#toggle_sidebar();
-      this.#toggle_btn();
+      this.#btn_click_handler();
     });
 
     window.addEventListener('resize', () => {
