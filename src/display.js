@@ -1,38 +1,82 @@
-function toggle_sidebar(sidebar) {
-  const alreadyClosed = sidebar.classList.contains('sidebar-closed');
-  sidebar.classList.toggle('sidebar-closed');
+class DisplayController {
+  #sidebar_wrapper = document.querySelector('.sidebar-wrapper');
+  #sidebar_btn = document.querySelector('.sidebar-btn');
+  #content = document.querySelector('#content');
+  #trigger_resize_event = null;
 
-  if (!alreadyClosed) {
-    sidebar.classList.add('toggled-off');
-  } else {
-    sidebar.classList.remove('toggled-off');
+  #toggle_sidebar() {
+    const alreadyClosed =
+      this.#sidebar_wrapper.classList.contains('sidebar-closed');
+    this.#sidebar_wrapper.classList.toggle('sidebar-closed');
+
+    if (!alreadyClosed) {
+      this.#sidebar_wrapper.classList.add('toggled-off');
+    } else {
+      this.#sidebar_wrapper.classList.remove('toggled-off');
+    }
   }
-}
 
-function window_resize(sidebar, previousWidth) {
-  const windowSmall = window.innerWidth < 1100;
-  const toggledOff = sidebar.classList.contains('toggled-off');
-  const sidebarClosed = sidebar.classList.contains('sidebar-closed');
-  const shrinking = window.innerWidth < previousWidth;
+  #create_sidebar_overlay() {
+    const overlay = document.createElement('div');
+    overlay.classList.add('sidebar-overlay');
+    overlay.appendChild(this.#sidebar_wrapper);
+    this.#content.insertBefore(overlay, this.#content.firstChild);
+  }
 
-  if (windowSmall && shrinking && !sidebarClosed) {
-    sidebar.classList.add('sidebar-closed');
-  } else if (!windowSmall && !toggledOff && sidebarClosed) {
-    sidebar.classList.remove('sidebar-closed');
+  #remove_sidebar_overlay() {
+    const overlay = document.querySelector('.sidebar-overlay');
+    this.#content.removeChild(overlay);
+    this.#content.insertBefore(this.#sidebar_wrapper, this.#content.firstChild);
+  }
+
+  #resize_toggle(windowSmall, sidebarClosed) {
+    const toggledOff = this.#sidebar_wrapper.classList.contains('toggled-off');
+
+    if (windowSmall && !sidebarClosed) {
+      this.#sidebar_wrapper.classList.add('sidebar-closed');
+    } else if (!windowSmall && !toggledOff && sidebarClosed) {
+      // Create delay from the DOM manipulation so the CSS transitions are shown
+      setTimeout(() => {
+        this.#sidebar_wrapper.classList.remove('sidebar-closed');
+      }, 1);
+    }
+  }
+
+  #resize_handler() {
+    const isOverlay =
+      this.#sidebar_wrapper.parentNode.classList.contains('sidebar-overlay');
+    const windowSmall = window.innerWidth < 1100;
+    const sidebarClosed =
+      this.#sidebar_wrapper.classList.contains('sidebar-closed');
+
+    if (!windowSmall && isOverlay) {
+      this.#remove_sidebar_overlay();
+    }
+
+    this.#resize_toggle(windowSmall, sidebarClosed);
+
+    // Only create the sidebar overlay when the user is DONE resizing the screen
+    clearTimeout(this.#trigger_resize_event);
+    this.#trigger_resize_event = setTimeout(() => {
+      if (windowSmall && sidebarClosed && !isOverlay) {
+        this.#create_sidebar_overlay();
+      }
+    }, 200);
+  }
+
+  set_up_listeners() {
+    this.#sidebar_btn.addEventListener('click', () => {
+      this.#toggle_sidebar();
+    });
+
+    window.addEventListener('resize', () => {
+      this.#resize_handler();
+    });
   }
 }
 
 export function display_init() {
-  const sidebar_wrapper = document.querySelector('.sidebar-wrapper');
-  const sidebar_btn = document.querySelector('.sidebar-btn');
-  let previousWidth = window.innerWidth;
+  const display = new DisplayController();
 
-  sidebar_btn.addEventListener('click', () => {
-    toggle_sidebar(sidebar_wrapper);
-  });
-
-  window.addEventListener('resize', () => {
-    window_resize(sidebar_wrapper, previousWidth);
-    previousWidth = window.innerWidth;
-  });
+  display.set_up_listeners();
 }
