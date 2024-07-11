@@ -16,10 +16,10 @@ class DisplayController {
     return document.querySelector('.sidebar-overlay');
   }
 
-  #toggle_sidebar() {
+  #toggle_sidebar(btnPress = false) {
     this.#sidebar_wrapper.classList.toggle('sidebar-closed');
 
-    if (!this.#sidebarClosed) {
+    if (btnPress && this.#sidebarClosed) {
       this.#sidebar_wrapper.classList.add('toggled-off');
     } else {
       this.#sidebar_wrapper.classList.remove('toggled-off');
@@ -50,7 +50,7 @@ class DisplayController {
       );
       this.#toggle_btn();
     } else {
-      this.#toggle_sidebar();
+      this.#toggle_sidebar(true);
       this.#toggle_btn();
     }
   }
