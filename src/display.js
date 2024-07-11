@@ -34,13 +34,8 @@ class DisplayController {
     }
   }
 
-  #btn_click_handler() {
-    if (this.#overlay && this.#sidebarClosed) {
-      this.#overlay.classList.add('show');
-      this.#toggle_sidebar();
-      this.#toggle_btn();
-    } else if (this.#overlay && !this.sidebarClosed) {
-      this.#toggle_sidebar();
+  #toggle_overlay() {
+    if (this.#overlay.classList.contains('show')) {
       this.#sidebar_wrapper.addEventListener(
         'transitionend',
         () => {
@@ -48,6 +43,15 @@ class DisplayController {
         },
         { once: true }
       );
+    } else {
+      this.#overlay.classList.add('show');
+    }
+  }
+
+  #btn_click_handler() {
+    if (this.#overlay) {
+      this.#toggle_overlay();
+      this.#toggle_sidebar();
       this.#toggle_btn();
     } else {
       this.#toggle_sidebar(true);
@@ -71,6 +75,9 @@ class DisplayController {
     const toggledOff = this.#sidebar_wrapper.classList.contains('toggled-off');
 
     if (this.#windowSmall && !this.#sidebarClosed) {
+      if (this.#overlay) {
+        this.#toggle_overlay();
+      }
       this.#sidebar_wrapper.classList.add('sidebar-closed');
       this.#toggle_btn();
     } else if (!this.#windowSmall && !toggledOff && this.#sidebarClosed) {

@@ -96,10 +96,6 @@ button:active {
     opacity: 1;
 }
 
-.swipe-in {
-    animation: swipeIn 0.35s;
-}
-
 .sidebar-wrapper {
     position: relative;
     transition: all 0.3s, height 0s;
@@ -249,15 +245,4 @@ button:active {
     background: #fff;
     box-shadow: inset 0px 0px 10px 2px #7a9ec7;
     border-radius: 50px;
-}
-
-@keyframes swipeIn {
-    0% {
-        margin-left: -350px;
-        margin-right: 70px;
-    } 
-    100% {
-        margin-left: 30px;
-        margin-right: 0px;
-    }
 }
