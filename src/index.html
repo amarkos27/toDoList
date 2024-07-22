@@ -47,7 +47,22 @@
         </div>
         <div class="task-display">
             <h1 class="todo-header">To-Do List</h1>
-            <div class="items"></div>
+            <div class="items">
+                <div class="form-overlay">
+                    <form class="create-task">
+                        <input type="text" name="task-name" id="task-name" placeholder="Task Name">
+                        <input type="text" name="description" id="description" placeholder="Description">
+                        <input type="datetime-local" name="date-and-time" id="date-time">
+                        <select name="project" id="select-project">
+                            <option value="default" selected="selected" disabled>Project</option>
+                            <option value="Test">Test</option>
+                            <option value="Test 2">Test 2</option>
+                        </select>
+                        <button type="button">Cancel</button>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </body>

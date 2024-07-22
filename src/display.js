@@ -39,7 +39,12 @@ class DisplayController {
       this.#sidebar_wrapper.addEventListener(
         'transitionend',
         () => {
-          this.#overlay.classList.remove('show');
+          // There needs to be a check for the existence of the overlay in case the user stretches
+          // the screen and it is removed before transitionend, which would cause an error on
+          // accessing its classList
+          if (this.#overlay) {
+            this.#overlay.classList.remove('show');
+          }
         },
         { once: true }
       );
@@ -121,3 +126,5 @@ export function display_init() {
 
   display.set_up_listeners();
 }
+
+export function open_modal() {}
