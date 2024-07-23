@@ -266,7 +266,7 @@ button:disabled {
     justify-content: center;
 }
 
-form.create-task {
+.create-task {
     margin-top: 150px;
     display: flex;
     flex-direction: column;
@@ -276,9 +276,10 @@ form.create-task {
     height: fit-content;
     padding: 10px 25px 0;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    animation: showModal 0.2s;
 }
 
-form.create-task * {
+.create-task * {
     color: black;
     outline: none;
     border: none;
@@ -287,6 +288,10 @@ form.create-task * {
 .create-task > * {
     height: 45px;
     font-weight: 300;
+}
+
+.close-modal {
+    animation: closeModal 0.2s;
 }
 
 #task-name {
@@ -337,4 +342,26 @@ form.create-task button {
 #submit {
     background: #4bd670;
     color: white;
+}
+
+@keyframes showModal {
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes closeModal {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
 }
