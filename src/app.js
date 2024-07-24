@@ -1,6 +1,6 @@
 import 'normalize.css';
 import './style.css';
-import { display_init, display_form } from './display/display.js';
+import { display_init, display_form } from './display/displayController.js';
 
 function init() {
   display_init();
