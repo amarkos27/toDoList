@@ -25,7 +25,5 @@ export function display_init() {
 }
 
 export function display_form() {
-  if (!display.formAlreadyOpen) {
-    display.open_modal();
-  }
+  display.open_modal();
 }
