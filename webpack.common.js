@@ -10,6 +10,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'To Do List',
       template: './src/index.html',
+      favicon: './icons/icons8-to-do-list-48.png',
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
