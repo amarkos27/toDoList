@@ -25,6 +25,10 @@ class DisplayController {
     return document.querySelector('.create-task');
   }
 
+  get formAlreadyOpen() {
+    return !!document.querySelector('.form-overlay');
+  }
+
   #toggle_sidebar(btnPress = false) {
     this.#sidebar_wrapper.classList.toggle('sidebar-closed');
 
@@ -117,10 +121,6 @@ class DisplayController {
         this.#create_sidebar_overlay();
       }
     }, 200);
-  }
-
-  get formAlreadyOpen() {
-    return !!document.querySelector('.form-overlay');
   }
 
   #create_modal() {
@@ -231,7 +231,7 @@ export function display_init() {
   display.set_up_listeners();
 }
 
-export function new_task_form() {
+export function display_new_task() {
   if (!display.formAlreadyOpen) {
     display.open_modal();
   }
