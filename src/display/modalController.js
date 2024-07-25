@@ -72,6 +72,10 @@ class ModalController {
     return form;
   }
 
+  #focus_modal() {
+    this.#modal.firstChild.focus();
+  }
+
   #close_modal() {
     this.#modal.classList.add('close-modal');
     this.#modal.addEventListener('animationend', () => {
@@ -95,10 +99,9 @@ class ModalController {
       form_overlay.classList.add('form-overlay');
 
       const modal = this.#create_modal();
-
       form_overlay.appendChild(modal);
-
       this.#items.appendChild(form_overlay);
+      this.#focus_modal();
 
       this.#modal_listeners();
     }
