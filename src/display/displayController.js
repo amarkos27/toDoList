@@ -8,11 +8,11 @@ class DisplayController {
   }
 
   initialize() {
-    this.sidebarController.set_up_listeners();
+    this.sidebarController.setUpListeners();
   }
 
-  open_modal() {
-    this.modalController.open_modal();
+  openModal() {
+    this.modalController.openModal();
   }
 }
 
@@ -20,10 +20,10 @@ const sidebarController = new SidebarController();
 const modalController = new ModalController();
 const display = new DisplayController(sidebarController, modalController);
 
-export function display_init() {
+export function displayInit() {
   display.initialize();
 }
 
-export function display_form() {
-  display.open_modal();
+export function displayForm() {
+  display.openModal();
 }

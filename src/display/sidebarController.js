@@ -1,42 +1,42 @@
 class SidebarController {
-  #sidebar_wrapper = document.querySelector('.sidebar-wrapper');
-  #sidebar_btn = document.querySelector('.sidebar-btn');
+  #sidebarWrapper = document.querySelector('.sidebar-wrapper');
+  #sidebarBtn = document.querySelector('.sidebar-btn');
   #content = document.querySelector('#content');
-  #trigger_resize_event = null;
+  #triggerResizeEvent = null;
 
   get #windowSmall() {
     return window.innerWidth < 1100;
   }
 
   get #sidebarClosed() {
-    return this.#sidebar_wrapper.classList.contains('sidebar-closed');
+    return this.#sidebarWrapper.classList.contains('sidebar-closed');
   }
 
   get #overlay() {
     return document.querySelector('.sidebar-overlay');
   }
 
-  #toggle_sidebar(btnPress = false) {
-    this.#sidebar_wrapper.classList.toggle('sidebar-closed');
+  #toggleSidebar(btnPress = false) {
+    this.#sidebarWrapper.classList.toggle('sidebar-closed');
 
     if (btnPress && this.#sidebarClosed) {
-      this.#sidebar_wrapper.classList.add('toggled-off');
+      this.#sidebarWrapper.classList.add('toggled-off');
     } else {
-      this.#sidebar_wrapper.classList.remove('toggled-off');
+      this.#sidebarWrapper.classList.remove('toggled-off');
     }
   }
 
-  #toggle_btn() {
+  #toggleBtn() {
     if (this.#sidebarClosed) {
-      this.#sidebar_btn.classList.add('standAlone');
+      this.#sidebarBtn.classList.add('standAlone');
     } else {
-      this.#sidebar_btn.classList.remove('standAlone');
+      this.#sidebarBtn.classList.remove('standAlone');
     }
   }
 
-  #toggle_overlay() {
+  #toggleOverlay() {
     if (this.#overlay.classList.contains('show')) {
-      this.#sidebar_wrapper.addEventListener(
+      this.#sidebarWrapper.addEventListener(
         'transitionend',
         () => {
           // There needs to be a check for the existence of the overlay in case the user stretches
@@ -53,70 +53,70 @@ class SidebarController {
     }
   }
 
-  #btn_click_handler() {
+  #btnClickHandler() {
     if (this.#overlay) {
-      this.#toggle_overlay();
-      this.#toggle_sidebar();
-      this.#toggle_btn();
+      this.#toggleOverlay();
+      this.#toggleSidebar();
+      this.#toggleBtn();
     } else {
-      this.#toggle_sidebar(true);
-      this.#toggle_btn();
+      this.#toggleSidebar(true);
+      this.#toggleBtn();
     }
   }
 
-  #create_sidebar_overlay() {
+  #createSidebarOverlay() {
     const overlay = document.createElement('div');
     overlay.classList.add('sidebar-overlay');
-    overlay.appendChild(this.#sidebar_wrapper);
+    overlay.appendChild(this.#sidebarWrapper);
     this.#content.insertBefore(overlay, this.#content.firstChild);
   }
 
-  #remove_sidebar_overlay() {
+  #removeSidebarOverlay() {
     this.#content.removeChild(this.#overlay);
-    this.#content.insertBefore(this.#sidebar_wrapper, this.#content.firstChild);
+    this.#content.insertBefore(this.#sidebarWrapper, this.#content.firstChild);
   }
 
-  #resize_toggle() {
-    const toggledOff = this.#sidebar_wrapper.classList.contains('toggled-off');
+  #resizeToggle() {
+    const toggledOff = this.#sidebarWrapper.classList.contains('toggled-off');
 
     if (this.#windowSmall && !this.#sidebarClosed) {
       if (this.#overlay) {
-        this.#toggle_overlay();
+        this.#toggleOverlay();
       }
-      this.#sidebar_wrapper.classList.add('sidebar-closed');
-      this.#toggle_btn();
+      this.#sidebarWrapper.classList.add('sidebar-closed');
+      this.#toggleBtn();
     } else if (!this.#windowSmall && !toggledOff && this.#sidebarClosed) {
       // Create delay from the DOM manipulation so the CSS transitions are shown
       setTimeout(() => {
-        this.#sidebar_wrapper.classList.remove('sidebar-closed');
-        this.#toggle_btn();
+        this.#sidebarWrapper.classList.remove('sidebar-closed');
+        this.#toggleBtn();
       }, 1);
     }
   }
 
-  #resize_handler() {
+  #resizeHandler() {
     if (!this.#windowSmall && this.#overlay) {
-      this.#remove_sidebar_overlay();
+      this.#removeSidebarOverlay();
     }
 
-    this.#resize_toggle();
+    this.#resizeToggle();
 
     // Only create the sidebar overlay when the user is DONE resizing the screen
-    clearTimeout(this.#trigger_resize_event);
-    this.#trigger_resize_event = setTimeout(() => {
+    clearTimeout(this.#triggerResizeEvent);
+    this.#triggerResizeEvent = setTimeout(() => {
       if (this.#windowSmall && this.#sidebarClosed && !this.#overlay) {
-        this.#create_sidebar_overlay();
+        this.#createSidebarOverlay();
       }
     }, 200);
   }
 
-  set_up_listeners() {
-    this.#sidebar_btn.addEventListener('click', () => {
-      this.#btn_click_handler();
+  setUpListeners() {
+    this.#sidebarBtn.addEventListener('click', () => {
+      this.#btnClickHandler();
     });
 
     window.addEventListener('resize', () => {
-      this.#resize_handler();
+      this.#resizeHandler();
     });
   }
 }
