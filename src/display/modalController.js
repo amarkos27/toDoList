@@ -86,11 +86,15 @@ class ModalController {
   #modalListeners() {
     const cancel = document.querySelector('#cancel');
 
-    this.#modalOverlay.addEventListener('click', (e) => {
-      if (e.target === e.currentTarget || e.target === cancel) {
-        this.#closeModal();
-      }
-    });
+    window.addEventListener(
+      'click',
+      (e) => {
+        if (!this.#modal.contains(e.target) || e.target === cancel) {
+          this.#closeModal();
+        }
+      },
+      { once: true }
+    );
   }
 
   openModal() {
