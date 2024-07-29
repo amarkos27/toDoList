@@ -44,7 +44,7 @@
     box-sizing: border-box;
     color: #000;
     font-family: 'Dosis';
-    font-weight: 300;
+    font-weight: 400;
 }
 
 #content {
@@ -67,7 +67,7 @@ button {
 }
 
 button:hover {
-    background: rgba(0, 0, 0, 0.065);
+    background: rgba(0, 0, 0, 0.08);
     cursor: pointer;
 }
 
