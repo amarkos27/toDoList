@@ -85,16 +85,14 @@ class ModalController {
 
   #modalListeners() {
     const cancel = document.querySelector('#cancel');
+    const windowClick = (e) => {
+      if (!this.#modal.contains(e.target) || e.target === cancel) {
+        this.#closeModal();
+        window.removeEventListener('click', windowClick);
+      }
+    };
 
-    window.addEventListener(
-      'click',
-      (e) => {
-        if (!this.#modal.contains(e.target) || e.target === cancel) {
-          this.#closeModal();
-        }
-      },
-      { once: true }
-    );
+    window.addEventListener('click', windowClick);
   }
 
   openModal() {
