@@ -25,5 +25,8 @@ export function displayInit() {
 }
 
 export function displayForm() {
+  if (sidebarController.overlay) {
+    sidebarController.toggleSidebarWithOverlay();
+  }
   display.openModal();
 }

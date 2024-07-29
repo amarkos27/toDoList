@@ -12,7 +12,7 @@ class SidebarController {
     return this.#sidebarWrapper.classList.contains('sidebar-closed');
   }
 
-  get #overlay() {
+  get overlay() {
     return document.querySelector('.sidebar-overlay');
   }
 
@@ -35,32 +35,29 @@ class SidebarController {
   }
 
   #toggleOverlay() {
-    if (this.#overlay.classList.contains('show')) {
+    if (this.overlay.classList.contains('show')) {
       this.#sidebarWrapper.addEventListener(
         'transitionend',
         () => {
           // There needs to be a check for the existence of the overlay in case the user stretches
           // the screen and it is removed before transitionend, which would cause an error on
           // accessing its classList
-          if (this.#overlay) {
-            this.#overlay.classList.remove('show');
+          if (this.overlay) {
+            this.overlay.classList.remove('show');
           }
         },
         { once: true }
       );
     } else {
-      this.#overlay.classList.add('show');
+      this.overlay.classList.add('show');
     }
   }
 
   #btnClickHandler() {
-    if (this.#overlay) {
-      this.#toggleOverlay();
-      this.#toggleSidebar();
-      this.#toggleBtn();
+    if (this.overlay) {
+      this.toggleSidebarWithOverlay();
     } else {
-      this.#toggleSidebar(true);
-      this.#toggleBtn();
+      this.toggleSidebarWithoutOverlay();
     }
   }
 
@@ -72,7 +69,7 @@ class SidebarController {
   }
 
   #removeSidebarOverlay() {
-    this.#content.removeChild(this.#overlay);
+    this.#content.removeChild(this.overlay);
     this.#content.insertBefore(this.#sidebarWrapper, this.#content.firstChild);
   }
 
@@ -80,7 +77,7 @@ class SidebarController {
     const toggledOff = this.#sidebarWrapper.classList.contains('toggled-off');
 
     if (this.#windowSmall && !this.#sidebarClosed) {
-      if (this.#overlay) {
+      if (this.overlay) {
         this.#toggleOverlay();
       }
       this.#sidebarWrapper.classList.add('sidebar-closed');
@@ -95,7 +92,7 @@ class SidebarController {
   }
 
   #resizeHandler() {
-    if (!this.#windowSmall && this.#overlay) {
+    if (!this.#windowSmall && this.overlay) {
       this.#removeSidebarOverlay();
     }
 
@@ -104,10 +101,21 @@ class SidebarController {
     // Only create the sidebar overlay when the user is DONE resizing the screen
     clearTimeout(this.#triggerResizeEvent);
     this.#triggerResizeEvent = setTimeout(() => {
-      if (this.#windowSmall && this.#sidebarClosed && !this.#overlay) {
+      if (this.#windowSmall && this.#sidebarClosed && !this.overlay) {
         this.#createSidebarOverlay();
       }
     }, 200);
+  }
+
+  toggleSidebarWithoutOverlay() {
+    this.#toggleSidebar(true);
+    this.#toggleBtn();
+  }
+
+  toggleSidebarWithOverlay() {
+    this.#toggleOverlay();
+    this.#toggleSidebar();
+    this.#toggleBtn();
   }
 
   setUpListeners() {
