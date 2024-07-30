@@ -1,9 +1,10 @@
 import 'normalize.css';
 import './style.css';
 import { displayInit, displayForm } from './display/displayController.js';
+import { createTask } from './taskManager.js';
 
 function init() {
-  displayInit();
+  displayInit(createTask);
 
   const newTask = document.querySelector('.add-task');
   newTask.addEventListener('click', (e) => {

@@ -20,10 +20,12 @@ class DisplayController {
 }
 
 const sidebarController = new SidebarController();
-const modalController = new ModalController();
-const display = new DisplayController(sidebarController, modalController);
+let modalController;
+let display;
 
-export function displayInit() {
+export function displayInit(createTask) {
+  modalController = new ModalController(createTask);
+  display = new DisplayController(sidebarController, modalController);
   display.initialize();
 }
 

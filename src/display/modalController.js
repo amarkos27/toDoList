@@ -1,4 +1,11 @@
 class ModalController {
+  #onSubmitCallback;
+  #windowClick;
+
+  constructor(onSubmitCallback) {
+    this.#onSubmitCallback = onSubmitCallback;
+  }
+
   #items = document.querySelector('.items');
 
   get #modalOverlay() {
@@ -55,7 +62,7 @@ class ModalController {
     cancel.textContent = 'Cancel';
 
     const submit = document.createElement('button');
-    submit.type = 'button';
+    submit.type = 'submit';
     submit.id = 'submit';
     submit.textContent = 'Submit';
     submit.disabled = true;
@@ -69,6 +76,12 @@ class ModalController {
     form.appendChild(project);
     form.appendChild(buttons);
 
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.#handleFormSubmission(form);
+      this.#closeModal();
+    });
+
     return form;
   }
 
@@ -81,10 +94,25 @@ class ModalController {
     this.#modal.addEventListener('animationend', () => {
       this.#items.removeChild(this.#modalOverlay);
     });
+    window.removeEventListener('click', this.#windowClick);
+  }
+
+  #handleFormSubmission(form) {
+    const taskData = {
+      taskName: form.querySelector('#task-name').value,
+      description: form.querySelector('#description').value,
+      dateTime: form.querySelector('#date-time').value,
+      project: form.querySelector('#select-project').value,
+    };
+
+    this.#onSubmitCallback(taskData);
   }
 
   #modalListeners() {
     const cancel = document.querySelector('#cancel');
+    const submit = document.querySelector('#submit');
+    const taskName = document.querySelector('#task-name');
+
     const windowClick = (e) => {
       if (
         (!this.#modal.contains(e.target) &&
@@ -92,11 +120,20 @@ class ModalController {
         e.target === cancel
       ) {
         this.#closeModal();
-        window.removeEventListener('click', windowClick);
       }
     };
 
+    // Store reference to function for event listener removal
+    this.#windowClick = windowClick;
+
     window.addEventListener('click', windowClick);
+    taskName.addEventListener('input', () => {
+      if (taskName.value !== '') {
+        submit.disabled = false;
+      } else {
+        submit.disabled = true;
+      }
+    });
   }
 
   openModal() {
