@@ -119,7 +119,9 @@ class SidebarController {
   }
 
   setUpListeners() {
-    this.#sidebarBtn.addEventListener('click', () => {
+    this.#sidebarBtn.addEventListener('click', (e) => {
+      // Stops event from propagating to inner icon div
+      e.stopPropagation();
       this.#btnClickHandler();
     });
 

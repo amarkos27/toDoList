@@ -86,7 +86,11 @@ class ModalController {
   #modalListeners() {
     const cancel = document.querySelector('#cancel');
     const windowClick = (e) => {
-      if (!this.#modal.contains(e.target) || e.target === cancel) {
+      if (
+        (!this.#modal.contains(e.target) &&
+          !e.target.classList.contains('sidebar-btn')) ||
+        e.target === cancel
+      ) {
         this.#closeModal();
         window.removeEventListener('click', windowClick);
       }
