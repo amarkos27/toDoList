@@ -23,6 +23,7 @@ class ModalController {
   #createModal() {
     const form = document.createElement('form');
     form.classList.add('create-task');
+    form.autocomplete = 'off';
 
     const taskName = document.createElement('input');
     taskName.type = 'text';
