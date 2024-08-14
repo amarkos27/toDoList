@@ -249,20 +249,27 @@ button:disabled {
 }
 
 .items {
+    position: relative;
     height: 100%;
     width: 85%;
     border-radius: 25px;
+    padding: 15px;
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.4);
     background: #fff;
+    z-index: 0;
 }
 
 /* NEW TASK FORM */
 
 .form-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
+    z-index: 1;
 }
 
 .create-task {
@@ -344,6 +351,19 @@ form.create-task button {
     color: white;
 }
 
+/* TASKS */
+.task {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid gray;
+    border-radius: 50%;
+}
 @keyframes showModal {
     0% {
         opacity: 0;
