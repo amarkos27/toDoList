@@ -1,11 +1,5 @@
 class ModalController {
-  #onSubmitCallback;
   #windowClick;
-
-  constructor(onSubmitCallback) {
-    this.#onSubmitCallback = onSubmitCallback;
-  }
-
   #items = document.querySelector('.items');
 
   get #modalOverlay() {
@@ -77,36 +71,11 @@ class ModalController {
     form.appendChild(project);
     form.appendChild(buttons);
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this.#handleFormSubmission(form);
-      this.#closeModal();
-    });
-
     return form;
   }
 
   #focusModal() {
     this.#modal.firstChild.focus();
-  }
-
-  #closeModal() {
-    this.#modal.classList.add('close-modal');
-    this.#modal.addEventListener('animationend', () => {
-      this.#items.removeChild(this.#modalOverlay);
-    });
-    window.removeEventListener('click', this.#windowClick);
-  }
-
-  #handleFormSubmission(form) {
-    const taskData = {
-      taskName: form.querySelector('#task-name').value,
-      description: form.querySelector('#description').value,
-      dateTime: form.querySelector('#date-time').value,
-      project: form.querySelector('#select-project').value,
-    };
-
-    this.#onSubmitCallback(taskData);
   }
 
   #modalListeners() {
@@ -120,7 +89,7 @@ class ModalController {
           !e.target.classList.contains('sidebar-btn')) ||
         e.target === cancel
       ) {
-        this.#closeModal();
+        this.closeModal();
       }
     };
 
@@ -148,7 +117,17 @@ class ModalController {
       this.#focusModal();
 
       this.#modalListeners();
+
+      return modal;
     }
+  }
+
+  closeModal() {
+    this.#modal.classList.add('close-modal');
+    this.#modal.addEventListener('animationend', () => {
+      this.#items.removeChild(this.#modalOverlay);
+    });
+    window.removeEventListener('click', this.#windowClick);
   }
 }
 

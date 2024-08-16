@@ -15,20 +15,32 @@ class DisplayController {
     if (this.sidebarController.overlay) {
       this.sidebarController.toggleSidebarWithOverlay();
     }
-    this.modalController.openModal();
+    const form = this.modalController.openModal();
+
+    return form;
+  }
+
+  closeModal() {
+    this.modalController.closeModal();
   }
 }
 
-const sidebarController = new SidebarController();
-let modalController;
 let display;
 
-export function displayInit(createTask) {
-  modalController = new ModalController(createTask);
+export function displayInit() {
+  const sidebarController = new SidebarController();
+  const modalController = new ModalController();
+
   display = new DisplayController(sidebarController, modalController);
   display.initialize();
 }
 
 export function displayForm() {
-  display.openModal();
+  const form = display.openModal();
+
+  return form;
+}
+
+export function closeForm() {
+  display.closeModal();
 }

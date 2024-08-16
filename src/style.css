@@ -359,11 +359,39 @@ form.create-task button {
 }
 
 .checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 20px;
     height: 20px;
     border: 1px solid gray;
     border-radius: 50%;
+    cursor: pointer;
 }
+
+.completed-indicator {
+    opacity: 0;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: url('../icons/checkmark-svgrepo-com.svg');
+}
+
+.checkbox:hover .completed-indicator {
+    opacity: 1;
+}
+
+.task-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.description, .date-and-time {
+    opacity: .5;
+    font-size: .8em;
+}
+
 @keyframes showModal {
     0% {
         opacity: 0;
