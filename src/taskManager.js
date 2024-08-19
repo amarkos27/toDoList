@@ -1,3 +1,9 @@
-export function createTask(taskData) {
-  return JSON.stringify(taskData);
+class TaskManager {
+  #tasks = [];
+
+  createTask() {
+    this.#tasks.push(taskData);
+  }
 }
+
+export { TaskManager };
