@@ -56,22 +56,30 @@ class DisplayController {
     taskInfo.appendChild(description);
     taskInfo.appendChild(dateAndTime);
 
-    const actions = {};
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
+    const actionButtons = {};
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Delete';
+    const editBtn = document.createElement('div');
+    editBtn.classList.add('edit');
 
-    actions.delete = deleteBtn;
+    const deleteBtn = document.createElement('div');
+    deleteBtn.classList.add('delete');
+
+    actionButtons.checkbox = checkbox;
+    actionButtons.edit = editBtn;
+    actionButtons.delete = deleteBtn;
+
+    actions.appendChild(actionButtons.edit);
+    actions.appendChild(actionButtons.delete);
 
     taskDisplay.appendChild(checkbox);
     taskDisplay.appendChild(taskInfo);
-    for (let action in actions) {
-      taskDisplay.appendChild(actions[action]);
-    }
+    taskDisplay.appendChild(actions);
 
     this.#items.appendChild(taskDisplay);
 
-    return { taskDisplay, actions };
+    return { taskDisplay, actionButtons };
   }
 
   removeTaskDisplay(taskDisplay) {

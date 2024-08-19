@@ -249,6 +249,10 @@ button:disabled {
 }
 
 .items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
     position: relative;
     height: 100%;
     width: 85%;
@@ -356,6 +360,11 @@ form.create-task button {
     display: flex;
     align-items: start;
     gap: 10px;
+    transition: 0.2s;
+}
+
+.deleted {
+    opacity: 0;
 }
 
 .checkbox {
@@ -401,6 +410,15 @@ form.create-task button {
 
 .delete, .edit {
     cursor: pointer;
+    opacity: 0;
+}
+
+.task:hover :is(.delete, .edit) {
+    opacity: .4;
+}
+
+.task:hover :is(.delete, .edit):hover {
+    opacity: 1;
 }
 
 .delete {

@@ -3,10 +3,10 @@ import './style.css';
 import { DisplayController } from './display/displayController.js';
 import { TaskManager } from './task/taskManager.js';
 
-function init() {
-  const display = new DisplayController();
-  const taskManager = new TaskManager();
+const display = new DisplayController();
+const taskManager = new TaskManager();
 
+function init() {
   display.initialize();
 
   let form;
@@ -21,16 +21,26 @@ function init() {
       form.addEventListener('submit', (e) => {
         display.closeModal();
         const task = taskManager.createTask(e);
-        const { taskDisplay, actions } = display.createTaskDisplay(task);
+        const { taskDisplay, actionButtons } = display.createTaskDisplay(task);
         taskManager.connectToDisplay(task, taskDisplay);
 
-        actions.delete.addEventListener('click', () => {
-          display.removeTaskDisplay(taskDisplay);
-          taskManager.removeTask(task);
-        });
+        actionListeners(taskDisplay, actionButtons, task);
       });
     }
   });
+}
+
+function actionListeners(taskDisplay, actionButtons, task) {
+  actionButtons.delete.addEventListener('click', () => {
+    taskDisplay.classList.add('deleted');
+
+    taskDisplay.addEventListener('transitionend', () => {
+      display.removeTaskDisplay(taskDisplay);
+      taskManager.removeTask(task);
+    });
+  });
+
+  actionButtons.edit.addEventListener('click', () => {});
 }
 
 init();
