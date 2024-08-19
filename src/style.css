@@ -392,6 +392,29 @@ form.create-task button {
     font-size: .8em;
 }
 
+.actions {
+    display: flex;
+    gap: 25px;
+    align-self: center;
+    margin-left: auto;
+}
+
+.delete, .edit {
+    cursor: pointer;
+}
+
+.delete {
+    width: 27px;
+    height: 27px;
+    background: url('../icons/delete-1-svgrepo-com.svg');
+}
+
+.edit {
+    width: 23px;
+    height: 23px;
+    background: url('../icons/edit-3-svgrepo-com.svg');
+}
+
 @keyframes showModal {
     0% {
         opacity: 0;
