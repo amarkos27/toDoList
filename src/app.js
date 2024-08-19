@@ -1,13 +1,13 @@
 import 'normalize.css';
 import './style.css';
-import {
-  displayInit,
-  displayForm,
-  closeForm,
-} from './display/displayController.js';
+import { DisplayController } from './display/displayController.js';
+import { TaskManager } from './task/taskManager.js';
 
 function init() {
-  displayInit();
+  const display = new DisplayController();
+  const taskManager = new TaskManager();
+
+  display.initialize();
 
   let form;
   const newTask = document.querySelector('.add-task');
@@ -15,25 +15,22 @@ function init() {
     // Needed so that the window event listener for closing the modal does not
     // immediately trigger
     e.stopPropagation();
-    form = displayForm();
+    form = display.openModal();
 
     if (form) {
-      form.addEventListener('submit', handleFormSubmission);
+      form.addEventListener('submit', (e) => {
+        display.closeModal();
+        const task = taskManager.createTask(e);
+        const { taskDisplay, actions } = display.createTaskDisplay(task);
+        taskManager.connectToDisplay(task, taskDisplay);
+
+        actions.delete.addEventListener('click', () => {
+          display.removeTaskDisplay(taskDisplay);
+          taskManager.removeTask(task);
+        });
+      });
     }
   });
-}
-
-function handleFormSubmission(e) {
-  e.preventDefault();
-  const form = e.currentTarget;
-  closeForm();
-
-  const taskData = {
-    taskName: form.querySelector('#task-name').value,
-    description: form.querySelector('#description').value,
-    dateTime: form.querySelector('#date-time').value,
-    project: form.querySelector('#select-project').value,
-  };
 }
 
 init();
