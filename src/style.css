@@ -460,11 +460,7 @@ form.create-task button, .edit-buttons button {
     opacity: .6;
 }
 
-.edit-date {
-    opacity: .6;
-}
-
-.edit-project {
+.edit-date, .edit-project {
     opacity: .6;
 }
 

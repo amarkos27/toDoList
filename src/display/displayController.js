@@ -85,6 +85,67 @@ class DisplayController {
   removeTaskDisplay(taskDisplay) {
     this.#items.removeChild(taskDisplay);
   }
+
+  #addPaneListeners(editPane) {}
+
+  addEditPane(taskDisplay, task) {
+    const editPane = document.createElement('form');
+    editPane.classList.add('edit-pane');
+
+    const editName = document.createElement('input');
+    editName.type = 'text';
+    editName.classList.add('edit-name');
+    editName.placeholder = 'Task Name';
+    editName.value = task.taskName;
+
+    const editDescription = document.createElement('input');
+    editDescription.type = 'text';
+    editDescription.classList.add('edit-description');
+    editDescription.placeholder = 'Description';
+    editDescription.value = task.description;
+
+    const editDate = document.createElement('input');
+    editDate.type = 'datetime-local';
+    editDate.classList.add('edit-date');
+    editDate.value = task.dateTime;
+
+    const editProject = document.createElement('select');
+    editProject.classList.add('edit-project');
+
+    const defaultOption = document.createElement('option');
+    defaultOption.value = 'default';
+    defaultOption.textContent = 'Project';
+    defaultOption.selected = true;
+    defaultOption.disabled = true;
+
+    const buttons = document.createElement('div');
+    buttons.classList.add('edit-buttons');
+
+    const cancel = document.createElement('button');
+    cancel.type = 'button';
+    cancel.id = 'cancel-edit';
+    cancel.textContent = 'Cancel';
+
+    const submit = document.createElement('button');
+    submit.type = 'submit';
+    submit.id = 'submit-edit';
+    submit.textContent = 'Submit';
+
+    buttons.appendChild(cancel);
+    buttons.appendChild(submit);
+
+    editProject.appendChild(defaultOption);
+
+    editPane.appendChild(editName);
+    editPane.appendChild(editDescription);
+    editPane.appendChild(editDate);
+    editPane.appendChild(editProject);
+    editPane.appendChild(buttons);
+
+    this.#addPaneListeners(editPane);
+
+    this.#items.insertBefore(editPane, taskDisplay);
+  }
 }
 
 export { DisplayController };

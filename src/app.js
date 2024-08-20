@@ -43,8 +43,8 @@ function actionListeners(taskDisplay, actionButtons, task) {
   });
 
   actionButtons.edit.addEventListener('click', () => {
+    display.addEditPane(taskDisplay, task);
     display.removeTaskDisplay(taskDisplay);
-    display.addEditPane(task);
   });
 }
 
