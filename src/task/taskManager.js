@@ -2,11 +2,8 @@ import { Task } from './task.js';
 class TaskManager {
   #tasks = [];
 
-  createTask(e) {
-    e.preventDefault();
-    const form = e.currentTarget;
-
-    const task = new Task(form);
+  createTask(values) {
+    const task = new Task(values);
     this.#tasks.push(task);
 
     return task;

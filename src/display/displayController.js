@@ -86,31 +86,33 @@ class DisplayController {
     this.#items.removeChild(taskDisplay);
   }
 
-  #addPaneListeners(editPane) {}
-
   addEditPane(taskDisplay, task) {
     const editPane = document.createElement('form');
     editPane.classList.add('edit-pane');
 
     const editName = document.createElement('input');
     editName.type = 'text';
+    editName.name = 'task-name';
     editName.classList.add('edit-name');
     editName.placeholder = 'Task Name';
     editName.value = task.taskName;
 
     const editDescription = document.createElement('input');
     editDescription.type = 'text';
+    editDescription.name = 'description';
     editDescription.classList.add('edit-description');
     editDescription.placeholder = 'Description';
     editDescription.value = task.description;
 
     const editDate = document.createElement('input');
     editDate.type = 'datetime-local';
+    editDate.name = 'date-and-time';
     editDate.classList.add('edit-date');
     editDate.value = task.dateTime;
 
     const editProject = document.createElement('select');
     editProject.classList.add('edit-project');
+    editProject.name = 'project';
 
     const defaultOption = document.createElement('option');
     defaultOption.value = 'default';
@@ -142,9 +144,14 @@ class DisplayController {
     editPane.appendChild(editProject);
     editPane.appendChild(buttons);
 
-    this.#addPaneListeners(editPane);
-
     this.#items.insertBefore(editPane, taskDisplay);
+
+    return editPane;
+  }
+
+  cancelEdit(editPane, taskDisplay) {
+    this.#items.insertBefore(taskDisplay, editPane);
+    this.#items.removeChild(editPane);
   }
 }
 

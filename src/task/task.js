@@ -1,14 +1,13 @@
 class Task {
-  constructor(form, taskDisplay) {
-    this.taskName = form.querySelector('#task-name').value;
-    this.description = form.querySelector('#description').value;
-    this.dateTime = form.querySelector('#date-time').value;
-    this.project = form.querySelector('#select-project').value;
-    this.display = taskDisplay;
+  constructor(values) {
+    this.taskName = values.taskName;
+    this.description = values.description;
+    this.dateTime = values.dateTime;
+    this.project = values.project;
   }
 
   attach(taskDisplay) {
-    this.taskDisplay = taskDisplay;
+    this.display = taskDisplay;
   }
 }
 

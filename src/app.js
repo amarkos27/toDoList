@@ -23,9 +23,28 @@ function init() {
   });
 }
 
+function getValues(formNode) {
+  const formClass = formNode.classList[0];
+  const values = {
+    taskName: formNode.querySelector(`.${formClass} [name="task-name"]`).value,
+    description: formNode.querySelector(`.${formClass} [name="description"]`)
+      .value,
+    dateTime: formNode.querySelector(`.${formClass} [name="date-and-time"]`)
+      .value,
+    project: formNode.querySelector(`.${formClass} [name="project"]`).value,
+  };
+
+  return values;
+}
+
 function handleFormSubmission(e) {
   display.closeModal();
-  const task = taskManager.createTask(e);
+  e.preventDefault();
+
+  const form = e.currentTarget;
+  const values = getValues(form);
+
+  const task = taskManager.createTask(values);
   const { taskDisplay, actionButtons } = display.createTaskDisplay(task);
   taskManager.connectToDisplay(task, taskDisplay);
 
@@ -43,8 +62,31 @@ function actionListeners(taskDisplay, actionButtons, task) {
   });
 
   actionButtons.edit.addEventListener('click', () => {
-    display.addEditPane(taskDisplay, task);
+    const editPane = display.addEditPane(taskDisplay, task);
     display.removeTaskDisplay(taskDisplay);
+
+    editPaneListeners(editPane, task);
+  });
+}
+
+function cancelEdit(editPane, task) {
+  const current = getValues(editPane);
+
+  if (
+    current.taskName !== task.taskName ||
+    current.description !== task.description ||
+    current.dateTime !== task.dateTime ||
+    current.project !== task.project
+  ) {
+  } else {
+    display.cancelEdit(editPane, task.display);
+  }
+}
+
+function editPaneListeners(editPane, task) {
+  const cancel = editPane.querySelector('#cancel-edit');
+  cancel.addEventListener('click', () => {
+    cancelEdit(editPane, task);
   });
 }
 
