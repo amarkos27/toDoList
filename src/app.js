@@ -18,16 +18,18 @@ function init() {
     form = display.openModal();
 
     if (form) {
-      form.addEventListener('submit', (e) => {
-        display.closeModal();
-        const task = taskManager.createTask(e);
-        const { taskDisplay, actionButtons } = display.createTaskDisplay(task);
-        taskManager.connectToDisplay(task, taskDisplay);
-
-        actionListeners(taskDisplay, actionButtons, task);
-      });
+      form.addEventListener('submit', handleFormSubmission);
     }
   });
+}
+
+function handleFormSubmission(e) {
+  display.closeModal();
+  const task = taskManager.createTask(e);
+  const { taskDisplay, actionButtons } = display.createTaskDisplay(task);
+  taskManager.connectToDisplay(task, taskDisplay);
+
+  actionListeners(taskDisplay, actionButtons, task);
 }
 
 function actionListeners(taskDisplay, actionButtons, task) {
@@ -40,7 +42,10 @@ function actionListeners(taskDisplay, actionButtons, task) {
     });
   });
 
-  actionButtons.edit.addEventListener('click', () => {});
+  actionButtons.edit.addEventListener('click', () => {
+    display.removeTaskDisplay(taskDisplay);
+    display.addEditPane(task);
+  });
 }
 
 init();

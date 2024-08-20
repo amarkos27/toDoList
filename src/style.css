@@ -314,7 +314,7 @@ button:disabled {
     font-weight: 300;
 }
 
-form.create-task button {
+form.create-task button, .edit-buttons button {
     width: 80px;
     padding: 7px;
     border-radius: 5px;
@@ -431,6 +431,56 @@ form.create-task button {
     width: 23px;
     height: 23px;
     background: url('../icons/edit-3-svgrepo-com.svg');
+}
+
+/* EDIT PANE */
+.edit-pane {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    border-radius: 15px;
+    padding: 15px;
+    gap: 10px;
+
+}
+
+.edit-pane * {
+    border: none;
+    outline: none;
+}
+
+.edit-name {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.edit-description {
+    font-weight: 300;
+    font-size: 15px;
+    opacity: .6;
+}
+
+.edit-date {
+    opacity: .6;
+}
+
+.edit-project {
+    opacity: .6;
+}
+
+.edit-buttons {
+    display: flex;
+    align-self: end;
+    gap: 20px;
+}
+
+#cancel-edit {
+    background-color: #d9dbda;
+}
+
+#submit-edit {
+    background-color: #4bd670;
+    color: white;
 }
 
 @keyframes showModal {
