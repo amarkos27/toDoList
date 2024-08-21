@@ -77,9 +77,15 @@ class DisplayController {
     taskDisplay.appendChild(taskInfo);
     taskDisplay.appendChild(actions);
 
-    this.#items.appendChild(taskDisplay);
-
     return { taskDisplay, actionButtons };
+  }
+
+  addTaskDisplay(taskDisplay) {
+    this.#items.appendChild(taskDisplay);
+  }
+
+  insertTaskDisplay(taskDisplay, previous) {
+    this.#items.insertBefore(taskDisplay, previous);
   }
 
   removeTaskDisplay(taskDisplay) {
@@ -149,8 +155,7 @@ class DisplayController {
     return editPane;
   }
 
-  cancelEdit(editPane, taskDisplay) {
-    this.#items.insertBefore(taskDisplay, editPane);
+  removeEditPane(editPane) {
     this.#items.removeChild(editPane);
   }
 }

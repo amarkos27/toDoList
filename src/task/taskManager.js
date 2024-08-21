@@ -4,9 +4,22 @@ class TaskManager {
 
   createTask(values) {
     const task = new Task(values);
-    this.#tasks.push(task);
 
     return task;
+  }
+
+  storeTask(task) {
+    this.#tasks.push(task);
+  }
+
+  updateTask(task, values) {
+    const index = this.#tasks.indexOf(task);
+    const newTask = this.createTask(values);
+    this.#tasks.splice(index, 1, newTask);
+
+    console.log(this.#tasks);
+
+    return newTask;
   }
 
   removeTask(task) {

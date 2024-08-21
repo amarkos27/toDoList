@@ -449,6 +449,11 @@ form.create-task button, .edit-buttons button {
     outline: none;
 }
 
+.edit-pane input {
+    padding: 0;
+    line-height: 1;
+}
+
 .edit-name {
     font-weight: 600;
     font-size: 20px;
