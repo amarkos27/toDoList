@@ -31,8 +31,7 @@ function handleFormSubmission(form) {
   const values = getValues(form);
 
   const task = taskManager.createTask(values);
-  const { taskDisplay, actionButtons } = display.createTaskDisplay(task);
-  display.addTaskDisplay(taskDisplay);
+  const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
   taskManager.connectToDisplay(task, taskDisplay);
   taskManager.storeTask(task);
 
@@ -59,13 +58,12 @@ function actionListeners(taskDisplay, actionButtons, task) {
 
     taskDisplay.addEventListener('transitionend', () => {
       display.removeTaskDisplay(taskDisplay);
-      taskManager.removeTask(task);
+      taskManager.removeTask(taskDisplay);
     });
   });
 
   actionButtons.edit.addEventListener('click', () => {
-    const editPane = display.addEditPane(taskDisplay, task);
-    display.removeTaskDisplay(taskDisplay);
+    const editPane = display.editTask(taskDisplay, task);
 
     editPaneListeners(editPane, task);
   });
@@ -94,8 +92,7 @@ function cancelEdit(editPane, task) {
     current.project !== task.project
   ) {
   } else {
-    display.insertTaskDisplay(task.display, previous);
-    display.removeEditPane(editPane);
+    display.closeEdit(task.display, editPane);
   }
 }
 
@@ -103,10 +100,9 @@ function submitEdit(editPane, task) {
   const newValues = getValues(editPane);
   task = taskManager.updateTask(task, newValues);
 
-  const { taskDisplay, actionButtons } = display.createTaskDisplay(task);
-  display.insertTaskDisplay(taskDisplay, editPane);
+  const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
+  display.closeEdit(taskDisplay, editPane);
   taskManager.connectToDisplay(task, taskDisplay);
-  display.removeEditPane(editPane);
   actionListeners(taskDisplay, actionButtons, task);
 
   return task;
