@@ -17,8 +17,6 @@ class TaskManager {
     const newTask = this.createTask(values);
     this.#tasks.splice(index, 1, newTask);
 
-    console.log(this.#tasks);
-
     return newTask;
   }
 

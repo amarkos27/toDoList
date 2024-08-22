@@ -2,6 +2,10 @@ class ModalController {
   #windowClick;
   #items = document.querySelector('.items');
 
+  constructor(buildDatePicker) {
+    this.buildDatePicker = buildDatePicker;
+  }
+
   get #modalOverlay() {
     return document.querySelector('.form-overlay');
   }
@@ -31,9 +35,7 @@ class ModalController {
     description.id = 'description';
     description.placeholder = 'Description';
 
-    const dateTime = document.createElement('input');
-    dateTime.type = 'datetime-local';
-    dateTime.name = 'date-and-time';
+    const dateTime = this.buildDatePicker();
     dateTime.id = 'date-time';
 
     const project = document.createElement('select');

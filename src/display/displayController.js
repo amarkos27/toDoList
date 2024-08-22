@@ -7,13 +7,48 @@ class DisplayController {
 
   constructor() {
     this.sidebarController = new SidebarController();
-    this.modalController = new ModalController();
-    this.taskDisplayController = new TaskDisplayController(this.#items);
+    this.modalController = new ModalController(this.buildDatePicker);
+    this.taskDisplayController = new TaskDisplayController(
+      this.#items,
+      this.buildDatePicker
+    );
   }
 
   initialize() {
     this.sidebarController.setUpListeners();
   }
+
+  getCurrentDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
+  // These two methods must be arrow functions to prevent "this" from being lost in
+  // the two classes that receive them
+  onInvalidDate = (e) => {
+    const datePicker = e.currentTarget;
+    const currentTime = this.getCurrentDateTime();
+    if (datePicker.value < currentTime) {
+      datePicker.setCustomValidity(`Cannot enter before ${currentTime}.`);
+    }
+  };
+
+  buildDatePicker = () => {
+    const dateTime = document.createElement('input');
+    dateTime.type = 'datetime-local';
+    dateTime.name = 'date-and-time';
+    dateTime.min = this.getCurrentDateTime();
+    dateTime.oninvalid = this.onInvalidDate;
+    dateTime.oninput = () => dateTime.setCustomValidity('');
+
+    return dateTime;
+  };
 
   openModal() {
     if (this.sidebarController.overlay) {

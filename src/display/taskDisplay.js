@@ -1,8 +1,9 @@
 class TaskDisplayController {
   #items;
 
-  constructor(items) {
+  constructor(items, buildDatePicker) {
     this.#items = items;
+    this.buildDatePicker = buildDatePicker;
   }
   createTaskDisplay(task) {
     const taskDisplay = document.createElement('div');
@@ -88,9 +89,7 @@ class TaskDisplayController {
     editDescription.placeholder = 'Description';
     editDescription.value = task.description;
 
-    const editDate = document.createElement('input');
-    editDate.type = 'datetime-local';
-    editDate.name = 'date-and-time';
+    const editDate = this.buildDatePicker();
     editDate.classList.add('edit-date');
     editDate.value = task.dateTime;
 

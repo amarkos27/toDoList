@@ -82,15 +82,21 @@ function editPaneListeners(editPane, task) {
   });
 }
 
-function cancelEdit(editPane, task) {
-  const current = getValues(editPane);
-
+function valuesChanged(current, task) {
   if (
     current.taskName !== task.taskName ||
     current.description !== task.description ||
     current.dateTime !== task.dateTime ||
     current.project !== task.project
   ) {
+    return true;
+  } else return false;
+}
+
+function cancelEdit(editPane, task) {
+  const current = getValues(editPane);
+
+  if (valuesChanged(current, task)) {
   } else {
     display.closeEdit(task.display, editPane);
   }
@@ -98,14 +104,17 @@ function cancelEdit(editPane, task) {
 
 function submitEdit(editPane, task) {
   const newValues = getValues(editPane);
-  task = taskManager.updateTask(task, newValues);
 
-  const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
-  display.closeEdit(taskDisplay, editPane);
-  taskManager.connectToDisplay(task, taskDisplay);
-  actionListeners(taskDisplay, actionButtons, task);
+  if (valuesChanged(newValues, task)) {
+    task = taskManager.updateTask(task, newValues);
 
-  return task;
+    const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
+    display.closeEdit(taskDisplay, editPane);
+    taskManager.connectToDisplay(task, taskDisplay);
+    actionListeners(taskDisplay, actionButtons, task);
+
+    return task;
+  } else display.closeEdit(task.display, editPane);
 }
 
 init();

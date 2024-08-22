@@ -263,6 +263,16 @@ button:disabled {
     z-index: 0;
 }
 
+.items:empty::before {
+    content: 'No tasks yet...';
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    background-color: #fff;
+    
+}
+
 /* NEW TASK FORM */
 
 .form-overlay {
