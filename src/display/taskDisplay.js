@@ -74,6 +74,7 @@ class TaskDisplayController {
   addEditPane(taskDisplay, task) {
     const editPane = document.createElement('form');
     editPane.classList.add('edit-pane');
+    editPane.autocomplete = 'off';
 
     const editName = document.createElement('input');
     editName.type = 'text';
