@@ -35,7 +35,7 @@ function handleFormSubmission(form) {
   taskManager.connectToDisplay(task, taskDisplay);
   taskManager.storeTask(task);
 
-  actionListeners(taskDisplay, actionButtons, task);
+  actionListeners(actionButtons, task);
 }
 
 function getValues(formNode) {
@@ -54,19 +54,16 @@ function getValues(formNode) {
   return values;
 }
 
-function actionListeners(taskDisplay, actionButtons, task) {
+function actionListeners(actionButtons, task) {
   actionButtons.delete.addEventListener('click', () => {
-    taskDisplay.classList.add('deleted');
-
-    taskDisplay.addEventListener('transitionend', () => {
-      display.removeTaskDisplay(taskDisplay);
-      taskManager.removeTask(taskDisplay);
+    task.display.classList.add('deleted');
+    task.display.addEventListener('transitionend', () => {
+      display.removeTaskDisplay(task.display);
+      taskManager.removeTask(task);
     });
   });
-
   actionButtons.edit.addEventListener('click', () => {
-    const editPane = display.editTask(taskDisplay, task);
-
+    const editPane = display.editTask(task);
     editPaneListeners(editPane, task);
   });
 }
@@ -125,7 +122,7 @@ function submitEdit(editPane, task) {
     const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
     display.closeEdit(taskDisplay, editPane);
     taskManager.connectToDisplay(task, taskDisplay);
-    actionListeners(taskDisplay, actionButtons, task);
+    actionListeners(actionButtons, task);
 
     return task;
   } else display.closeEdit(task.display, editPane);

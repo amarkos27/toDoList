@@ -71,7 +71,7 @@ class TaskDisplayController {
     this.#items.removeChild(taskDisplay);
   }
 
-  addEditPane(taskDisplay, task) {
+  addEditPane(task) {
     const editPane = document.createElement('form');
     editPane.classList.add('edit-pane');
     editPane.autocomplete = 'off';
@@ -128,7 +128,7 @@ class TaskDisplayController {
     editPane.appendChild(editProject);
     editPane.appendChild(buttons);
 
-    this.#items.insertBefore(editPane, taskDisplay);
+    this.#items.insertBefore(editPane, task.display);
 
     return editPane;
   }

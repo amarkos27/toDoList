@@ -91,9 +91,9 @@ class DisplayController {
     this.taskDisplayController.removeTaskDisplay(taskDisplay);
   }
 
-  editTask(taskDisplay, task) {
-    const editPane = this.taskDisplayController.addEditPane(taskDisplay, task);
-    this.taskDisplayController.removeTaskDisplay(taskDisplay);
+  editTask(task) {
+    const editPane = this.taskDisplayController.addEditPane(task);
+    this.taskDisplayController.removeTaskDisplay(task.display);
 
     return editPane;
   }
