@@ -44,8 +44,10 @@ function getValues(formNode) {
     taskName: formNode.querySelector(`.${formClass} [name="task-name"]`).value,
     description: formNode.querySelector(`.${formClass} [name="description"]`)
       .value,
-    dateTime: formNode.querySelector(`.${formClass} [name="date-and-time"]`)
-      .value,
+    dateTime: formNode
+      .querySelector(`.${formClass} [name="date-and-time"]`)
+      .value.split('T')
+      .join(' '),
     project: formNode.querySelector(`.${formClass} [name="project"]`).value,
   };
 
@@ -97,7 +99,18 @@ function cancelEdit(editPane, task) {
   const current = getValues(editPane);
 
   if (valuesChanged(current, task)) {
-    const cancel = display.confirmCancel();
+    console.log(current, task);
+    const cancelModal = display.confirmCancel();
+    const { cancelDiscard, discard } = cancelModal.cancelButtons;
+
+    cancelDiscard.addEventListener('click', () =>
+      display.closeCancelModal(cancelModal.cancelOverlay)
+    );
+
+    discard.addEventListener('click', () => {
+      display.closeCancelModal(cancelModal.cancelOverlay);
+      display.closeEdit(task.display, editPane);
+    });
   } else {
     display.closeEdit(task.display, editPane);
   }

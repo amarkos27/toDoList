@@ -8,7 +8,10 @@ class DisplayController {
 
   constructor() {
     this.sidebarController = new SidebarController(this.#content);
-    this.modalController = new ModalController(content, this.buildDatePicker);
+    this.modalController = new ModalController(
+      this.#content,
+      this.buildDatePicker
+    );
     this.taskDisplayController = new TaskDisplayController(
       this.#items,
       this.buildDatePicker
@@ -101,7 +104,13 @@ class DisplayController {
   }
 
   confirmCancel() {
-    this.modalController.openCancelModal();
+    const cancelModal = this.modalController.createCancelModal();
+
+    return cancelModal;
+  }
+
+  closeCancelModal(cancelOverlay) {
+    this.modalController.closeCancelModal(cancelOverlay);
   }
 }
 
