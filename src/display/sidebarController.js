@@ -1,8 +1,12 @@
 class SidebarController {
   #sidebarWrapper = document.querySelector('.sidebar-wrapper');
   #sidebarBtn = document.querySelector('.sidebar-btn');
-  #content = document.querySelector('#content');
   #triggerResizeEvent = null;
+  #content;
+
+  constructor(content) {
+    this.#content = content;
+  }
 
   get #windowSmall() {
     return window.innerWidth < 1100;

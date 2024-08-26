@@ -57,18 +57,18 @@
 }
 
 
-h3, p {
+h1, h3, p {
     margin: 0;
 }
 
 button {
     background: none;
     border: none;
+    cursor: pointer;
 }
 
 button:hover {
     background: rgba(0, 0, 0, 0.08);
-    cursor: pointer;
 }
 
 button:active:not(:disabled) {
@@ -278,6 +278,7 @@ button:disabled {
     
 }
 
+
 /* NEW TASK FORM */
 
 .form-overlay {
@@ -329,7 +330,7 @@ button:disabled {
     font-weight: 300;
 }
 
-form.create-task button, .edit-buttons button {
+form.create-task button, .edit-buttons button, .cancel-modal button {
     width: 80px;
     padding: 7px;
     border-radius: 5px;
@@ -497,6 +498,65 @@ form.create-task button, .edit-buttons button {
 #submit-edit {
     background-color: #4bd670;
     color: white;
+}
+
+
+/** CANCEL MODAL **/
+.cancel-overlay {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.cancel-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 200px;
+    height: 250px;
+    width: 450px;
+    gap: 50px;
+    border-radius: 20px;
+    background-color: #fff;
+}
+
+.cancel-modal h1 {
+    font-weight: 600;
+}
+
+.cancel-modal button {
+    text-align: center;
+    color: white;
+    height: 40px;
+    width: 80px;
+}
+
+.cancel-buttons {
+    display: flex;
+    gap: 70px;
+}
+
+.cancel-discard {
+    background-color: rgb(173, 171, 171);
+}
+
+.discard {
+    background-color: rgb(218, 68, 68);
+}
+
+.cancel-discard:hover {
+    background-color: rgb(132, 132, 132)
+}
+
+.discard:hover {
+    background-color: rgb(175, 60, 60);
 }
 
 @keyframes showModal {

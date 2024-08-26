@@ -4,10 +4,11 @@ import { TaskDisplayController } from './taskDisplay.js';
 
 class DisplayController {
   #items = document.querySelector('.items');
+  #content = document.querySelector('#content');
 
   constructor() {
-    this.sidebarController = new SidebarController();
-    this.modalController = new ModalController(this.buildDatePicker);
+    this.sidebarController = new SidebarController(this.#content);
+    this.modalController = new ModalController(content, this.buildDatePicker);
     this.taskDisplayController = new TaskDisplayController(
       this.#items,
       this.buildDatePicker
@@ -97,6 +98,10 @@ class DisplayController {
   closeEdit(taskDisplay, editPane) {
     this.taskDisplayController.insertTaskDisplay(taskDisplay, editPane);
     this.taskDisplayController.removeEditPane(editPane);
+  }
+
+  confirmCancel() {
+    this.modalController.openCancelModal();
   }
 }
 

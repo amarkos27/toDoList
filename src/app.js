@@ -97,6 +97,7 @@ function cancelEdit(editPane, task) {
   const current = getValues(editPane);
 
   if (valuesChanged(current, task)) {
+    const cancel = display.confirmCancel();
   } else {
     display.closeEdit(task.display, editPane);
   }
