@@ -55,6 +55,10 @@ function getValues(formNode) {
 }
 
 function actionListeners(actionButtons, task) {
+  actionButtons.checkbox.addEventListener('click', () => {
+    completeTask(actionButtons.checkbox, task);
+  });
+
   actionButtons.delete.addEventListener('click', () => {
     task.display.classList.add('deleted');
     task.display.addEventListener('transitionend', () => {
@@ -62,10 +66,16 @@ function actionListeners(actionButtons, task) {
       taskManager.removeTask(task);
     });
   });
+
   actionButtons.edit.addEventListener('click', () => {
     const editPane = display.editTask(task);
     editPaneListeners(editPane, task);
   });
+}
+
+function completeTask(checkbox, task) {
+  task.completed = true;
+  display.removeTaskDisplay(task.display);
 }
 
 function editPaneListeners(editPane, task) {
@@ -96,7 +106,6 @@ function cancelEdit(editPane, task) {
   const current = getValues(editPane);
 
   if (valuesChanged(current, task)) {
-    console.log(current, task);
     const cancelModal = display.confirmCancel();
     const { cancelDiscard, discard } = cancelModal.cancelButtons;
 

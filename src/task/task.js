@@ -4,6 +4,7 @@ class Task {
     this.description = values.description;
     this.dateTime = values.dateTime.split('T').join(' ');
     this.project = values.project;
+    this.completed = false;
   }
 
   attach(taskDisplay) {
