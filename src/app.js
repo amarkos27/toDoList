@@ -60,11 +60,7 @@ function actionListeners(actionButtons, task) {
   });
 
   actionButtons.delete.addEventListener('click', () => {
-    task.display.classList.add('deleted');
-    task.display.addEventListener('transitionend', () => {
-      display.removeTaskDisplay(task.display);
-      taskManager.removeTask(task);
-    });
+    removeTask(task);
   });
 
   actionButtons.edit.addEventListener('click', () => {
@@ -73,9 +69,21 @@ function actionListeners(actionButtons, task) {
   });
 }
 
+function removeTask(task) {
+  task.display.classList.add('deleted');
+  task.display.addEventListener('transitionend', () => {
+    display.removeTaskDisplay(task.display);
+    taskManager.removeTask(task);
+  });
+}
+
 function completeTask(checkbox, task) {
-  task.completed = true;
-  display.removeTaskDisplay(task.display);
+  const check = checkbox.children[0];
+  check.classList.add('completed');
+
+  check.addEventListener('animationend', () => {
+    removeTask(task);
+  });
 }
 
 function editPaneListeners(editPane, task) {

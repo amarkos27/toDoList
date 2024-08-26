@@ -376,7 +376,7 @@ form.create-task button, .edit-buttons button, .cancel-modal button {
     display: flex;
     align-items: start;
     gap: 10px;
-    transition: 0.2s;
+    transition: 0.25s;
 }
 
 .deleted {
@@ -403,6 +403,11 @@ form.create-task button, .edit-buttons button, .cancel-modal button {
 }
 
 .checkbox:hover .completed-indicator {
+    opacity: 1;
+}
+
+.completed-indicator.completed {
+    animation: complete 0.25s;
     opacity: 1;
 }
 
@@ -578,5 +583,16 @@ form.create-task button, .edit-buttons button, .cancel-modal button {
     100% {
         opacity: 0;
         transform: scale(0.75);
+    }
+}
+
+@keyframes complete {
+    0% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
     }
 }
