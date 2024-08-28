@@ -42,6 +42,8 @@ class ModalController {
   newTaskModal() {
     const form = new TaskModal(this.buildDatePicker);
     this.#modalListeners(form);
+    this.#items.appendChild(form.overlay);
+    form.requireTaskName();
     this.#alreadyOpen = form;
 
     return form;

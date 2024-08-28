@@ -73,8 +73,6 @@ class DisplayController {
     this.modalController.closeExistingModal();
 
     const form = this.modalController.newTaskModal();
-    this.#items.appendChild(form.overlay);
-    form.requireTaskName();
 
     return form;
   }
