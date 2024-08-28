@@ -67,7 +67,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.sidebar button:hover {
     background: rgba(0, 0, 0, 0.08);
 }
 
@@ -78,6 +78,20 @@ button:active:not(:disabled) {
 button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.cancel {
+    background-color: #d9dbda;
+    opacity: .8;
+}
+
+.cancel:hover {
+    opacity: 1;
+}
+
+.submit {
+    background-color: #4bd670;
+    color: white;
 }
 
 /* SIDEBAR */
@@ -330,7 +344,7 @@ button:disabled {
     font-weight: 300;
 }
 
-form.create-task button, .edit-buttons button, .cancel-modal button {
+.modal button {
     width: 80px;
     padding: 7px;
     border-radius: 5px;
@@ -355,15 +369,6 @@ form.create-task button, .edit-buttons button, .cancel-modal button {
     height: 1px;
     width: 400px;
     background: rgba(0, 0, 0, 0.2);
-}
-
-#cancel {
-    background: #d9dbda;
-    opacity: 0.8;
-}
-
-#cancel:hover {
-    opacity: 1;
 }
 
 #submit {
@@ -496,15 +501,6 @@ form.create-task button, .edit-buttons button, .cancel-modal button {
     gap: 20px;
 }
 
-#cancel-edit {
-    background-color: #d9dbda;
-}
-
-#submit-edit {
-    background-color: #4bd670;
-    color: white;
-}
-
 
 /** CANCEL MODAL **/
 .cancel-overlay {
@@ -538,7 +534,6 @@ form.create-task button, .edit-buttons button, .cancel-modal button {
 
 .cancel-modal button {
     text-align: center;
-    color: white;
     height: 40px;
     width: 80px;
 }
@@ -548,20 +543,39 @@ form.create-task button, .edit-buttons button, .cancel-modal button {
     gap: 70px;
 }
 
-.cancel-discard {
-    background-color: rgb(173, 171, 171);
-}
 
 .discard {
     background-color: rgb(218, 68, 68);
+    color: white;
 }
 
-.cancel-discard:hover {
-    background-color: rgb(132, 132, 132)
-}
 
 .discard:hover {
     background-color: rgb(175, 60, 60);
+}
+
+/* PROJECT MODAL */
+.new-project *{
+    border: none;
+    outline: none;
+}
+
+.new-project {
+    margin-top: 150px;
+    padding: 15px 15px 5px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: fit-content;
+    gap: 15px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+}
+
+.project-name {
+    font-size: 33px;
+    font-weight: 600;
+    line-height: 1;
 }
 
 @keyframes showModal {

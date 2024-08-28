@@ -73,7 +73,7 @@ class TaskDisplayController {
 
   addEditPane(task) {
     const editPane = document.createElement('form');
-    editPane.classList.add('edit-pane');
+    editPane.classList.add('edit-pane', 'modal');
     editPane.autocomplete = 'off';
 
     const editName = document.createElement('input');
@@ -110,11 +110,13 @@ class TaskDisplayController {
     const cancel = document.createElement('button');
     cancel.type = 'button';
     cancel.id = 'cancel-edit';
+    cancel.classList.add('cancel');
     cancel.textContent = 'Cancel';
 
     const submit = document.createElement('button');
     submit.type = 'submit';
     submit.id = 'submit-edit';
+    submit.classList.add('submit');
     submit.textContent = 'Submit';
 
     buttons.appendChild(cancel);

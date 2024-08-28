@@ -4,7 +4,7 @@ class CancelModal {
     cancelOverlay.classList.add('cancel-overlay');
 
     const cancelModal = document.createElement('div');
-    cancelModal.classList.add('cancel-modal');
+    cancelModal.classList.add('cancel-modal', 'modal');
 
     const discardHeader = document.createElement('h1');
     discardHeader.textContent = 'Discard Changes?';
@@ -17,7 +17,7 @@ class CancelModal {
 
     const cancelDiscard = document.createElement('button');
     cancelDiscard.type = 'button';
-    cancelDiscard.classList.add('cancel-discard');
+    cancelDiscard.classList.add('cancel');
     cancelDiscard.textContent = 'Cancel';
 
     const discard = document.createElement('button');

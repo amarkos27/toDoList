@@ -4,7 +4,7 @@ class TaskModal {
     modalOverlay.classList.add('modal-overlay');
 
     const form = document.createElement('form');
-    form.classList.add('create-task');
+    form.classList.add('create-task', 'modal');
     form.autocomplete = 'off';
 
     const taskName = document.createElement('input');
@@ -40,6 +40,7 @@ class TaskModal {
     const cancel = document.createElement('button');
     cancel.type = 'button';
     cancel.id = 'cancel';
+    cancel.classList.add('cancel');
     cancel.textContent = 'Cancel';
 
     const submit = document.createElement('button');
