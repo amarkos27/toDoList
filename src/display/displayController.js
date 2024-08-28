@@ -66,17 +66,21 @@ class DisplayController {
     return dateTime;
   };
 
-  openModal() {
+  newTaskModal() {
     if (this.sidebarController.overlay) {
       this.sidebarController.toggleSidebarWithOverlay();
     }
-    const form = this.modalController.openModal();
+    this.modalController.closeExistingModal();
+
+    const form = this.modalController.newTaskModal();
+    this.#items.appendChild(form.overlay);
+    form.requireTaskName();
 
     return form;
   }
 
-  closeModal() {
-    this.modalController.closeModal();
+  closeModal(modal) {
+    this.modalController.closeModal(modal);
   }
 
   createNewTaskDisplay(task) {

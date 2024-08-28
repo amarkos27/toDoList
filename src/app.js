@@ -15,13 +15,13 @@ function init() {
     // Needed so that the window event listener for closing the modal does not
     // immediately trigger
     e.stopPropagation();
-    form = display.openModal();
+    form = display.newTaskModal();
 
     if (form) {
-      form.addEventListener('submit', (e) => {
+      form.modal.addEventListener('submit', (e) => {
         e.preventDefault();
-        display.closeModal();
-        handleFormSubmission(form);
+        display.closeModal(form);
+        handleFormSubmission(form.modal);
       });
     }
   });
