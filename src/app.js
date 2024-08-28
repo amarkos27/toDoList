@@ -25,6 +25,12 @@ function init() {
       });
     }
   });
+
+  const newProject = document.querySelector('.add-project');
+  newProject.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const projectModal = display.newProjectModal();
+  });
 }
 
 function handleFormSubmission(form) {

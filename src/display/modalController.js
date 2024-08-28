@@ -1,5 +1,6 @@
 import { CancelModal } from './confirmCancelModal.js';
 import { TaskModal } from './taskModal.js';
+import { ProjectModal } from './projectModal.js';
 class ModalController {
   #windowClick;
   #items = document.querySelector('.items');
@@ -48,6 +49,15 @@ class ModalController {
     this.#alreadyOpen = form;
 
     return form;
+  }
+
+  newProjectModal() {
+    const projectModal = new ProjectModal();
+    this.#modalListeners(projectModal);
+    this.#items.appendChild(projectModal.overlay);
+    this.#alreadyOpen = projectModal;
+
+    return projectModal;
   }
 
   closeModal(modal) {

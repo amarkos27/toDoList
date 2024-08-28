@@ -77,6 +77,17 @@ class DisplayController {
     return form;
   }
 
+  newProjectModal() {
+    if (this.sidebarController.overlay) {
+      this.sidebarController.toggleSidebarWithOverlay();
+    }
+    this.modalController.closeExistingModal();
+
+    const projectModal = this.modalController.newProjectModal();
+
+    return projectModal;
+  }
+
   closeModal(modal) {
     this.modalController.closeModal(modal);
   }

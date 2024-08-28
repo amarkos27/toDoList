@@ -67,7 +67,7 @@ button {
     cursor: pointer;
 }
 
-.sidebar button:hover {
+.sidebar button:hover, .sidebar-btn:hover {
     background: rgba(0, 0, 0, 0.08);
 }
 
@@ -331,7 +331,7 @@ button:disabled {
     font-weight: 300;
 }
 
-.close-modal {
+.modal.close-modal {
     animation: closeModal 0.2s;
 }
 
@@ -561,6 +561,7 @@ button:disabled {
 }
 
 .new-project {
+    animation: showModal 0.2s;
     margin-top: 150px;
     padding: 15px 15px 5px;
     display: flex;
