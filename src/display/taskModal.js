@@ -1,5 +1,5 @@
 class TaskModal {
-  constructor(buildDatePicker) {
+  constructor(buildDatePicker, requireInput) {
     const modalOverlay = document.createElement('div');
     modalOverlay.classList.add('modal-overlay');
 
@@ -62,20 +62,9 @@ class TaskModal {
 
     this.overlay = modalOverlay;
     this.modal = form;
-    this.taskName = taskName;
     this.submit = submit;
     this.cancel = cancel;
-  }
-
-  requireTaskName() {
-    this.taskName.focus();
-    this.taskName.addEventListener('input', () => {
-      if (this.taskName.value !== '') {
-        submit.disabled = false;
-      } else {
-        submit.disabled = true;
-      }
-    });
+    this.requireInput = requireInput;
   }
 }
 

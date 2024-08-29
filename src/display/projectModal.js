@@ -1,5 +1,5 @@
 class ProjectModal {
-  constructor() {
+  constructor(requireInput) {
     const modalOverlay = document.createElement('div');
     modalOverlay.classList.add('modal-overlay');
 
@@ -23,6 +23,7 @@ class ProjectModal {
     submit.type = 'button';
     submit.textContent = 'Submit';
     submit.classList.add('submit');
+    submit.disabled = true;
 
     buttonsDiv.appendChild(cancel);
     buttonsDiv.appendChild(submit);
@@ -32,11 +33,11 @@ class ProjectModal {
 
     modalOverlay.appendChild(projectModal);
 
-    this.projectName = projectName;
     this.overlay = modalOverlay;
     this.modal = projectModal;
     this.cancel = cancel;
     this.submit = submit;
+    this.requireInput = requireInput;
   }
 }
 

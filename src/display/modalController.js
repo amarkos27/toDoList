@@ -34,6 +34,19 @@ class ModalController {
     window.addEventListener('click', windowClick);
   }
 
+  requireInput() {
+    console.log(this.submit);
+    const input = this.modal.firstChild;
+    input.focus();
+    input.addEventListener('input', () => {
+      if (input.value !== '') {
+        this.submit.disabled = false;
+      } else {
+        this.submit.disabled = true;
+      }
+    });
+  }
+
   closeExistingModal() {
     if (this.#alreadyOpen) {
       this.closeModal(this.#alreadyOpen);
@@ -41,21 +54,21 @@ class ModalController {
   }
 
   newTaskModal() {
-    const form = new TaskModal(this.buildDatePicker);
+    const form = new TaskModal(this.buildDatePicker, this.requireInput);
 
     this.#modalListeners(form);
     this.#items.appendChild(form.overlay);
-    form.requireTaskName();
+    form.requireInput();
     this.#alreadyOpen = form;
 
     return form;
   }
 
   newProjectModal() {
-    const projectModal = new ProjectModal();
+    const projectModal = new ProjectModal(this.requireInput);
     this.#modalListeners(projectModal);
     this.#items.appendChild(projectModal.overlay);
-    projectModal.projectName.focus();
+    projectModal.requireInput();
     this.#alreadyOpen = projectModal;
 
     return projectModal;
