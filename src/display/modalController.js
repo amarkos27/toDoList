@@ -55,6 +55,7 @@ class ModalController {
     const projectModal = new ProjectModal();
     this.#modalListeners(projectModal);
     this.#items.appendChild(projectModal.overlay);
+    projectModal.projectName.focus();
     this.#alreadyOpen = projectModal;
 
     return projectModal;
