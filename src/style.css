@@ -202,7 +202,7 @@ button:disabled {
 .add-task, .option, .add-project {
     display: flex;
     align-items: center;
-    height: 45px;
+    min-height: 45px;
     width: 90%;
     gap: 10px;
     padding: 0 5px;
@@ -577,6 +577,14 @@ button:disabled {
     font-size: 33px;
     font-weight: 600;
     line-height: 1;
+}
+
+/* PROJECT DISPLAY */
+.projects-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 @keyframes showModal {

@@ -1,6 +1,7 @@
 class SidebarController {
   #sidebarWrapper = document.querySelector('.sidebar-wrapper');
   #sidebarBtn = document.querySelector('.sidebar-btn');
+  #projects = document.querySelector('.projects-list');
   #triggerResizeEvent = null;
   #content;
 
@@ -132,6 +133,15 @@ class SidebarController {
     window.addEventListener('resize', () => {
       this.#resizeHandler();
     });
+  }
+
+  initialize() {
+    this.#resizeHandler();
+    this.setUpListeners();
+  }
+
+  addProject(projectDisplay) {
+    this.#projects.appendChild(projectDisplay);
   }
 }
 

@@ -19,7 +19,7 @@ class DisplayController {
   }
 
   initialize() {
-    this.sidebarController.setUpListeners();
+    this.sidebarController.initialize();
   }
 
   getCurrentDateTime() {
@@ -90,6 +90,10 @@ class DisplayController {
 
   closeModal(modal) {
     this.modalController.closeModal(modal);
+  }
+
+  addProject(projectDisplay) {
+    this.sidebarController.addProject(projectDisplay);
   }
 
   createNewTaskDisplay(task) {

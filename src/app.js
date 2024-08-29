@@ -2,6 +2,7 @@ import 'normalize.css';
 import './style.css';
 import { DisplayController } from './display/displayController.js';
 import { TaskManager } from './task/taskManager.js';
+import { Project } from './project.js';
 
 const display = new DisplayController();
 const taskManager = new TaskManager();
@@ -30,7 +31,18 @@ function init() {
   newProject.addEventListener('click', (e) => {
     e.stopPropagation();
     const projectModal = display.newProjectModal();
+    projectModal.submit.addEventListener('click', () => {
+      display.closeModal(projectModal);
+
+      const projectName = projectModal.modal.firstChild.value;
+      const project = new Project(projectName);
+      handleProjectSubmission(project);
+    });
   });
+}
+
+function handleProjectSubmission(project) {
+  display.addProject(project.display);
 }
 
 function handleFormSubmission(form) {
