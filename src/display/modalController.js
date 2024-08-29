@@ -1,6 +1,6 @@
 import { CancelModal } from './confirmCancelModal.js';
-import { TaskModal } from './taskModal.js';
-import { ProjectModal } from './projectModal.js';
+import { TaskModal } from './modals/taskModal.js';
+import { ProjectModal } from './modals/projectModal.js';
 class ModalController {
   #windowClick;
   #items = document.querySelector('.items');
