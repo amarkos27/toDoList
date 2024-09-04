@@ -68,7 +68,6 @@ function getValues(formNode) {
       .value.split('T')
       .join(' '),
     project: formNode.querySelector(`.${formClass} [name="project"]`).value,
-    // Project string must be sliced to remove the hashtag from its display
   };
 
   return values;
