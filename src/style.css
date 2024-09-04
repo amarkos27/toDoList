@@ -271,7 +271,7 @@ button:disabled {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    overflow: hidden;
+    overflow: scroll;
     position: relative;
     height: 100%;
     width: 85%;
