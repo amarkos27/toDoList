@@ -7,8 +7,8 @@ class Project {
     this.display.classList.add('option');
     this.display.textContent = projectName;
 
-    this.actions = document.createElement('div');
-    this.actions.classList.add('project-actions', 'actions');
+    const actions = document.createElement('div');
+    actions.classList.add('project-actions', 'actions');
 
     this.editBtn = document.createElement('div');
     this.editBtn.classList.add('edit');
@@ -16,10 +16,10 @@ class Project {
     this.deleteBtn = document.createElement('div');
     this.deleteBtn.classList.add('delete');
 
-    this.actions.appendChild(this.editBtn);
-    this.actions.appendChild(this.deleteBtn);
+    actions.appendChild(this.editBtn);
+    actions.appendChild(this.deleteBtn);
 
-    this.display.appendChild(this.actions);
+    this.display.appendChild(actions);
   }
 }
 

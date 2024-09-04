@@ -507,7 +507,7 @@ button:disabled {
 
 
 /** CANCEL MODAL **/
-.cancel-overlay {
+.confirm-overlay {
     top: 0;
     left: 0;
     position: fixed;
@@ -519,7 +519,7 @@ button:disabled {
     z-index: 1;
 }
 
-.cancel-modal {
+.confirm-modal {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -532,29 +532,29 @@ button:disabled {
     background-color: #fff;
 }
 
-.cancel-modal h1 {
+.confirm-modal h1 {
     font-weight: 600;
 }
 
-.cancel-modal button {
+.confirm-modal button {
     text-align: center;
     height: 40px;
     width: 80px;
 }
 
-.cancel-buttons {
+.confirm-buttons {
     display: flex;
     gap: 70px;
 }
 
 
-.discard {
+.confirm {
     background-color: rgb(218, 68, 68);
     color: white;
 }
 
 
-.discard:hover {
+.confirm:hover {
     background-color: rgb(175, 60, 60);
 }
 

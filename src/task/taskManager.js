@@ -34,6 +34,10 @@ class TaskManager {
     this.#projects.push(projectName);
   }
 
+  getTasksByProject(projectName) {
+    return this.#tasks.filter((task) => task.project === projectName);
+  }
+
   get projects() {
     return this.#projects;
   }

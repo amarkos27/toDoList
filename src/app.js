@@ -52,6 +52,8 @@ function handleProjectSubmission(projectName) {
   const project = new Project(projectName);
   display.addProject(project.display);
   taskManager.addProject(project.projectName);
+
+  projectListeners(project);
 }
 
 function handleFormSubmission(form) {
@@ -81,6 +83,12 @@ function getValues(formNode) {
   return values;
 }
 
+function projectListeners(project) {
+  project.deleteBtn.addEventListener('click', () => {
+    const { cancel, confirmDelete } = display.confirmDelete();
+  });
+}
+
 function actionListeners(actionButtons, task) {
   actionButtons.checkbox.addEventListener('click', () => {
     completeTask(actionButtons.checkbox, task);
@@ -95,6 +103,8 @@ function actionListeners(actionButtons, task) {
     editPaneListeners(editPane, task);
   });
 }
+
+function deleteProject(project) {}
 
 function removeTask(task) {
   task.display.classList.add('deleted');
@@ -142,14 +152,14 @@ function cancelEdit(editPane, task) {
 
   if (valuesChanged(current, task)) {
     const cancelModal = display.confirmCancel();
-    const { cancelDiscard, discard } = cancelModal.cancelButtons;
+    const { cancel, confirm } = cancelModal.confirmButtons;
 
-    cancelDiscard.addEventListener('click', () =>
-      display.closeCancelModal(cancelModal.cancelOverlay)
+    cancel.addEventListener('click', () =>
+      display.closeCancelModal(cancelModal.confirmOverlay)
     );
 
-    discard.addEventListener('click', () => {
-      display.closeCancelModal(cancelModal.cancelOverlay);
+    confirm.addEventListener('click', () => {
+      display.closeCancelModal(cancelModal.confirmOverlay);
       display.closeEdit(task.display, editPane.modal);
     });
   } else {

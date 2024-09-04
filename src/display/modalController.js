@@ -1,4 +1,4 @@
-import { CancelModal } from './confirmCancelModal.js';
+import { ConfirmModal } from './confirmModal.js';
 import { TaskModal } from './modals/taskModal.js';
 import { ProjectModal } from './modals/projectModal.js';
 class ModalController {
@@ -89,8 +89,12 @@ class ModalController {
   }
 
   createCancelModal() {
-    const cancelModal = new CancelModal();
-    this.#content.appendChild(cancelModal.cancelOverlay);
+    const header = 'Discard Changes?';
+    const description = 'No changes will be saved.';
+    const confirmText = 'Discard';
+
+    const cancelModal = new ConfirmModal(header, description, confirmText);
+    this.#content.appendChild(cancelModal.confirmOverlay);
 
     return cancelModal;
   }
