@@ -443,11 +443,11 @@ button:disabled {
     opacity: 0;
 }
 
-.task:hover :is(.delete, .edit) {
+:is(.task, .option):hover :is(.delete, .edit) {
     opacity: .4;
 }
 
-.task:hover :is(.delete, .edit):hover {
+:is(.task, .option):hover :is(.delete, .edit):hover {
     opacity: 1;
 }
 
@@ -589,6 +589,10 @@ button:disabled {
     flex-direction: column;
     align-items: center;
     width: 100%;
+}
+
+.projects-list .actions{
+    gap: 10px;
 }
 
 @keyframes showModal {
