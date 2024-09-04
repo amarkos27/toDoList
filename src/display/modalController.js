@@ -39,7 +39,8 @@ class ModalController {
     const input = this.modal.firstChild;
     input.focus();
     input.addEventListener('input', () => {
-      if (input.value !== '') {
+      const validInput = /\S+/;
+      if (input.value.match(validInput)) {
         this.submit.disabled = false;
       } else {
         this.submit.disabled = true;

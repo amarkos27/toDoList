@@ -31,17 +31,25 @@ function init() {
   newProject.addEventListener('click', (e) => {
     e.stopPropagation();
     const projectModal = display.newProjectModal();
+    const input = projectModal.modal.firstChild;
+
     projectModal.submit.addEventListener('click', () => {
       display.closeModal(projectModal);
+      handleProjectSubmission(input.value);
+    });
 
-      const projectName = projectModal.modal.firstChild.value;
-      const project = new Project(projectName);
-      handleProjectSubmission(project);
+    input.addEventListener('keydown', (e) => {
+      const validInput = /\S+/;
+      if (e.key === 'Enter' && input.value.match(validInput)) {
+        display.closeModal(projectModal);
+        handleProjectSubmission(input.value);
+      }
     });
   });
 }
 
-function handleProjectSubmission(project) {
+function handleProjectSubmission(projectName) {
+  const project = new Project(projectName);
   display.addProject(project.display);
   taskManager.addProject(project.projectName);
 }
