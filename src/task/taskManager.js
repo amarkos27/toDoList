@@ -34,6 +34,12 @@ class TaskManager {
     this.#projects.push(projectName);
   }
 
+  removeProject(projectName) {
+    const index = this.#projects.indexOf(projectName);
+
+    this.#projects.splice(index, 1);
+  }
+
   getTasksByProject(projectName) {
     return this.#tasks.filter((task) => task.project === projectName);
   }

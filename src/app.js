@@ -86,6 +86,15 @@ function getValues(formNode) {
 function projectListeners(project) {
   project.deleteBtn.addEventListener('click', () => {
     const deleteModal = display.confirmDelete(project.projectName);
+    const { cancel, confirm } = deleteModal.confirmButtons;
+
+    cancel.addEventListener('click', () => {
+      display.closeConfirmModal(deleteModal.confirmOverlay);
+    });
+
+    confirm.addEventListener('click', () => {
+      deleteProject(deleteModal, project);
+    });
   });
 }
 
@@ -104,7 +113,19 @@ function actionListeners(actionButtons, task) {
   });
 }
 
-function deleteProject(project) {}
+function deleteProject(deleteModal, project) {
+  display.closeConfirmModal(deleteModal.confirmOverlay);
+  const tasks = taskManager.getTasksByProject(project.projectName);
+
+  for (const index in tasks) {
+    if (display.isTaskDisplayed(tasks[index].display)) {
+      display.removeTaskDisplay(tasks[index].display);
+    }
+    taskManager.removeTask(tasks[index]);
+  }
+  display.removeProject(project.display);
+  taskManager.removeProject(project.projectName);
+}
 
 function removeTask(task) {
   task.display.classList.add('deleted');
@@ -155,11 +176,11 @@ function cancelEdit(editPane, task) {
     const { cancel, confirm } = cancelModal.confirmButtons;
 
     cancel.addEventListener('click', () =>
-      display.closeCancelModal(cancelModal.confirmOverlay)
+      display.closeConfirmModal(cancelModal.confirmOverlay)
     );
 
     confirm.addEventListener('click', () => {
-      display.closeCancelModal(cancelModal.confirmOverlay);
+      display.closeConfirmModal(cancelModal.confirmOverlay);
       display.closeEdit(task.display, editPane.modal);
     });
   } else {

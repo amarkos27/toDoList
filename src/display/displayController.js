@@ -112,6 +112,10 @@ class DisplayController {
     this.sidebarController.addProject(projectDisplay);
   }
 
+  removeProject(projectDisplay) {
+    this.sidebarController.removeProject(projectDisplay);
+  }
+
   createNewTaskDisplay(task) {
     const { taskDisplay, actionButtons } =
       this.taskDisplayController.createTaskDisplay(task);
@@ -135,6 +139,12 @@ class DisplayController {
     return editPane;
   }
 
+  isTaskDisplayed(taskDisplay) {
+    if (this.#items.contains(taskDisplay)) {
+      return true;
+    } else return false;
+  }
+
   closeEdit(taskDisplay, editPane) {
     this.taskDisplayController.insertTaskDisplay(taskDisplay, editPane);
     this.taskDisplayController.removeEditPane(editPane);
@@ -146,8 +156,8 @@ class DisplayController {
     return cancelModal;
   }
 
-  closeCancelModal(cancelOverlay) {
-    this.modalController.closeCancelModal(cancelOverlay);
+  closeConfirmModal(overlay) {
+    this.modalController.closeConfirmModal(overlay);
   }
 
   confirmDelete(projectName) {

@@ -143,6 +143,10 @@ class SidebarController {
   addProject(projectDisplay) {
     this.#projects.appendChild(projectDisplay);
   }
+
+  removeProject(projectDisplay) {
+    this.#projects.removeChild(projectDisplay);
+  }
 }
 
 export { SidebarController };
