@@ -524,8 +524,10 @@ button:disabled {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
     margin-top: 200px;
-    height: 250px;
+    padding: 20px;
+    height: fit-content;
     width: 450px;
     gap: 50px;
     border-radius: 20px;

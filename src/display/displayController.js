@@ -149,6 +149,12 @@ class DisplayController {
   closeCancelModal(cancelOverlay) {
     this.modalController.closeCancelModal(cancelOverlay);
   }
+
+  confirmDelete(projectName) {
+    const deleteModal = this.modalController.createDeleteModal(projectName);
+
+    return deleteModal;
+  }
 }
 
 export { DisplayController };

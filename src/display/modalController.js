@@ -102,6 +102,17 @@ class ModalController {
   closeCancelModal(cancelOverlay) {
     this.#content.removeChild(cancelOverlay);
   }
+
+  createDeleteModal(projectName) {
+    const header = `Are you sure you want to delete #${projectName}?`;
+    const description = 'All tasks within this project will be deleted.';
+    const confirmText = 'Delete';
+
+    const deleteModal = new ConfirmModal(header, description, confirmText);
+    this.#content.appendChild(deleteModal.confirmOverlay);
+
+    return deleteModal;
+  }
 }
 
 export { ModalController };

@@ -85,7 +85,7 @@ function getValues(formNode) {
 
 function projectListeners(project) {
   project.deleteBtn.addEventListener('click', () => {
-    const { cancel, confirmDelete } = display.confirmDelete();
+    const deleteModal = display.confirmDelete(project.projectName);
   });
 }
 
