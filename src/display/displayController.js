@@ -10,7 +10,8 @@ class DisplayController {
     this.sidebarController = new SidebarController(this.#content);
     this.modalController = new ModalController(
       this.#content,
-      this.buildDatePicker
+      this.buildDatePicker,
+      this.fillProjects
     );
     this.taskDisplayController = new TaskDisplayController(
       this.#items,
@@ -66,13 +67,28 @@ class DisplayController {
     return dateTime;
   };
 
-  newTaskModal() {
+  fillProjects(projects, existingTask = null) {
+    const modal = this;
+    projects.forEach((project) => {
+      const newOption = document.createElement('option');
+      newOption.textContent = project;
+      newOption.value = project;
+
+      if (existingTask && existingTask.project === project) {
+        newOption.selected = true;
+      }
+
+      modal.project.appendChild(newOption);
+    });
+  }
+
+  newTaskModal(projects) {
     if (this.sidebarController.overlay) {
       this.sidebarController.toggleSidebarWithOverlay();
     }
     this.modalController.closeExistingModal();
 
-    const form = this.modalController.newTaskModal();
+    const form = this.modalController.newTaskModal(projects);
 
     return form;
   }
@@ -108,8 +124,12 @@ class DisplayController {
     this.taskDisplayController.removeTaskDisplay(taskDisplay);
   }
 
-  editTask(task) {
-    const editPane = this.taskDisplayController.addEditPane(task);
+  editTask(task, projects) {
+    const editPane = this.taskDisplayController.addEditPane(
+      task,
+      this.fillProjects
+    );
+    editPane.fillProjects(projects, task);
     this.taskDisplayController.removeTaskDisplay(task.display);
 
     return editPane;

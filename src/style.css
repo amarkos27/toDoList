@@ -422,9 +422,13 @@ button:disabled {
     gap: 5px;
 }
 
-.description, .date-and-time {
+.task-detail {
     opacity: .5;
     font-size: .8em;
+}
+
+.task-project {
+    font-weight: 500;
 }
 
 .actions {

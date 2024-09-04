@@ -5,6 +5,7 @@ class TaskDisplayController {
     this.#items = items;
     this.buildDatePicker = buildDatePicker;
   }
+
   createTaskDisplay(task) {
     const taskDisplay = document.createElement('div');
     taskDisplay.classList.add('task');
@@ -19,21 +20,36 @@ class TaskDisplayController {
     const taskInfo = document.createElement('div');
     taskInfo.classList.add('task-info');
 
-    const taskName = document.createElement('p');
-    taskName.classList.add('task-name');
-    taskName.textContent = task.taskName;
+    if (task.taskName) {
+      const taskName = document.createElement('p');
+      taskName.classList.add('task-name');
+      taskName.textContent = task.taskName;
 
-    const description = document.createElement('p');
-    description.classList.add('description');
-    description.textContent = task.description;
+      taskInfo.appendChild(taskName);
+    }
 
-    const dateAndTime = document.createElement('p');
-    dateAndTime.classList.add('date-and-time');
-    dateAndTime.textContent = task.dateTime;
+    if (task.description) {
+      const description = document.createElement('p');
+      description.classList.add('description', 'task-detail');
+      description.textContent = task.description;
 
-    taskInfo.appendChild(taskName);
-    taskInfo.appendChild(description);
-    taskInfo.appendChild(dateAndTime);
+      taskInfo.appendChild(description);
+    }
+
+    if (task.dateTime) {
+      const dateAndTime = document.createElement('p');
+      dateAndTime.classList.add('date-and-time', 'task-detail');
+      dateAndTime.textContent = task.dateTime;
+
+      taskInfo.appendChild(dateAndTime);
+    }
+
+    if (task.project !== 'default') {
+      const project = document.createElement('p');
+      project.classList.add('task-project', 'task-detail');
+      project.textContent = `#${task.project}`;
+      taskInfo.appendChild(project);
+    }
 
     const actions = document.createElement('div');
     actions.classList.add('actions');
@@ -71,7 +87,7 @@ class TaskDisplayController {
     this.#items.removeChild(taskDisplay);
   }
 
-  addEditPane(task) {
+  addEditPane(task, fillProjects) {
     const editPane = document.createElement('form');
     editPane.classList.add('edit-pane', 'modal');
     editPane.autocomplete = 'off';
@@ -102,7 +118,6 @@ class TaskDisplayController {
     defaultOption.value = 'default';
     defaultOption.textContent = 'Project';
     defaultOption.selected = true;
-    defaultOption.disabled = true;
 
     const buttons = document.createElement('div');
     buttons.classList.add('edit-buttons');
@@ -132,7 +147,13 @@ class TaskDisplayController {
 
     this.#items.insertBefore(editPane, task.display);
 
-    return editPane;
+    return {
+      modal: editPane,
+      project: editProject,
+      cancel: cancel,
+      submit: submit,
+      fillProjects: fillProjects,
+    };
   }
 
   removeEditPane(editPane) {

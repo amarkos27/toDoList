@@ -1,6 +1,7 @@
 import { Task } from './task.js';
 class TaskManager {
   #tasks = [];
+  #projects = [];
 
   createTask(values) {
     const task = new Task(values);
@@ -27,6 +28,14 @@ class TaskManager {
 
   connectToDisplay(task, taskDisplay) {
     task.attach(taskDisplay);
+  }
+
+  addProject(projectName) {
+    this.#projects.push(projectName);
+  }
+
+  get projects() {
+    return this.#projects;
   }
 }
 

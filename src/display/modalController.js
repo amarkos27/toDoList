@@ -7,9 +7,10 @@ class ModalController {
   #content;
   #alreadyOpen;
 
-  constructor(content, buildDatePicker) {
+  constructor(content, buildDatePicker, fillProjects) {
     this.#content = content;
     this.buildDatePicker = buildDatePicker;
+    this.fillProjects = fillProjects;
   }
 
   get formAlreadyOpen() {
@@ -35,7 +36,6 @@ class ModalController {
   }
 
   requireInput() {
-    console.log(this.submit);
     const input = this.modal.firstChild;
     input.focus();
     input.addEventListener('input', () => {
@@ -53,9 +53,14 @@ class ModalController {
     }
   }
 
-  newTaskModal() {
-    const form = new TaskModal(this.buildDatePicker, this.requireInput);
+  newTaskModal(projects) {
+    const form = new TaskModal(
+      this.buildDatePicker,
+      this.requireInput,
+      this.fillProjects
+    );
 
+    form.fillProjects(projects);
     this.#modalListeners(form);
     this.#items.appendChild(form.overlay);
     form.requireInput();

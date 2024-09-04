@@ -1,5 +1,5 @@
 class TaskModal {
-  constructor(buildDatePicker, requireInput) {
+  constructor(buildDatePicker, requireInput, fillProjects) {
     const modalOverlay = document.createElement('div');
     modalOverlay.classList.add('modal-overlay');
 
@@ -30,7 +30,6 @@ class TaskModal {
     defaultOption.value = 'default';
     defaultOption.textContent = 'Project';
     defaultOption.selected = true;
-    defaultOption.disabled = true;
 
     project.appendChild(defaultOption);
 
@@ -62,9 +61,11 @@ class TaskModal {
 
     this.overlay = modalOverlay;
     this.modal = form;
+    this.project = project;
     this.submit = submit;
     this.cancel = cancel;
     this.requireInput = requireInput;
+    this.fillProjects = fillProjects;
   }
 }
 

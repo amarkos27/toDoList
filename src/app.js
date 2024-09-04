@@ -16,7 +16,7 @@ function init() {
     // Needed so that the window event listener for closing the modal does not
     // immediately trigger
     e.stopPropagation();
-    form = display.newTaskModal();
+    form = display.newTaskModal(taskManager.projects);
 
     if (form) {
       form.modal.addEventListener('submit', (e) => {
@@ -43,6 +43,7 @@ function init() {
 
 function handleProjectSubmission(project) {
   display.addProject(project.display);
+  taskManager.addProject(project.projectName);
 }
 
 function handleFormSubmission(form) {
@@ -67,6 +68,7 @@ function getValues(formNode) {
       .value.split('T')
       .join(' '),
     project: formNode.querySelector(`.${formClass} [name="project"]`).value,
+    // Project string must be sliced to remove the hashtag from its display
   };
 
   return values;
@@ -82,7 +84,7 @@ function actionListeners(actionButtons, task) {
   });
 
   actionButtons.edit.addEventListener('click', () => {
-    const editPane = display.editTask(task);
+    const editPane = display.editTask(task, taskManager.projects);
     editPaneListeners(editPane, task);
   });
 }
@@ -105,13 +107,13 @@ function completeTask(checkbox, task) {
 }
 
 function editPaneListeners(editPane, task) {
-  const cancel = editPane.querySelector('#cancel-edit');
+  const cancel = editPane.cancel;
 
   cancel.addEventListener('click', () => {
     cancelEdit(editPane, task);
   });
 
-  editPane.addEventListener('submit', (e) => {
+  editPane.modal.addEventListener('submit', (e) => {
     e.preventDefault();
     task = submitEdit(editPane, task);
   });
@@ -129,7 +131,7 @@ function valuesChanged(current, task) {
 }
 
 function cancelEdit(editPane, task) {
-  const current = getValues(editPane);
+  const current = getValues(editPane.modal);
 
   if (valuesChanged(current, task)) {
     const cancelModal = display.confirmCancel();
@@ -141,26 +143,26 @@ function cancelEdit(editPane, task) {
 
     discard.addEventListener('click', () => {
       display.closeCancelModal(cancelModal.cancelOverlay);
-      display.closeEdit(task.display, editPane);
+      display.closeEdit(task.display, editPane.modal);
     });
   } else {
-    display.closeEdit(task.display, editPane);
+    display.closeEdit(task.display, editPane.modal);
   }
 }
 
 function submitEdit(editPane, task) {
-  const newValues = getValues(editPane);
+  const newValues = getValues(editPane.modal);
 
   if (valuesChanged(newValues, task)) {
     task = taskManager.updateTask(task, newValues);
 
     const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
-    display.closeEdit(taskDisplay, editPane);
+    display.closeEdit(taskDisplay, editPane.modal);
     taskManager.connectToDisplay(task, taskDisplay);
     actionListeners(actionButtons, task);
 
     return task;
-  } else display.closeEdit(task.display, editPane);
+  } else display.closeEdit(task.display, editPane.modal);
 }
 
 init();
