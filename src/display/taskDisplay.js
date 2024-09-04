@@ -146,6 +146,7 @@ class TaskDisplayController {
     editPane.appendChild(buttons);
 
     this.#items.insertBefore(editPane, task.display);
+    this.closeEditIfModalOpen(editPane, task.display);
 
     return {
       modal: editPane,
@@ -154,6 +155,32 @@ class TaskDisplayController {
       submit: submit,
       fillProjects: fillProjects,
     };
+  }
+
+  closeEditIfModalOpen(editPane, taskDisplay) {
+    const targetNode = this.#items;
+
+    const config = { childList: true };
+
+    const closeOnModalOpen = (mutations, observer) => {
+      const added = mutations[0].addedNodes[0];
+      if (!added) return;
+
+      if (
+        added.classList.contains('modal-overlay') ||
+        (added.classList.contains('modal') && added !== editPane)
+      ) {
+        this.insertTaskDisplay(taskDisplay, editPane);
+        this.removeEditPane(editPane);
+        observer.disconnect();
+      } else if (!targetNode.contains(editPane)) {
+        observer.disconnect();
+      }
+    };
+
+    const childListObserver = new MutationObserver(closeOnModalOpen);
+
+    childListObserver.observe(targetNode, config);
   }
 
   removeEditPane(editPane) {
