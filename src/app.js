@@ -85,31 +85,24 @@ function getValues(formNode) {
 
 function projectListeners(project) {
   project.deleteBtn.addEventListener('click', () => {
-    const deleteModal = display.confirmDelete(project.projectName);
-    const { cancel, confirm } = deleteModal.confirmButtons;
+    confirmDelete(project);
+  });
 
-    cancel.addEventListener('click', () => {
-      display.closeConfirmModal(deleteModal.confirmOverlay);
-    });
-
-    confirm.addEventListener('click', () => {
-      deleteProject(deleteModal, project);
-    });
+  project.editBtn.addEventListener('click', () => {
+    editProject(project);
   });
 }
 
-function actionListeners(actionButtons, task) {
-  actionButtons.checkbox.addEventListener('click', () => {
-    completeTask(actionButtons.checkbox, task);
+function confirmDelete(project) {
+  const deleteModal = display.confirmDelete(project.projectName);
+  const { cancel, confirm } = deleteModal.confirmButtons;
+
+  cancel.addEventListener('click', () => {
+    display.closeConfirmModal(deleteModal.confirmOverlay);
   });
 
-  actionButtons.delete.addEventListener('click', () => {
-    removeTask(task);
-  });
-
-  actionButtons.edit.addEventListener('click', () => {
-    const editPane = display.editTask(task, taskManager.projects);
-    editPaneListeners(editPane, task);
+  confirm.addEventListener('click', () => {
+    deleteProject(deleteModal, project);
   });
 }
 
@@ -125,6 +118,21 @@ function deleteProject(deleteModal, project) {
   }
   display.removeProject(project.display);
   taskManager.removeProject(project.projectName);
+}
+
+function actionListeners(actionButtons, task) {
+  actionButtons.checkbox.addEventListener('click', () => {
+    completeTask(actionButtons.checkbox, task);
+  });
+
+  actionButtons.delete.addEventListener('click', () => {
+    removeTask(task);
+  });
+
+  actionButtons.edit.addEventListener('click', () => {
+    const editPane = display.editTask(task, taskManager.projects);
+    editPaneListeners(editPane, task);
+  });
 }
 
 function removeTask(task) {
@@ -155,17 +163,6 @@ function editPaneListeners(editPane, task) {
     e.preventDefault();
     task = submitEdit(editPane, task);
   });
-}
-
-function valuesChanged(current, task) {
-  if (
-    current.taskName !== task.taskName ||
-    current.description !== task.description ||
-    current.dateTime !== task.dateTime ||
-    current.project !== task.project
-  ) {
-    return true;
-  } else return false;
 }
 
 function cancelEdit(editPane, task) {
@@ -201,6 +198,17 @@ function submitEdit(editPane, task) {
 
     return task;
   } else display.closeEdit(task.display, editPane.modal);
+}
+
+function valuesChanged(current, task) {
+  if (
+    current.taskName !== task.taskName ||
+    current.description !== task.description ||
+    current.dateTime !== task.dateTime ||
+    current.project !== task.project
+  ) {
+    return true;
+  } else return false;
 }
 
 init();
