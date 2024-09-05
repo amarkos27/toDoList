@@ -1,4 +1,4 @@
-import { ConfirmModal } from './confirmModal.js';
+import { ConfirmModal } from './modals/confirmModal.js';
 import { TaskModal } from './modals/taskModal.js';
 import { ProjectModal } from './modals/projectModal.js';
 class ModalController {
