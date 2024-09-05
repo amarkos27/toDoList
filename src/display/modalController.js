@@ -3,12 +3,11 @@ import { TaskModal } from './modals/taskModal.js';
 import { ProjectModal } from './modals/projectModal.js';
 class ModalController {
   #windowClick;
-  #items = document.querySelector('.items');
-  #content;
+  #items;
   #alreadyOpen;
 
-  constructor(content, buildDatePicker, fillProjects) {
-    this.#content = content;
+  constructor(items, buildDatePicker, fillProjects) {
+    this.#items = items;
     this.buildDatePicker = buildDatePicker;
     this.fillProjects = fillProjects;
   }
@@ -94,7 +93,8 @@ class ModalController {
     const confirmText = 'Discard';
 
     const cancelModal = new ConfirmModal(header, description, confirmText);
-    this.#content.appendChild(cancelModal.confirmOverlay);
+    cancelModal.confirmOverlay.classList.add('cancel-modal');
+    this.#items.appendChild(cancelModal.confirmOverlay);
 
     return cancelModal;
   }
@@ -105,13 +105,14 @@ class ModalController {
     const confirmText = 'Delete';
 
     const deleteModal = new ConfirmModal(header, description, confirmText);
-    this.#content.appendChild(deleteModal.confirmOverlay);
+    deleteModal.confirmOverlay.classList.add('delete-modal');
+    this.#items.appendChild(deleteModal.confirmOverlay);
 
     return deleteModal;
   }
 
   closeConfirmModal(overlay) {
-    this.#content.removeChild(overlay);
+    this.#items.removeChild(overlay);
   }
 }
 

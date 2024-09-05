@@ -9,7 +9,7 @@ class DisplayController {
   constructor() {
     this.sidebarController = new SidebarController(this.#content);
     this.modalController = new ModalController(
-      this.#content,
+      this.#items,
       this.buildDatePicker,
       this.fillProjects
     );

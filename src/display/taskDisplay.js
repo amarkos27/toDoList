@@ -162,18 +162,37 @@ class TaskDisplayController {
 
     const config = { childList: true };
 
-    const closeOnModalOpen = (mutations, observer) => {
-      const added = mutations[0].addedNodes[0];
-      if (!added) return;
+    const extractNodes = (mutations) => {
+      let added = [];
+      let removed = [];
+      for (const mutation of mutations) {
+        if (mutation.addedNodes[0]) {
+          added.push(mutation.addedNodes[0]);
+        }
+        if (mutation.removedNodes[0]) {
+          removed.push(mutation.removedNodes[0]);
+        }
+      }
 
-      if (
-        added.classList.contains('modal-overlay') ||
-        (added.classList.contains('modal') && added !== editPane)
-      ) {
-        this.insertTaskDisplay(taskDisplay, editPane);
-        this.removeEditPane(editPane);
-        observer.disconnect();
-      } else if (!targetNode.contains(editPane)) {
+      return { added, removed };
+    };
+
+    const closeOnModalOpen = (mutations, observer) => {
+      const { added, removed } = extractNodes(mutations);
+
+      if (added.length) {
+        if (
+          added[0].classList.contains('modal-overlay') ||
+          added[0].classList.contains('delete-modal') ||
+          (added[0].classList.contains('modal') && added[0] !== editPane)
+        ) {
+          this.insertTaskDisplay(taskDisplay, editPane);
+          this.removeEditPane(editPane);
+          observer.disconnect();
+        }
+      }
+
+      if (removed.includes(editPane)) {
         observer.disconnect();
       }
     };
