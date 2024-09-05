@@ -12,10 +12,6 @@ class ModalController {
     this.fillProjects = fillProjects;
   }
 
-  get formAlreadyOpen() {
-    return !!document.querySelector('.form-overlay');
-  }
-
   #modalListeners(modal) {
     const cancel = modal.cancel;
     const windowClick = (e) => {
@@ -36,6 +32,7 @@ class ModalController {
 
   requireInput() {
     const input = this.modal.firstChild;
+
     input.focus();
     input.addEventListener('input', () => {
       const validInput = /\S+/;
@@ -61,22 +58,30 @@ class ModalController {
     );
 
     form.fillProjects(projects);
-    this.#modalListeners(form);
-    this.#items.appendChild(form.overlay);
-    form.requireInput();
-    this.#alreadyOpen = form;
+    this.initializeModal(form);
 
     return form;
   }
 
-  newProjectModal() {
+  newProjectModal(existingProject) {
     const projectModal = new ProjectModal(this.requireInput);
-    this.#modalListeners(projectModal);
-    this.#items.appendChild(projectModal.overlay);
-    projectModal.requireInput();
-    this.#alreadyOpen = projectModal;
+    // If this function is passed an existing project (from the edit function in app.js),
+    // set the input value to that project name
+    if (existingProject) {
+      projectModal.modal.firstChild.value = existingProject;
+      projectModal.submit.disabled = false;
+    }
+
+    this.initializeModal(projectModal);
 
     return projectModal;
+  }
+
+  initializeModal(modal) {
+    this.#modalListeners(modal);
+    this.#items.appendChild(modal.overlay);
+    modal.requireInput();
+    this.#alreadyOpen = modal;
   }
 
   closeModal(modal) {
@@ -85,6 +90,7 @@ class ModalController {
       this.#items.removeChild(modal.overlay);
     });
     window.removeEventListener('click', this.#windowClick);
+    this.#alreadyOpen = null;
   }
 
   createCancelModal() {

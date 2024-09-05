@@ -93,13 +93,13 @@ class DisplayController {
     return form;
   }
 
-  newProjectModal() {
+  newProjectModal(existingProject = null) {
     if (this.sidebarController.overlay) {
       this.sidebarController.toggleSidebarWithOverlay();
     }
     this.modalController.closeExistingModal();
 
-    const projectModal = this.modalController.newProjectModal();
+    const projectModal = this.modalController.newProjectModal(existingProject);
 
     return projectModal;
   }

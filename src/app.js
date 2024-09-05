@@ -30,21 +30,25 @@ function init() {
   const newProject = document.querySelector('.add-project');
   newProject.addEventListener('click', (e) => {
     e.stopPropagation();
-    const projectModal = display.newProjectModal();
-    const input = projectModal.modal.firstChild;
+    addProjectModal();
+  });
+}
 
-    projectModal.submit.addEventListener('click', () => {
+function addProjectModal() {
+  const projectModal = display.newProjectModal();
+  const input = projectModal.modal.firstChild;
+
+  projectModal.submit.addEventListener('click', () => {
+    display.closeModal(projectModal);
+    handleProjectSubmission(input.value);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    const validInput = /\S+/;
+    if (e.key === 'Enter' && input.value.match(validInput)) {
       display.closeModal(projectModal);
       handleProjectSubmission(input.value);
-    });
-
-    input.addEventListener('keydown', (e) => {
-      const validInput = /\S+/;
-      if (e.key === 'Enter' && input.value.match(validInput)) {
-        display.closeModal(projectModal);
-        handleProjectSubmission(input.value);
-      }
-    });
+    }
   });
 }
 
@@ -88,7 +92,8 @@ function projectListeners(project) {
     confirmDelete(project);
   });
 
-  project.editBtn.addEventListener('click', () => {
+  project.editBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     editProject(project);
   });
 }
@@ -118,6 +123,12 @@ function deleteProject(deleteModal, project) {
   }
   display.removeProject(project.display);
   taskManager.removeProject(project.projectName);
+}
+
+function editProject(project) {
+  const projectModal = display.newProjectModal(project.projectName);
+
+  projectModal.submit.addEventListener('click', () => {});
 }
 
 function actionListeners(actionButtons, task) {
