@@ -44,8 +44,25 @@ class TaskManager {
     return this.#tasks.filter((task) => task.project === projectName);
   }
 
+  updateProject(oldProject, updatedProject) {
+    const tasksToBeUpdated = this.getTasksByProject(oldProject);
+
+    for (const task of tasksToBeUpdated) {
+      task.project = updatedProject;
+    }
+
+    const index = this.#projects.indexOf(oldProject);
+    this.#projects.splice(index, 1, updatedProject);
+
+    return tasksToBeUpdated;
+  }
+
   get projects() {
     return this.#projects;
+  }
+
+  get tasks() {
+    return this.#tasks;
   }
 }
 

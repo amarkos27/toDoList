@@ -98,7 +98,12 @@ class ModalController {
     const description = 'No changes will be saved.';
     const confirmText = 'Discard';
 
-    const cancelModal = new ConfirmModal(header, description, confirmText);
+    const cancelModal = new ConfirmModal(
+      header,
+      description,
+      confirmText,
+      this.closeConfirmModal
+    );
     cancelModal.confirmOverlay.classList.add('cancel-modal');
     this.#items.appendChild(cancelModal.confirmOverlay);
 
@@ -110,16 +115,37 @@ class ModalController {
     const description = 'All tasks within this project will be deleted.';
     const confirmText = 'Delete';
 
-    const deleteModal = new ConfirmModal(header, description, confirmText);
+    const deleteModal = new ConfirmModal(
+      header,
+      description,
+      confirmText,
+      this.closeConfirmModal
+    );
     deleteModal.confirmOverlay.classList.add('delete-modal');
     this.#items.appendChild(deleteModal.confirmOverlay);
 
     return deleteModal;
   }
 
-  closeConfirmModal(overlay) {
-    this.#items.removeChild(overlay);
+  createConfirmEditProject(oldProjectName, newProjectName) {
+    const header = `Are you sure you would like to change #${oldProjectName} to #${newProjectName}?`;
+    const description = 'All tasks within this project will be changed.';
+    const confirmText = 'Confirm';
+
+    const confirmEditProjectModal = new ConfirmModal(
+      header,
+      description,
+      confirmText,
+      this.closeConfirmModal
+    );
+    this.#items.appendChild(confirmEditProjectModal.confirmOverlay);
+
+    return confirmEditProjectModal;
   }
+
+  closeConfirmModal = (overlay) => {
+    this.#items.removeChild(overlay);
+  };
 }
 
 export { ModalController };

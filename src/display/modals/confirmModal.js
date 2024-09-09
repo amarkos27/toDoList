@@ -1,5 +1,5 @@
 class ConfirmModal {
-  constructor(headerText, descText, confirmText) {
+  constructor(headerText, descText, confirmText, closeConfirmModal) {
     const confirmOverlay = document.createElement('div');
     confirmOverlay.classList.add('confirm-overlay');
 
@@ -19,11 +19,13 @@ class ConfirmModal {
     cancel.type = 'button';
     cancel.classList.add('cancel');
     cancel.textContent = 'Cancel';
+    cancel.addEventListener('click', () => closeConfirmModal(confirmOverlay));
 
     const confirm = document.createElement('button');
     confirm.type = 'button';
     confirm.classList.add('confirm');
     confirm.textContent = confirmText;
+    confirm.addEventListener('click', () => closeConfirmModal(confirmOverlay));
 
     confirmButtons.appendChild(cancel);
     confirmButtons.appendChild(confirm);
@@ -34,7 +36,7 @@ class ConfirmModal {
 
     confirmOverlay.appendChild(confirmModal);
 
-    this.confirmButtons = { cancel, confirm };
+    this.confirm = confirm;
     this.confirmOverlay = confirmOverlay;
   }
 }

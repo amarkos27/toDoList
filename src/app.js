@@ -94,25 +94,19 @@ function projectListeners(project) {
 
   project.editBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    editProject(project);
+    editProjectModal(project);
   });
 }
 
 function confirmDelete(project) {
   const deleteModal = display.confirmDelete(project.projectName);
-  const { cancel, confirm } = deleteModal.confirmButtons;
 
-  cancel.addEventListener('click', () => {
-    display.closeConfirmModal(deleteModal.confirmOverlay);
-  });
-
-  confirm.addEventListener('click', () => {
-    deleteProject(deleteModal, project);
+  deleteModal.confirm.addEventListener('click', () => {
+    deleteProject(project);
   });
 }
 
-function deleteProject(deleteModal, project) {
-  display.closeConfirmModal(deleteModal.confirmOverlay);
+function deleteProject(project) {
   const tasks = taskManager.getTasksByProject(project.projectName);
 
   for (const task of tasks) {
@@ -125,10 +119,52 @@ function deleteProject(deleteModal, project) {
   taskManager.removeProject(project.projectName);
 }
 
-function editProject(project) {
+function editProjectModal(project) {
   const projectModal = display.newProjectModal(project.projectName);
 
-  projectModal.submit.addEventListener('click', () => {});
+  projectModal.submit.addEventListener('click', () => {
+    const newProjectName = projectModal.modal.firstChild.value;
+    confirmEditProject(project, newProjectName);
+  });
+}
+
+function confirmEditProject(project, newProjectName) {
+  const confirmEditModal = display.confirmEditProject(
+    project.projectName,
+    newProjectName
+  );
+
+  confirmEditModal.confirm.addEventListener('click', () => {
+    editProject(project, newProjectName);
+  });
+}
+
+function editProject(project, newProjectName) {
+  const updatedProject = new Project(newProjectName);
+
+  const tasksToBeUpdated = taskManager.updateProject(
+    project.projectName,
+    updatedProject.projectName
+  );
+  display.updateProject(project, updatedProject);
+  projectListeners(updatedProject);
+
+  updateTaskDisplays(tasksToBeUpdated);
+
+  console.log(taskManager.tasks);
+}
+
+function updateTaskDisplays(tasksToBeUpdated) {
+  for (const task of tasksToBeUpdated) {
+    const oldDisplay = task.display;
+    const { taskDisplay, actionButtons } = display.updateTaskOfProject(
+      task,
+      oldDisplay
+    );
+
+    task.display = taskDisplay;
+    actionListeners(actionButtons, task);
+  }
 }
 
 function actionListeners(actionButtons, task) {
@@ -181,14 +217,8 @@ function cancelEdit(editPane, task) {
 
   if (valuesChanged(current, task)) {
     const cancelModal = display.confirmCancel();
-    const { cancel, confirm } = cancelModal.confirmButtons;
 
-    cancel.addEventListener('click', () =>
-      display.closeConfirmModal(cancelModal.confirmOverlay)
-    );
-
-    confirm.addEventListener('click', () => {
-      display.closeConfirmModal(cancelModal.confirmOverlay);
+    cancelModal.confirm.addEventListener('click', () => {
       display.closeEdit(task.display, editPane.modal);
     });
   } else {

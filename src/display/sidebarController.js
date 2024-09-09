@@ -147,6 +147,11 @@ class SidebarController {
   removeProject(projectDisplay) {
     this.#projects.removeChild(projectDisplay);
   }
+
+  updateProject(project, updatedProject) {
+    this.#projects.insertBefore(updatedProject.display, project.display);
+    this.#projects.removeChild(project.display);
+  }
 }
 
 export { SidebarController };

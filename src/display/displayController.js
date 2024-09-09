@@ -156,14 +156,34 @@ class DisplayController {
     return cancelModal;
   }
 
-  closeConfirmModal(overlay) {
-    this.modalController.closeConfirmModal(overlay);
-  }
-
   confirmDelete(projectName) {
     const deleteModal = this.modalController.createDeleteModal(projectName);
 
     return deleteModal;
+  }
+
+  confirmEditProject(oldProjectName, newProjectName) {
+    const confirmEditProjectModal =
+      this.modalController.createConfirmEditProject(
+        oldProjectName,
+        newProjectName
+      );
+
+    return confirmEditProjectModal;
+  }
+
+  updateProject(project, updatedProject) {
+    this.sidebarController.updateProject(project, updatedProject);
+  }
+
+  updateTaskOfProject(task, oldDisplay) {
+    const { taskDisplay, actionButtons } =
+      this.taskDisplayController.createTaskDisplay(task);
+
+    this.taskDisplayController.insertTaskDisplay(taskDisplay, oldDisplay);
+    this.taskDisplayController.removeTaskDisplay(oldDisplay);
+
+    return { taskDisplay, actionButtons };
   }
 }
 
