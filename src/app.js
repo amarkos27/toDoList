@@ -121,10 +121,26 @@ function deleteProject(project) {
 
 function editProjectModal(project) {
   const projectModal = display.newProjectModal(project.projectName);
+  const input = projectModal.modal.firstChild;
+
+  const handleSubmit = () => {
+    const newProjectName = input.value;
+    if (newProjectName !== project.projectName) {
+      confirmEditProject(project, newProjectName);
+    } else {
+      display.closeModal(projectModal);
+    }
+  };
 
   projectModal.submit.addEventListener('click', () => {
-    const newProjectName = projectModal.modal.firstChild.value;
-    confirmEditProject(project, newProjectName);
+    handleSubmit();
+  });
+
+  input.addEventListener('keydown', (e) => {
+    const validInput = /\S+/;
+    if (e.key === 'Enter' && input.value.match(validInput)) {
+      handleSubmit();
+    }
   });
 }
 
@@ -150,8 +166,6 @@ function editProject(project, newProjectName) {
   projectListeners(updatedProject);
 
   updateTaskDisplays(tasksToBeUpdated);
-
-  console.log(taskManager.tasks);
 }
 
 function updateTaskDisplays(tasksToBeUpdated) {
