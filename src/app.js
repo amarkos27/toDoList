@@ -115,11 +115,11 @@ function deleteProject(deleteModal, project) {
   display.closeConfirmModal(deleteModal.confirmOverlay);
   const tasks = taskManager.getTasksByProject(project.projectName);
 
-  for (const index in tasks) {
-    if (display.isTaskDisplayed(tasks[index].display)) {
-      display.removeTaskDisplay(tasks[index].display);
+  for (const task of tasks) {
+    if (display.isTaskDisplayed(task.display)) {
+      display.removeTaskDisplay(task.display);
     }
-    taskManager.removeTask(tasks[index]);
+    taskManager.removeTask(task);
   }
   display.removeProject(project.display);
   taskManager.removeProject(project.projectName);
