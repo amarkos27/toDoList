@@ -96,6 +96,12 @@ function projectListeners(project) {
     e.stopPropagation();
     editProjectModal(project);
   });
+
+  project.display.addEventListener('click', () => {
+    const header = document.createElement('h1');
+    header.textContent = project.projectName;
+    document.querySelector('.items-wrapper').prepend(header);
+  });
 }
 
 function confirmDelete(project) {
