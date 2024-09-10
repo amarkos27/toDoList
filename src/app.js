@@ -121,13 +121,21 @@ function deleteProject(project) {
   const tasks = taskManager.getTasksByProject(project.projectName);
 
   for (const task of tasks) {
-    if (display.isTaskDisplayed(task.display)) {
-      display.removeTaskDisplay(task.display);
-    }
     taskManager.removeTask(task);
   }
+
+  if (display.isProjectOpen(project.projectName)) {
+    returnHome();
+  }
+
   display.removeProject(project.display);
   taskManager.removeProject(project.projectName);
+}
+
+function returnHome() {
+  const allTasks = document.querySelector('.all');
+
+  allTasks.click();
 }
 
 function editProjectModal(project) {
