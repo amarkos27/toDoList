@@ -27,7 +27,7 @@ class ModalController {
     // Store reference to function for event listener removal
     this.#windowClick = windowClick;
 
-    window.addEventListener('click', windowClick);
+    window.addEventListener('mousedown', windowClick);
   }
 
   requireInput() {
