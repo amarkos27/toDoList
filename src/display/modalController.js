@@ -89,7 +89,7 @@ class ModalController {
     modal.modal.addEventListener('animationend', () => {
       this.#items.removeChild(modal.overlay);
     });
-    window.removeEventListener('click', this.#windowClick);
+    window.removeEventListener('mousedown', this.#windowClick);
     this.#alreadyOpen = null;
   }
 
