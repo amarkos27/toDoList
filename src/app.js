@@ -88,7 +88,8 @@ function getValues(formNode) {
 }
 
 function projectListeners(project) {
-  project.deleteBtn.addEventListener('click', () => {
+  project.deleteBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     confirmDelete(project);
   });
 
@@ -97,10 +98,12 @@ function projectListeners(project) {
     editProjectModal(project);
   });
 
-  project.display.addEventListener('click', () => {
-    const header = document.createElement('h1');
-    header.textContent = project.projectName;
-    document.querySelector('.items-wrapper').prepend(header);
+  project.display.addEventListener('click', (e) => {
+    if (e.target.type !== 'div') {
+      const header = document.createElement('h1');
+      header.textContent = project.projectName;
+      document.querySelector('.items-wrapper').prepend(header);
+    }
   });
 }
 

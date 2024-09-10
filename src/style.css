@@ -71,7 +71,7 @@ button {
     background: rgba(0, 0, 0, 0.08);
 }
 
-button:active:not(:disabled) {
+button:active:not(:disabled, .option) {
     transform: scale(0.97);
 }
 
@@ -210,6 +210,14 @@ button:disabled {
     font-size: 17px;
 }
 
+.option {
+    transition: 0.2s;
+}
+
+.option.clicked {
+    background: rgba(0, 0, 0, 0.08);
+}
+
 .add-task,
 .add-project {
     justify-content: center;
@@ -285,6 +293,7 @@ button:disabled {
 .items {
     flex: 1;
     display: flex;
+    flex-direction: column;
     gap: 20px
 }
 

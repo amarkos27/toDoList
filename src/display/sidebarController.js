@@ -2,6 +2,7 @@ class SidebarController {
   #sidebarWrapper = document.querySelector('.sidebar-wrapper');
   #sidebarBtn = document.querySelector('.sidebar-btn');
   #projects = document.querySelector('.projects-list');
+  #options = Array.from(document.querySelectorAll('.option'));
   #triggerResizeEvent = null;
   #content;
 
@@ -133,6 +134,24 @@ class SidebarController {
     window.addEventListener('resize', () => {
       this.#resizeHandler();
     });
+
+    for (const option of this.#options) {
+      this.setUpOptionBtn(option);
+    }
+  }
+
+  setUpOptionBtn(option) {
+    option.addEventListener('click', () => {
+      if (!option.classList.contains('.clicked')) {
+        const existing = this.#options.find((btn) =>
+          btn.classList.contains('clicked')
+        );
+        if (existing) {
+          existing.classList.remove('clicked');
+        }
+        option.classList.add('clicked');
+      }
+    });
   }
 
   initialize() {
@@ -142,15 +161,26 @@ class SidebarController {
 
   addProject(projectDisplay) {
     this.#projects.appendChild(projectDisplay);
+    this.#options.push(projectDisplay);
+
+    this.setUpOptionBtn(projectDisplay);
   }
 
   removeProject(projectDisplay) {
     this.#projects.removeChild(projectDisplay);
+
+    const index = this.#options.indexOf(projectDisplay);
+    this.#options.splice(index, 1);
   }
 
   updateProject(project, updatedProject) {
     this.#projects.insertBefore(updatedProject.display, project.display);
     this.#projects.removeChild(project.display);
+
+    this.setUpOptionBtn(updatedProject.display);
+
+    const index = this.#options.indexOf(project.display);
+    this.#options.splice(index, 1, updatedProject.display);
   }
 }
 
