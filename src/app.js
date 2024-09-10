@@ -145,6 +145,7 @@ function editProjectModal(project) {
   input.addEventListener('keydown', (e) => {
     const validInput = /\S+/;
     if (e.key === 'Enter' && input.value.match(validInput)) {
+      input.blur();
       handleSubmit();
     }
   });
