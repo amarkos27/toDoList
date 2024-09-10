@@ -98,12 +98,9 @@ function projectListeners(project) {
     editProjectModal(project);
   });
 
-  project.display.addEventListener('click', (e) => {
-    if (e.target.type !== 'div') {
-      const header = document.createElement('h1');
-      header.textContent = project.projectName;
-      document.querySelector('.items-wrapper').prepend(header);
-    }
+  project.display.addEventListener('click', () => {
+    const tasksToDisplay = taskManager.getTasksByProject(project.projectName);
+    display.filterTasks(tasksToDisplay, project.projectName);
   });
 }
 

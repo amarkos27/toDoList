@@ -3,6 +3,7 @@ import { ModalController } from './modalController.js';
 import { TaskDisplayController } from './taskDisplay.js';
 
 class DisplayController {
+  #itemsWrapper = document.querySelector('.items-wrapper');
   #items = document.querySelector('.items');
   #content = document.querySelector('#content');
 
@@ -184,6 +185,22 @@ class DisplayController {
     this.taskDisplayController.removeTaskDisplay(oldDisplay);
 
     return { taskDisplay, actionButtons };
+  }
+
+  clearTasks() {
+    this.#items.innerHTML = '';
+  }
+
+  filterTasks(tasksToDisplay, filterName = null) {
+    this.clearTasks();
+
+    const existingFilter = this.#itemsWrapper.firstChild;
+    this.#itemsWrapper.removeChild(existingFilter);
+
+    if (filterName) this.#itemsWrapper.prepend(filterName);
+    for (const task of tasksToDisplay) {
+      this.#items.appendChild(task.display);
+    }
   }
 }
 
