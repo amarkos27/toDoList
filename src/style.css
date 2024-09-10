@@ -613,6 +613,10 @@ button:disabled {
     gap: 10px;
 }
 
+.project-header {
+    font-weight: 600;
+}
+
 @keyframes showModal {
     0% {
         opacity: 0;

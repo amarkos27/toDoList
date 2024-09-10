@@ -27,6 +27,11 @@ function init() {
     }
   });
 
+  const allTasks = document.querySelector('.all');
+  allTasks.addEventListener('click', () => {
+    display.filterTasks(taskManager.tasks);
+  });
+
   const newProject = document.querySelector('.add-project');
   newProject.addEventListener('click', (e) => {
     e.stopPropagation();

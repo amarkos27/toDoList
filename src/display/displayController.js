@@ -194,10 +194,15 @@ class DisplayController {
   filterTasks(tasksToDisplay, filterName = null) {
     this.clearTasks();
 
-    const existingFilter = this.#itemsWrapper.firstChild;
-    this.#itemsWrapper.removeChild(existingFilter);
+    const existingFilter = this.#itemsWrapper.querySelector('.project-header');
+    if (existingFilter) this.#itemsWrapper.removeChild(existingFilter);
 
-    if (filterName) this.#itemsWrapper.prepend(filterName);
+    if (filterName) {
+      const header = document.createElement('h1');
+      header.classList.add('project-header');
+      header.textContent = `${filterName}`;
+      this.#itemsWrapper.prepend(header);
+    }
     for (const task of tasksToDisplay) {
       this.#items.appendChild(task.display);
     }
