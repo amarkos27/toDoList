@@ -27,6 +27,12 @@ function init() {
     }
   });
 
+  const today = document.querySelector('.today');
+  today.addEventListener('click', () => {
+    const currentDate = display.getCurrentDateTime();
+    const tasksToDisplay = taskManager.getTasksByDate(currentDate);
+  });
+
   const allTasks = document.querySelector('.all');
   allTasks.addEventListener('click', () => {
     display.filterTasks(taskManager.tasks);
