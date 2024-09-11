@@ -134,11 +134,16 @@ class DisplayController {
     return editPane;
   }
 
-  isProjectOpen(projectName) {
+  taskIsDisplayed(taskDisplay) {
+    if (this.#items.contains(taskDisplay)) return true;
+    else return false;
+  }
+
+  currentOpenProject() {
     const openProject = this.#itemsWrapper.querySelector('.project-header');
 
-    if (openProject && openProject.textContent === projectName) return true;
-    else return false;
+    if (openProject) return openProject.textContent;
+    else return undefined;
   }
 
   closeEdit(taskDisplay, editPane) {

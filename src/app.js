@@ -12,10 +12,7 @@ function init() {
 
   let form;
   const newTask = document.querySelector('.add-task');
-  newTask.addEventListener('click', (e) => {
-    // Needed so that the window event listener for closing the modal does not
-    // immediately trigger
-    // e.stopPropagation();
+  newTask.addEventListener('click', () => {
     form = display.newTaskModal(taskManager.projects);
 
     if (form) {
@@ -39,8 +36,7 @@ function init() {
   });
 
   const newProject = document.querySelector('.add-project');
-  newProject.addEventListener('click', (e) => {
-    // e.stopPropagation();
+  newProject.addEventListener('click', () => {
     addProjectModal();
   });
 }
@@ -128,9 +124,12 @@ function deleteProject(project) {
 
   for (const task of tasks) {
     taskManager.removeTask(task);
+    if (display.taskIsDisplayed(task.display)) {
+      display.removeTaskDisplay(task.display);
+    }
   }
 
-  if (display.isProjectOpen(project.projectName)) {
+  if (display.currentOpenProject() === project.projectName) {
     returnHome();
   }
 
