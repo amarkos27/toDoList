@@ -119,6 +119,7 @@ button:disabled {
     position: relative;
     transition: all 0.3s, height 0s;
     margin-left: 30px;
+    width: fit-content;
 }
 
 .sidebar {

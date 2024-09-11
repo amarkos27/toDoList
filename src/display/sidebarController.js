@@ -72,11 +72,21 @@ class SidebarController {
     overlay.classList.add('sidebar-overlay');
     overlay.appendChild(this.#sidebarWrapper);
     this.#content.insertBefore(overlay, this.#content.firstChild);
+
+    this.#addOverlayListener(overlay);
   }
 
   #removeSidebarOverlay() {
     this.#content.removeChild(this.overlay);
     this.#content.insertBefore(this.#sidebarWrapper, this.#content.firstChild);
+  }
+
+  #addOverlayListener(overlay) {
+    overlay.addEventListener('click', (e) => {
+      if (!e.target.classList.contains('sidebar')) {
+        this.toggleSidebarWithOverlay();
+      }
+    });
   }
 
   #resizeToggle() {
@@ -142,7 +152,7 @@ class SidebarController {
 
   setUpOptionBtn(option) {
     option.addEventListener('click', () => {
-      if (!option.classList.contains('.clicked')) {
+      if (!option.classList.contains('clicked')) {
         const existing = this.#options.find((btn) =>
           btn.classList.contains('clicked')
         );

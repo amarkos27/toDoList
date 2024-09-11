@@ -84,9 +84,6 @@ class DisplayController {
   }
 
   newTaskModal(projects) {
-    if (this.sidebarController.overlay) {
-      this.sidebarController.toggleSidebarWithOverlay();
-    }
     this.modalController.closeExistingModal();
 
     const form = this.modalController.newTaskModal(projects);
@@ -95,9 +92,6 @@ class DisplayController {
   }
 
   newProjectModal(existingProject = null) {
-    if (this.sidebarController.overlay) {
-      this.sidebarController.toggleSidebarWithOverlay();
-    }
     this.modalController.closeExistingModal();
 
     const projectModal = this.modalController.newProjectModal(existingProject);

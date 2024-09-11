@@ -15,7 +15,7 @@ function init() {
   newTask.addEventListener('click', (e) => {
     // Needed so that the window event listener for closing the modal does not
     // immediately trigger
-    e.stopPropagation();
+    // e.stopPropagation();
     form = display.newTaskModal(taskManager.projects);
 
     if (form) {
@@ -40,7 +40,7 @@ function init() {
 
   const newProject = document.querySelector('.add-project');
   newProject.addEventListener('click', (e) => {
-    e.stopPropagation();
+    // e.stopPropagation();
     addProjectModal();
   });
 }
