@@ -22,7 +22,7 @@ function init() {
         handleFormSubmission(form.modal);
 
         const openProject = display.currentOpenProject();
-        if (openProject) filterByProject(openProject, form.modal);
+        if (openProject) filterByProject(openProject);
       });
     }
   });
