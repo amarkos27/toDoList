@@ -203,6 +203,8 @@ function editProject(project, newProjectName) {
   projectListeners(updatedProject);
 
   updateTaskDisplays(tasksToBeUpdated);
+
+  filterByProject(updatedProject);
 }
 
 function updateTaskDisplays(tasksToBeUpdated) {
