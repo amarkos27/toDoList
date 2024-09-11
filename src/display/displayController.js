@@ -6,6 +6,7 @@ class DisplayController {
   #itemsWrapper = document.querySelector('.items-wrapper');
   #items = document.querySelector('.items');
   #content = document.querySelector('#content');
+  #activeFilter;
 
   constructor() {
     this.sidebarController = new SidebarController(this.#content);
@@ -139,11 +140,8 @@ class DisplayController {
     else return false;
   }
 
-  currentOpenProject() {
-    const openProject = this.#itemsWrapper.querySelector('.project-header');
-
-    if (openProject) return openProject.textContent;
-    else return undefined;
+  currentOpenFilter() {
+    return this.#activeFilter;
   }
 
   closeEdit(taskDisplay, editPane) {
@@ -194,7 +192,11 @@ class DisplayController {
     }
   }
 
-  filterTasks(tasksToDisplay, filterName = null) {
+  filterTasks(tasksToDisplay, filterName = null, activeFilterButton = null) {
+    // If filterName and activeFilterButton are not passed to the function, it will filter by whatever tasks are passed to it
+    // with no filter header. If they are passed, the header will be present and any time a new task is added, the filter button
+    // will be "clicked" to refresh the page to show the proper tasks
+
     this.clearTasks();
 
     const existingFilter = this.#itemsWrapper.querySelector('.project-header');
@@ -205,6 +207,10 @@ class DisplayController {
       header.classList.add('project-header');
       header.textContent = `${filterName}`;
       this.#itemsWrapper.prepend(header);
+
+      this.#activeFilter = activeFilterButton;
+    } else {
+      this.#activeFilter = null;
     }
     for (const task of tasksToDisplay) {
       this.#items.appendChild(task.display);

@@ -21,8 +21,8 @@ function init() {
         display.closeModal(form);
         handleFormSubmission(form.modal);
 
-        const openProject = display.currentOpenProject();
-        if (openProject) filterByProject(openProject);
+        const openFilter = display.currentOpenFilter();
+        if (openFilter) openFilter.click();
       });
     }
   });
@@ -33,7 +33,7 @@ function init() {
     const tasksToDisplay = taskManager.getTasksByDate(currentDate);
     const filterName = 'Today';
 
-    display.filterTasks(tasksToDisplay, filterName);
+    display.filterTasks(tasksToDisplay, filterName, today);
   });
 
   const allTasks = document.querySelector('.all');
@@ -112,7 +112,7 @@ function projectListeners(project) {
   });
 
   project.display.addEventListener('click', () => {
-    filterByProject(project.projectName);
+    filterByProject(project);
   });
 }
 
@@ -149,9 +149,10 @@ function returnHome() {
 }
 
 function filterByProject(project) {
-  const tasksToDisplay = taskManager.getTasksByProject(project);
+  const tasksToDisplay = taskManager.getTasksByProject(project.projectName);
+  const projectButton = project.display;
 
-  display.filterTasks(tasksToDisplay, project);
+  display.filterTasks(tasksToDisplay, project.projectName, projectButton);
 }
 
 function editProjectModal(project) {
