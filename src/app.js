@@ -20,14 +20,20 @@ function init() {
         e.preventDefault();
         display.closeModal(form);
         handleFormSubmission(form.modal);
+
+        const openProject = display.currentOpenProject();
+        if (openProject) filterByProject(openProject, form.modal);
       });
     }
   });
 
   const today = document.querySelector('.today');
   today.addEventListener('click', () => {
-    const currentDate = display.getCurrentDateTime();
+    const currentDate = display.getCurrentDateTime().split('T')[0]; // Only get the date and exclude time
     const tasksToDisplay = taskManager.getTasksByDate(currentDate);
+    const filterName = 'Today';
+
+    display.filterTasks(tasksToDisplay, filterName);
   });
 
   const allTasks = document.querySelector('.all');
@@ -106,8 +112,7 @@ function projectListeners(project) {
   });
 
   project.display.addEventListener('click', () => {
-    const tasksToDisplay = taskManager.getTasksByProject(project.projectName);
-    display.filterTasks(tasksToDisplay, project.projectName);
+    filterByProject(project.projectName);
   });
 }
 
@@ -141,6 +146,12 @@ function returnHome() {
   const allTasks = document.querySelector('.all');
 
   allTasks.click();
+}
+
+function filterByProject(project) {
+  const tasksToDisplay = taskManager.getTasksByProject(project);
+
+  display.filterTasks(tasksToDisplay, project);
 }
 
 function editProjectModal(project) {

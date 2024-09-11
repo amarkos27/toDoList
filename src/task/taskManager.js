@@ -45,9 +45,11 @@ class TaskManager {
   }
 
   getTasksByDate(date) {
-    for (const task of this.tasks) {
-      console.log(task.dateTime.split(' ')[0] === date.split('T')[0]);
-    }
+    return this.#tasks.filter((task) => {
+      const taskDate = task.dateTime.split(' ')[0];
+
+      return taskDate === date;
+    });
   }
 
   updateProject(oldProject, updatedProject) {
