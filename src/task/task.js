@@ -5,10 +5,6 @@ class Task {
     this.dateTime = values.dateTime.split('T').join(' ');
     this.project = values.project;
   }
-
-  attach(taskDisplay) {
-    this.display = taskDisplay;
-  }
 }
 
 export { Task };

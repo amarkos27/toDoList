@@ -78,7 +78,7 @@ function handleFormSubmission(form) {
 
   const task = taskManager.createTask(values);
   const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
-  taskManager.connectToDisplay(task, taskDisplay);
+  task.display = taskDisplay;
   taskManager.storeTask(task);
 
   actionListeners(actionButtons, task);
@@ -134,7 +134,7 @@ function deleteProject(project) {
     }
   }
 
-  if (display.currentOpenProject() === project.projectName) {
+  if (display.currentOpenFilter() === project.display) {
     returnHome();
   }
 
@@ -285,7 +285,7 @@ function submitEdit(editPane, task) {
 
     const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
     display.closeEdit(taskDisplay, editPane.modal);
-    taskManager.connectToDisplay(task, taskDisplay);
+    task.display = taskDisplay;
     actionListeners(actionButtons, task);
 
     return task;

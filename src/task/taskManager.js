@@ -26,10 +26,6 @@ class TaskManager {
     this.#tasks.splice(index, 1);
   }
 
-  connectToDisplay(task, taskDisplay) {
-    task.attach(taskDisplay);
-  }
-
   addProject(projectName) {
     this.#projects.push(projectName);
   }
