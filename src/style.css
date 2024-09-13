@@ -116,7 +116,7 @@ button:disabled {
 
 .show {
     opacity: 1;
-    z-index: 1;
+    z-index: 2;
 }
 
 .sidebar-wrapper {
@@ -172,6 +172,10 @@ button:disabled {
     z-index: 1;
     height: 40px;
     width: 50px;
+}
+
+.sidebar-overlay ~ .sidebar-btn {
+    z-index: 2;
 }
 
 .standAlone {
@@ -622,9 +626,13 @@ button:disabled {
 }
 
 /* OVERDUE TASKS */
-.overdue-wrapper {
+.task-group, .group-container {
     display: flex;
     flex-direction: column;
+}
+
+.task-group {
+    gap: 10px;
 }
 
 .dropdown{
@@ -635,12 +643,16 @@ button:disabled {
     cursor: pointer;
 }
 
-.overdue-header {
+.hide {
+    display: none;
+}
+
+.task-group-header {
     display: flex;
     align-items: center;
 }
 
-.overdue-header h3 {
+.task-group-header h3 {
     font-weight: 500;
 }
 

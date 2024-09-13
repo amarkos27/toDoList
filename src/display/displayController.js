@@ -1,6 +1,7 @@
 import { SidebarController } from './sidebarController.js';
 import { ModalController } from './modalController.js';
 import { TaskDisplayController } from './taskDisplay.js';
+import { TaskGroup } from './taskGroup.js';
 
 class DisplayController {
   #itemsWrapper = document.querySelector('.items-wrapper');
@@ -145,8 +146,7 @@ class DisplayController {
   }
 
   closeEdit(taskDisplay, editPane) {
-    this.taskDisplayController.insertTaskDisplay(taskDisplay, editPane);
-    this.taskDisplayController.removeEditPane(editPane);
+    this.taskDisplayController.closeEdit(taskDisplay, editPane);
   }
 
   confirmCancel() {
@@ -188,7 +188,7 @@ class DisplayController {
   clearTasks() {
     const tasks = this.#items.querySelectorAll('.task');
     for (const task of tasks) {
-      this.#items.removeChild(task);
+      this.taskDisplayController.removeTaskDisplay(task);
     }
   }
 
@@ -214,6 +214,13 @@ class DisplayController {
     }
     for (const task of tasksToDisplay) {
       this.#items.appendChild(task.display);
+    }
+  }
+
+  formatToday(overdue, today) {
+    if (overdue.length) {
+      const overdueGroup = new TaskGroup('Overdue', overdue);
+      this.#items.prepend(overdueGroup.container);
     }
   }
 }

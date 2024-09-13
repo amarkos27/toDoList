@@ -29,11 +29,13 @@ function init() {
 
   const today = document.querySelector('.today');
   today.addEventListener('click', () => {
-    const currentDate = display.getCurrentDateTime().split('T')[0]; // Only get the date and exclude time
+    const currentDate = new Date();
+    const overdueTasks = taskManager.getOverdue(currentDate);
     const tasksToDisplay = taskManager.getTasksByDate(currentDate);
     const filterName = 'Today';
 
-    display.filterTasks(tasksToDisplay, filterName, today);
+    display.filterTasks(overdueTasks.concat(tasksToDisplay), filterName, today);
+    display.formatToday(overdueTasks, tasksToDisplay);
   });
 
   const allTasks = document.querySelector('.all');

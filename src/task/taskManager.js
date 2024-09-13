@@ -40,9 +40,17 @@ class TaskManager {
     return this.#tasks.filter((task) => task.project === projectName);
   }
 
+  getOverdue(date) {
+    return this.#tasks.filter((task) => {
+      const taskDate = new Date(task.dateTime.replace(' ', 'T'));
+
+      return taskDate < date;
+    });
+  }
+
   getTasksByDate(date) {
     return this.#tasks.filter((task) => {
-      const taskDate = task.dateTime.split(' ')[0];
+      const taskDate = new Date(task.dateTime.replace(' ', 'T'));
 
       return taskDate === date;
     });
