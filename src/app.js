@@ -262,6 +262,9 @@ function editPaneListeners(editPane, task) {
   editPane.modal.addEventListener('submit', (e) => {
     e.preventDefault();
     task = submitEdit(editPane, task);
+
+    const currentFilter = display.currentOpenFilter();
+    if (currentFilter) currentFilter.click();
   });
 }
 
