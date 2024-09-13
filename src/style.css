@@ -291,7 +291,7 @@ button:disabled {
     padding: 25px 30px;
     box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.4);
     background: #fff;
-    z-index: 0;
+    z-index: 1;
 }
 
 .items {
@@ -322,7 +322,7 @@ button:disabled {
     height: 100%;
     display: flex;
     justify-content: center;
-    z-index: 1;
+    z-index: 2;
 }
 
 .create-task {
@@ -632,6 +632,7 @@ button:disabled {
     height: 20px;
     background: url('../icons/dropdown-arrow-svgrepo-com.svg');
     margin-top: 5px;
+    cursor: pointer;
 }
 
 .overdue-header {
