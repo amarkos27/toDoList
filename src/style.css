@@ -635,9 +635,12 @@ button:disabled {
 }
 
 .overdue-header {
-    font-weight: 500;
     display: flex;
     align-items: center;
+}
+
+.overdue-header h3 {
+    font-weight: 500;
 }
 
 @keyframes showModal {
