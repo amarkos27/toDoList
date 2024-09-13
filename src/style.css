@@ -67,6 +67,10 @@ button {
     cursor: pointer;
 }
 
+*:not(input) {
+    user-select: none;
+}
+
 .sidebar button:hover, .sidebar-btn:hover {
     background: rgba(0, 0, 0, 0.08);
 }
@@ -132,7 +136,6 @@ button:disabled {
     border-radius: 30px;
     background: #CFD9EF;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    user-select: none;
     overflow: hidden;
 }
 
@@ -616,6 +619,25 @@ button:disabled {
 
 .project-header {
     font-weight: 600;
+}
+
+/* OVERDUE TASKS */
+.overdue-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown{
+    width: 20px;
+    height: 20px;
+    background: url('../icons/dropdown-arrow-svgrepo-com.svg');
+    margin-top: 5px;
+}
+
+.overdue-header {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
 }
 
 @keyframes showModal {
