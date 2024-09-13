@@ -206,7 +206,7 @@ function editProject(project, newProjectName) {
 
   updateTaskDisplays(tasksToBeUpdated);
 
-  filterByProject(updatedProject);
+  updatedProject.display.click();
 }
 
 function updateTaskDisplays(tasksToBeUpdated) {
