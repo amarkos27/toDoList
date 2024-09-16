@@ -16,6 +16,7 @@ class TaskGroup {
     groupContainer.classList.add('group-container');
 
     dropdown.addEventListener('click', () => {
+      dropdown.classList.toggle('clicked');
       groupContainer.classList.toggle('hide');
     });
 

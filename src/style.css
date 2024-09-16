@@ -640,7 +640,12 @@ button:disabled {
     height: 20px;
     background: url('../icons/dropdown-arrow-svgrepo-com.svg');
     margin-top: 5px;
+    transition: 0.2s;
     cursor: pointer;
+}
+
+.dropdown.clicked {
+    transform: rotate(90deg);
 }
 
 .hide {
