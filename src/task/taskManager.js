@@ -52,7 +52,10 @@ class TaskManager {
     return this.#tasks.filter((task) => {
       const taskDate = new Date(task.dateTime.replace(' ', 'T'));
 
-      return taskDate === date;
+      return (
+        `${taskDate.getMonth()}-${taskDate.getDate()}-${taskDate.getFullYear()}` ===
+        `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`
+      );
     });
   }
 

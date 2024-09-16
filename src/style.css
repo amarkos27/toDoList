@@ -629,9 +629,6 @@ button:disabled {
 .task-group, .group-container {
     display: flex;
     flex-direction: column;
-}
-
-.task-group {
     gap: 10px;
 }
 

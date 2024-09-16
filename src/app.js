@@ -34,8 +34,15 @@ function init() {
     const tasksToDisplay = taskManager.getTasksByDate(currentDate);
     const filterName = 'Today';
 
+    // Add all tasks to display first and then split them into groups
     display.filterTasks(overdueTasks.concat(tasksToDisplay), filterName, today);
-    display.formatToday(overdueTasks, tasksToDisplay);
+
+    // This is simply looking for tasks greater in *time* to the current time, so as not to be filtered in with overdue if
+    // the task is on the current date but at a later time.
+    const notOverdue = tasksToDisplay.filter(
+      (task) => new Date(task.dateTime) > currentDate
+    );
+    display.formatOverdue(overdueTasks, notOverdue);
   });
 
   const allTasks = document.querySelector('.all');

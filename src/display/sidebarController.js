@@ -85,7 +85,6 @@ class SidebarController {
     overlay.addEventListener(
       'click',
       (e) => {
-        console.log(e.target);
         if (!e.target.classList.contains('sidebar')) {
           this.toggleSidebarWithOverlay();
         }

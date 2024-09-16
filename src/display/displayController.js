@@ -217,10 +217,15 @@ class DisplayController {
     }
   }
 
-  formatToday(overdue, today) {
+  formatOverdue(overdue, notOverdue) {
     if (overdue.length) {
       const overdueGroup = new TaskGroup('Overdue', overdue);
       this.#items.prepend(overdueGroup.container);
+    }
+
+    if (notOverdue.length) {
+      const notOverdueGroup = new TaskGroup('Today', notOverdue);
+      this.#items.appendChild(notOverdueGroup.container);
     }
   }
 }
