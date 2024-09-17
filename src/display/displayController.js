@@ -116,7 +116,7 @@ class DisplayController {
   createNewTaskDisplay(task) {
     const { taskDisplay, actionButtons } =
       this.taskDisplayController.createTaskDisplay(task);
-    this.taskDisplayController.addTaskDisplay(taskDisplay);
+    // this.taskDisplayController.addTaskDisplay(taskDisplay);
 
     return { taskDisplay, actionButtons };
   }
@@ -217,14 +217,14 @@ class DisplayController {
     }
   }
 
-  formatOverdue(overdue, notOverdue) {
+  formatOverdue(overdue, notOverdue, filterName) {
     if (overdue.length) {
       const overdueGroup = new TaskGroup('Overdue', overdue);
       this.#items.prepend(overdueGroup.container);
     }
 
     if (notOverdue.length) {
-      const notOverdueGroup = new TaskGroup('Today', notOverdue);
+      const notOverdueGroup = new TaskGroup(filterName, notOverdue);
       this.#items.appendChild(notOverdueGroup.container);
     }
   }

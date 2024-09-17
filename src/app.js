@@ -23,6 +23,7 @@ function init() {
 
         const openFilter = display.currentOpenFilter();
         if (openFilter) openFilter.click();
+        else display.filterTasks(taskManager.tasks);
       });
     }
   });
@@ -42,9 +43,25 @@ function init() {
     const notOverdue = tasksToDisplay.filter(
       (task) => new Date(task.dateTime) > currentDate
     );
-    display.formatOverdue(overdueTasks, notOverdue);
+    display.formatOverdue(overdueTasks, notOverdue, filterName);
 
     refreshOverdue(notOverdue, today);
+  });
+
+  const upcoming = document.querySelector('.upcoming');
+  upcoming.addEventListener('click', () => {
+    const currentDate = new Date();
+    const overdueTasks = taskManager.getOverdue(currentDate);
+    const upcomingTasks = taskManager.getFutureTasks(currentDate);
+    const filterName = 'Upcoming';
+
+    display.filterTasks(
+      overdueTasks.concat(upcomingTasks),
+      filterName,
+      upcoming
+    );
+    display.formatOverdue(overdueTasks, upcomingTasks, filterName);
+    refreshOverdue(upcomingTasks, upcoming);
   });
 
   const allTasks = document.querySelector('.all');

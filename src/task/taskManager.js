@@ -10,7 +10,14 @@ class TaskManager {
   }
 
   storeTask(task) {
-    this.#tasks.push(task);
+    const found = this.#tasks.find(
+      (existing) =>
+        !existing.dateTime ||
+        new Date(existing.dateTime) > new Date(task.dateTime)
+    );
+    if (this.#tasks.length && task.dateTime && found)
+      this.#tasks.splice(found, 0, task);
+    else this.#tasks.push(task);
   }
 
   updateTask(task, values) {
@@ -42,7 +49,7 @@ class TaskManager {
 
   getOverdue(date) {
     return this.#tasks.filter((task) => {
-      const taskDate = new Date(task.dateTime.replace(' ', 'T'));
+      const taskDate = new Date(task.dateTime);
 
       return taskDate < date;
     });
@@ -50,12 +57,20 @@ class TaskManager {
 
   getTasksByDate(date) {
     return this.#tasks.filter((task) => {
-      const taskDate = new Date(task.dateTime.replace(' ', 'T'));
+      const taskDate = new Date(task.dateTime);
 
       return (
         `${taskDate.getMonth()}-${taskDate.getDate()}-${taskDate.getFullYear()}` ===
         `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`
       );
+    });
+  }
+
+  getFutureTasks(date) {
+    return this.#tasks.filter((task) => {
+      const taskDate = new Date(task.dateTime);
+
+      return taskDate > date;
     });
   }
 
