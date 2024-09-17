@@ -10,12 +10,12 @@ class TaskManager {
   }
 
   storeTask(task) {
-    const found = this.#tasks.find(
+    const found = this.#tasks.findIndex(
       (existing) =>
         !existing.dateTime ||
         new Date(existing.dateTime) > new Date(task.dateTime)
     );
-    if (this.#tasks.length && task.dateTime && found)
+    if (this.#tasks.length && task.dateTime && found !== -1)
       this.#tasks.splice(found, 0, task);
     else this.#tasks.push(task);
   }
