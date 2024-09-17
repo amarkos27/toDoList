@@ -43,6 +43,8 @@ function init() {
       (task) => new Date(task.dateTime) > currentDate
     );
     display.formatOverdue(overdueTasks, notOverdue);
+
+    refreshOverdue(notOverdue, today);
   });
 
   const allTasks = document.querySelector('.all');
@@ -54,6 +56,20 @@ function init() {
   newProject.addEventListener('click', () => {
     addProjectModal();
   });
+}
+
+function refreshOverdue(notOverdue, filter) {
+  const intervalId = setInterval(() => {
+    if (display.currentOpenFilter() !== filter) {
+      clearInterval(intervalId);
+    }
+    for (const task of notOverdue) {
+      if (new Date(task.dateTime) < new Date()) {
+        filter.click();
+        clearInterval(intervalId);
+      }
+    }
+  }, 1000);
 }
 
 function addProjectModal() {
