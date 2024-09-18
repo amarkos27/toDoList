@@ -41,9 +41,11 @@ function init() {
     const notOverdue = tasksToDisplay.filter(
       (task) => new Date(task.dateTime) > currentDate
     );
-    display.formatOverdue(overdueTasks, notOverdue, filterName);
 
-    refreshOverdue(notOverdue, today);
+    if (overdueTasks.length) {
+      display.formatOverdue(overdueTasks, notOverdue, filterName);
+      refreshOverdue(notOverdue, today);
+    }
   });
 
   const upcoming = document.querySelector('.upcoming');
@@ -58,8 +60,11 @@ function init() {
       filterName,
       upcoming
     );
-    display.formatOverdue(overdueTasks, upcomingTasks, filterName);
-    refreshOverdue(upcomingTasks, upcoming);
+
+    if (overdueTasks.length) {
+      display.formatOverdue(overdueTasks, upcomingTasks, filterName);
+      refreshOverdue(upcomingTasks, upcoming);
+    }
   });
 
   const allTasks = document.querySelector('.all');

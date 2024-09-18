@@ -89,7 +89,7 @@ class SidebarController {
           this.toggleSidebarWithOverlay();
         }
       },
-      true
+      { capture: true, once: true }
     );
   }
 
