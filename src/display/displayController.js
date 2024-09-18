@@ -41,13 +41,21 @@ class DisplayController {
   // the two classes that receive them
   onInvalidDate = (e) => {
     const datePicker = e.currentTarget;
-    const currentDate = this.getCurrentDateTime();
+    const enteredDate = new Date(datePicker.value);
+    const currentDate = new Date();
     if (datePicker.value) {
-      if (datePicker.value < currentDate) {
+      if (enteredDate < currentDate) {
         datePicker.setCustomValidity(
-          `Please enter date and time after ${currentDate
-            .split('T')
-            .join(' ')}.`
+          `Please enter date and time after ${currentDate.toLocaleString(
+            'en-US',
+            {
+              month: 'numeric',
+              day: 'numeric',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            }
+          )}.`
         );
       }
     } else {
@@ -64,6 +72,7 @@ class DisplayController {
     dateTime.type = 'datetime-local';
     dateTime.name = 'date-and-time';
     dateTime.min = this.getCurrentDateTime();
+    dateTime.max = '9999-12-31T23:59';
     dateTime.oninvalid = this.onInvalidDate;
     dateTime.oninput = this.onValidDate;
 
