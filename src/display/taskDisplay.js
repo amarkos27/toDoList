@@ -40,8 +40,16 @@ class TaskDisplayController {
     if (task.dateTime) {
       const dateAndTime = document.createElement('p');
       dateAndTime.classList.add('date-and-time', 'task-detail');
-      dateAndTime.textContent = `Due: ${task.dateTime}`;
-
+      dateAndTime.textContent = new Date(task.dateTime).toLocaleString(
+        'en-US',
+        {
+          day: 'numeric',
+          year: 'numeric',
+          month: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        }
+      );
       taskInfo.appendChild(dateAndTime);
     }
 

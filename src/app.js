@@ -136,10 +136,8 @@ function getValues(formNode) {
     taskName: formNode.querySelector(`.${formClass} [name="task-name"]`).value,
     description: formNode.querySelector(`.${formClass} [name="description"]`)
       .value,
-    dateTime: formNode
-      .querySelector(`.${formClass} [name="date-and-time"]`)
-      .value.split('T')
-      .join(' '),
+    dateTime: formNode.querySelector(`.${formClass} [name="date-and-time"]`)
+      .value,
     project: formNode.querySelector(`.${formClass} [name="project"]`).value,
   };
 
