@@ -21,9 +21,7 @@ function init() {
         display.closeModal(form);
         handleFormSubmission(form.modal);
 
-        const openFilter = display.currentOpenFilter();
-        if (openFilter) openFilter.click();
-        else display.filterTasks(taskManager.tasks);
+        refreshOpenPage();
       });
     }
   });
@@ -73,6 +71,12 @@ function init() {
   newProject.addEventListener('click', () => {
     addProjectModal();
   });
+}
+
+function refreshOpenPage() {
+  const openFilter = display.currentOpenFilter();
+  if (openFilter) openFilter.click();
+  else display.filterTasks(taskManager.tasks);
 }
 
 function refreshOverdue(notOverdue, filter) {
@@ -303,10 +307,9 @@ function editPaneListeners(editPane, task) {
 
   editPane.modal.addEventListener('submit', (e) => {
     e.preventDefault();
-    task = submitEdit(editPane, task);
+    submitEdit(editPane, task);
 
-    const currentFilter = display.currentOpenFilter();
-    if (currentFilter) currentFilter.click();
+    refreshOpenPage();
   });
 }
 
@@ -334,8 +337,6 @@ function submitEdit(editPane, task) {
     display.closeEdit(taskDisplay, editPane.modal);
     task.display = taskDisplay;
     actionListeners(actionButtons, task);
-
-    return task;
   } else display.closeEdit(task.display, editPane.modal);
 }
 

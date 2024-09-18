@@ -22,8 +22,10 @@ class TaskManager {
 
   updateTask(task, values) {
     const index = this.#tasks.indexOf(task);
+    this.#tasks.splice(index, 1);
+
     const newTask = this.createTask(values);
-    this.#tasks.splice(index, 1, newTask);
+    this.storeTask(newTask);
 
     return newTask;
   }
