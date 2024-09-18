@@ -136,10 +136,15 @@ function getValues(formNode) {
     taskName: formNode.querySelector(`.${formClass} [name="task-name"]`).value,
     description: formNode.querySelector(`.${formClass} [name="description"]`)
       .value,
-    dateTime: formNode
-      .querySelector(`.${formClass} [name="date-and-time"]`)
-      .value.split('T')
-      .join(' '),
+    dateTime: new Date(
+      formNode.querySelector(`.${formClass} [name="date-and-time"]`).value
+    ).toLocaleString('en-US', {
+      day: 'numeric',
+      year: 'numeric',
+      month: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }),
     project: formNode.querySelector(`.${formClass} [name="project"]`).value,
   };
 
