@@ -164,7 +164,7 @@ class TaskDisplayController {
 
   closeEditIfOutsideClick(editPane, taskDisplay) {
     const callback = (e) => {
-      if (!editPane.contains(e.target) && !taskDisplay.contains(e.target)) {
+      if (!editPane.contains(e.target) && !e.target.closest('.modal')) {
         this.closeEdit(taskDisplay, editPane);
       }
     };
