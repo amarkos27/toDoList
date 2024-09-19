@@ -82,15 +82,14 @@ class SidebarController {
   }
 
   #addOverlayListener(overlay) {
-    overlay.addEventListener(
-      'click',
-      (e) => {
-        if (!e.target.classList.contains('sidebar')) {
-          this.toggleSidebarWithOverlay();
-        }
-      },
-      { capture: true, once: true }
-    );
+    overlay.addEventListener('click', (e) => {
+      if (
+        !this.#sidebarClosed &&
+        (!e.target.closest('.sidebar') || e.target.closest('.sidebar button'))
+      ) {
+        this.toggleSidebarWithOverlay();
+      }
+    });
   }
 
   #resizeToggle() {

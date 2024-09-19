@@ -1,5 +1,5 @@
 class TaskGroup {
-  constructor(name, tasks) {
+  constructor(name, tasks, activeFilter) {
     const taskGroup = document.createElement('div');
     taskGroup.classList.add('task-group');
 
@@ -30,17 +30,22 @@ class TaskGroup {
     taskGroup.appendChild(groupContainer);
 
     this.container = taskGroup;
-    this.removeIfEmpty(this.container, groupContainer);
+    this.removeIfEmpty(this.container, groupContainer, activeFilter);
   }
 
-  removeIfEmpty(wholeContainer, tasksContainer) {
+  removeIfEmpty(wholeContainer, tasksContainer, activeFilter) {
     const targetNode = tasksContainer;
 
     const config = { childList: true };
 
     const callback = (mutations, observer) => {
+      if (!document.body.contains(wholeContainer)) {
+        observer.disconnect();
+        return;
+      }
+
       if (!tasksContainer.children.length) {
-        wholeContainer.remove();
+        activeFilter.click();
         observer.disconnect();
       }
     };

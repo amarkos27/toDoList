@@ -34,7 +34,7 @@ function init() {
     const filterName = 'Today';
 
     // Add all tasks to display first and then split them into groups
-    display.filterTasks(overdueTasks.concat(tasksToDisplay), filterName, today);
+    display.filterTasks(tasksToDisplay, filterName, today);
 
     // This is simply looking for tasks greater in *time* to the current time, so as not to be filtered in with overdue if
     // the task is on the current date but at a later time.
@@ -93,6 +93,7 @@ function refreshOverdue(notOverdue, filter) {
       if (new Date(task.dateTime) < new Date()) {
         filter.click();
         clearInterval(intervalId);
+        return;
       }
     }
   }, 1000);

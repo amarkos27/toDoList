@@ -195,10 +195,11 @@ class DisplayController {
   }
 
   clearTasks() {
-    const tasks = this.#items.querySelectorAll('.task');
-    for (const task of tasks) {
-      this.taskDisplayController.removeTaskDisplay(task);
-    }
+    // const tasks = this.#items.querySelectorAll('.task');
+    // for (const task of tasks) {
+    //   this.taskDisplayController.removeTaskDisplay(task);
+    // }
+    this.#items.innerHTML = '';
   }
 
   filterTasks(tasksToDisplay, filterName = null, activeFilterButton = null) {
@@ -228,12 +229,20 @@ class DisplayController {
 
   formatOverdue(overdue, notOverdue, filterName) {
     if (overdue.length) {
-      const overdueGroup = new TaskGroup('Overdue', overdue);
+      const overdueGroup = new TaskGroup(
+        'Overdue',
+        overdue,
+        this.#activeFilter
+      );
       this.#items.prepend(overdueGroup.container);
     }
 
     if (notOverdue.length) {
-      const notOverdueGroup = new TaskGroup(filterName, notOverdue);
+      const notOverdueGroup = new TaskGroup(
+        filterName,
+        notOverdue,
+        this.#activeFilter
+      );
       this.#items.appendChild(notOverdueGroup.container);
     }
   }
