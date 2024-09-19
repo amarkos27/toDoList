@@ -172,7 +172,10 @@ class TaskDisplayController {
 
   closeEditIfOutsideClick(editPane, taskDisplay) {
     const callback = (e) => {
-      if (!editPane.contains(e.target) && !e.target.closest('.modal')) {
+      if (
+        !editPane.contains(e.target) &&
+        !e.target.closest('.confirm-overlay')
+      ) {
         this.closeEdit(taskDisplay, editPane);
       }
     };

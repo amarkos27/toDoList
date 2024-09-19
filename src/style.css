@@ -503,8 +503,7 @@ button:disabled {
 }
 
 .edit-pane input {
-    padding: 0;
-    line-height: 1;
+    padding: 2.5px;
 }
 
 .edit-name {
