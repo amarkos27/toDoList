@@ -9,6 +9,7 @@ const taskManager = new TaskManager();
 
 function init() {
   display.initialize();
+  let refresher = null;
 
   let form;
   const newTask = document.querySelector('.add-task');
@@ -44,8 +45,12 @@ function init() {
 
     if (overdueTasks.length) {
       display.formatOverdue(overdueTasks, notOverdue, filterName);
-      refreshOverdue(notOverdue, today);
     }
+
+    if (refresher) {
+      clearInterval(refresher);
+    }
+    refresher = refreshOverdue(notOverdue, today);
   });
 
   const upcoming = document.querySelector('.upcoming');
@@ -63,8 +68,12 @@ function init() {
 
     if (overdueTasks.length) {
       display.formatOverdue(overdueTasks, upcomingTasks, filterName);
-      refreshOverdue(upcomingTasks, upcoming);
     }
+
+    if (refresher) {
+      clearInterval(refresher);
+    }
+    refresher = refreshOverdue(notOverdue, upcoming);
   });
 
   const allTasks = document.querySelector('.all');
@@ -86,17 +95,20 @@ function refreshOpenPage() {
 
 function refreshOverdue(notOverdue, filter) {
   const intervalId = setInterval(() => {
-    if (display.currentOpenFilter() !== filter) {
+    if (display.currentOpenFilter() === filter && notOverdue.length) {
+      for (const task of notOverdue) {
+        if (new Date(task.dateTime) < new Date()) {
+          filter.click();
+          clearInterval(intervalId);
+          return;
+        }
+      }
+    } else {
       clearInterval(intervalId);
     }
-    for (const task of notOverdue) {
-      if (new Date(task.dateTime) < new Date()) {
-        filter.click();
-        clearInterval(intervalId);
-        return;
-      }
-    }
   }, 1000);
+
+  return intervalId;
 }
 
 function addProjectModal() {

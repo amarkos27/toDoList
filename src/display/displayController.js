@@ -195,10 +195,6 @@ class DisplayController {
   }
 
   clearTasks() {
-    // const tasks = this.#items.querySelectorAll('.task');
-    // for (const task of tasks) {
-    //   this.taskDisplayController.removeTaskDisplay(task);
-    // }
     this.#items.innerHTML = '';
   }
 
