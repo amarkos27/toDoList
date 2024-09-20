@@ -79,6 +79,25 @@ class DisplayController {
     return dateTime;
   };
 
+  createSearchInput() {
+    const container = document.createElement('div');
+    container.classList.add('search-container');
+
+    const searchInput = document.createElement('input');
+    searchInput.classList.add('search-input');
+    searchInput.placeholder = 'Search by task name ....';
+
+    const datePicker = this.buildDatePicker();
+    datePicker.min = '';
+    datePicker.oninvalid = null;
+    datePicker.oninput = null;
+
+    container.append(searchInput, datePicker);
+    this.#itemsWrapper.prepend(container);
+
+    return { searchInput, datePicker };
+  }
+
   fillProjects(projects, existingTask = null) {
     const modal = this;
     projects.forEach((project) => {
@@ -125,7 +144,6 @@ class DisplayController {
   createNewTaskDisplay(task) {
     const { taskDisplay, actionButtons } =
       this.taskDisplayController.createTaskDisplay(task);
-    // this.taskDisplayController.addTaskDisplay(taskDisplay);
 
     return { taskDisplay, actionButtons };
   }

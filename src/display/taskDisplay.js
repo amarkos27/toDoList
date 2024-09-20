@@ -84,10 +84,6 @@ class TaskDisplayController {
     return { taskDisplay, actionButtons };
   }
 
-  addTaskDisplay(taskDisplay) {
-    this.#items.appendChild(taskDisplay);
-  }
-
   insertTaskDisplay(taskDisplay, previous) {
     previous.parentNode.insertBefore(taskDisplay, previous);
   }

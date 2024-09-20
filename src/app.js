@@ -27,53 +27,27 @@ function init() {
     }
   });
 
+  const search = document.querySelector('.search');
+  search.addEventListener('click', () => {
+    const { searchInput, datePicker } = display.createSearchInput();
+  });
+
   const today = document.querySelector('.today');
   today.addEventListener('click', () => {
     const currentDate = new Date();
-    const overdueTasks = taskManager.getOverdue(currentDate);
-    const tasksToDisplay = taskManager.getTasksByDate(currentDate);
-    const filterName = 'Today';
+    const notOverdue = taskManager
+      .getTasksByDate(currentDate)
+      .filter((task) => new Date(task.dateTime) > currentDate); // refers to tasks that are today, but later in terms of time
 
-    // Add all tasks to display first and then split them into groups
-    display.filterTasks(tasksToDisplay, filterName, today);
-
-    // This is simply looking for tasks greater in *time* to the current time, so as not to be filtered in with overdue if
-    // the task is on the current date but at a later time.
-    const notOverdue = tasksToDisplay.filter(
-      (task) => new Date(task.dateTime) > currentDate
-    );
-
-    if (overdueTasks.length) {
-      display.formatOverdue(overdueTasks, notOverdue, filterName);
-    }
-
-    if (refresher) {
-      clearInterval(refresher);
-    }
-    refresher = refreshOverdue(notOverdue, today);
+    refresher = handleDateFilter(currentDate, notOverdue, today, refresher);
   });
 
   const upcoming = document.querySelector('.upcoming');
   upcoming.addEventListener('click', () => {
     const currentDate = new Date();
-    const overdueTasks = taskManager.getOverdue(currentDate);
-    const upcomingTasks = taskManager.getFutureTasks(currentDate);
-    const filterName = 'Upcoming';
+    const notOverdue = taskManager.getFutureTasks(currentDate);
 
-    display.filterTasks(
-      overdueTasks.concat(upcomingTasks),
-      filterName,
-      upcoming
-    );
-
-    if (overdueTasks.length) {
-      display.formatOverdue(overdueTasks, upcomingTasks, filterName);
-    }
-
-    if (refresher) {
-      clearInterval(refresher);
-    }
-    refresher = refreshOverdue(notOverdue, upcoming);
+    refresher = handleDateFilter(currentDate, notOverdue, upcoming, refresher);
   });
 
   const allTasks = document.querySelector('.all');
@@ -91,6 +65,24 @@ function refreshOpenPage() {
   const openFilter = display.currentOpenFilter();
   if (openFilter) openFilter.click();
   else display.filterTasks(taskManager.tasks);
+}
+
+function handleDateFilter(currentDate, notOverdue, filter, refresher) {
+  const overdueTasks = taskManager.getOverdue(currentDate);
+  const filterName = filter.textContent;
+
+  display.filterTasks(overdueTasks.concat(notOverdue), filterName, filter);
+
+  if (overdueTasks.length) {
+    display.formatOverdue(overdueTasks, notOverdue, filterName);
+  }
+
+  if (refresher) {
+    clearInterval(refresher);
+  }
+  refresher = refreshOverdue(notOverdue, filter);
+
+  return refresher;
 }
 
 function refreshOverdue(notOverdue, filter) {

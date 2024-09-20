@@ -76,6 +76,12 @@ class TaskManager {
     });
   }
 
+  getTasksByQuery(taskName) {
+    return this.#tasks.filter((task) =>
+      task.taskName.toUpperCase().includes(taskName.toUpperCase())
+    );
+  }
+
   updateProject(oldProject, updatedProject) {
     const tasksToBeUpdated = this.getTasksByProject(oldProject);
 
