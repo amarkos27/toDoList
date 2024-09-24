@@ -79,7 +79,7 @@ class DisplayController {
     return dateTime;
   };
 
-  createSearchInput() {
+  createSearchInput(searchButton) {
     const container = document.createElement('div');
     container.classList.add('search-container');
 
@@ -87,10 +87,9 @@ class DisplayController {
     searchInput.classList.add('search-input');
     searchInput.placeholder = 'Search by task name ....';
 
-    const datePicker = this.buildDatePicker();
-    datePicker.min = '';
-    datePicker.oninvalid = null;
-    datePicker.oninput = null;
+    const datePicker = document.createElement('input');
+    datePicker.type = 'date';
+    datePicker.max = '9999-12-31';
 
     container.append(searchInput, datePicker);
     this.#itemsWrapper.prepend(container);
@@ -102,10 +101,10 @@ class DisplayController {
     const modal = this;
     projects.forEach((project) => {
       const newOption = document.createElement('option');
-      newOption.textContent = project;
-      newOption.value = project;
+      newOption.textContent = project.projectName;
+      newOption.value = project.projectName;
 
-      if (existingTask && existingTask.project === project) {
+      if (existingTask && existingTask.project === project.projectName) {
         newOption.selected = true;
       }
 
@@ -216,15 +215,23 @@ class DisplayController {
     this.#items.innerHTML = '';
   }
 
-  filterTasks(tasksToDisplay, filterName = null, activeFilterButton = null) {
-    // If filterName and activeFilterButton are not passed to the function, it will filter by whatever tasks are passed to it
-    // with no filter header. If they are passed, the header will be present and any time a new task is added, the filter button
-    // will be "clicked" to refresh the page to show the proper tasks
-
+  displayTasks(tasksToDisplay) {
     this.clearTasks();
+    for (const task of tasksToDisplay) {
+      this.#items.appendChild(task.display);
+    }
+  }
 
-    const existingFilter = this.#itemsWrapper.querySelector('.project-header');
-    if (existingFilter) this.#itemsWrapper.removeChild(existingFilter);
+  setFilter(filterName = null, activeFilterButton = null) {
+    // If nothing is passed, the active filter is simply removed
+    this.clearTasks();
+    const firstChild = this.#itemsWrapper.children[0];
+    if (
+      firstChild.classList.contains('project-header') ||
+      firstChild.classList.contains('search-container')
+    ) {
+      firstChild.remove();
+    }
 
     if (filterName) {
       const header = document.createElement('h1');
@@ -235,9 +242,6 @@ class DisplayController {
       this.#activeFilter = activeFilterButton;
     } else {
       this.#activeFilter = null;
-    }
-    for (const task of tasksToDisplay) {
-      this.#items.appendChild(task.display);
     }
   }
 

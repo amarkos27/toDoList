@@ -1,4 +1,5 @@
 import { Task } from './task.js';
+import { toDOM, toJSON } from 'dom-to-json';
 class TaskManager {
   #tasks = [];
   #projects = [];
@@ -35,18 +36,18 @@ class TaskManager {
     this.#tasks.splice(index, 1);
   }
 
-  addProject(projectName) {
-    this.#projects.push(projectName);
+  addProject(project) {
+    this.#projects.push(project);
   }
 
-  removeProject(projectName) {
-    const index = this.#projects.indexOf(projectName);
+  removeProject(project) {
+    const index = this.#projects.indexOf(project);
 
     this.#projects.splice(index, 1);
   }
 
-  getTasksByProject(projectName) {
-    return this.#tasks.filter((task) => task.project === projectName);
+  getTasksByProject(project) {
+    return this.#tasks.filter((task) => task.project === project);
   }
 
   getOverdue(date) {
@@ -57,15 +58,25 @@ class TaskManager {
     });
   }
 
+  compareDatesWithoutTime(first, second) {
+    return (
+      `${first.getMonth()}-${first.getDate()}-${first.getFullYear()}` ===
+      `${second.getMonth()}-${second.getDate()}-${second.getFullYear()}`
+    );
+  }
+
   getTasksByDate(date) {
     return this.#tasks.filter((task) => {
       const taskDate = new Date(task.dateTime);
 
-      return (
-        `${taskDate.getMonth()}-${taskDate.getDate()}-${taskDate.getFullYear()}` ===
-        `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`
-      );
+      return this.compareDatesWithoutTime(taskDate, date);
     });
+  }
+
+  getTasksByName(taskName) {
+    return this.#tasks.filter((task) =>
+      task.taskName.toUpperCase().includes(taskName.toUpperCase())
+    );
   }
 
   getFutureTasks(date) {
@@ -76,23 +87,99 @@ class TaskManager {
     });
   }
 
-  getTasksByQuery(taskName) {
-    return this.#tasks.filter((task) =>
-      task.taskName.toUpperCase().includes(taskName.toUpperCase())
-    );
+  getTasksByQuery(taskName, date) {
+    if (taskName && !date) {
+      return this.getTasksByName(taskName);
+    } else if (date && !taskName) {
+      return this.getTasksByDate(date);
+    } else if (taskName && date) {
+      return this.#tasks.filter(
+        (task) =>
+          task.taskName.toUpperCase().includes(taskName.toUpperCase()) &&
+          this.compareDatesWithoutTime(new Date(task.dateTime), date)
+      );
+    } else {
+      return [];
+    }
   }
 
   updateProject(oldProject, updatedProject) {
-    const tasksToBeUpdated = this.getTasksByProject(oldProject);
+    const tasksToBeUpdated = this.getTasksByProject(oldProject.projectName);
 
     for (const task of tasksToBeUpdated) {
-      task.project = updatedProject;
+      task.project = updatedProject.projectName;
     }
 
     const index = this.#projects.indexOf(oldProject);
     this.#projects.splice(index, 1, updatedProject);
 
     return tasksToBeUpdated;
+  }
+
+  storeTasks() {
+    let taskNames = [];
+    this.#tasks.forEach((task) => {
+      taskNames.push(task.taskName);
+      task.display = toJSON(task.display);
+      localStorage.setItem(`${task.taskName}`, JSON.stringify(task));
+    });
+    localStorage.setItem('taskNames', JSON.stringify(taskNames));
+  }
+
+  storeProjects() {
+    let projectNames = [];
+    this.#projects.forEach((project) => {
+      // Do not store the button as active if it is currently clicked when the user exits the screen
+      project.display.classList.remove('clicked');
+
+      project.display = toJSON(project.display);
+      project.editBtn = toJSON(project.editBtn);
+      project.deleteBtn = toJSON(project.deleteBtn);
+      projectNames.push(project.projectName);
+      localStorage.setItem(`#${project.projectName}`, JSON.stringify(project));
+    });
+    localStorage.setItem('projectNames', JSON.stringify(projectNames));
+  }
+
+  retrieveTasks() {
+    if (localStorage.getItem('taskNames')) {
+      const taskNames = JSON.parse(localStorage.getItem('taskNames'));
+
+      if (taskNames.length) {
+        for (const taskName of taskNames) {
+          const task = JSON.parse(localStorage.getItem(`${taskName}`));
+          task.display = toDOM(task.display);
+          this.#tasks.push(task);
+        }
+      }
+    }
+  }
+
+  retrieveProjects() {
+    if (localStorage.getItem('projectNames')) {
+      const projectNames = JSON.parse(localStorage.getItem('projectNames'));
+
+      if (projectNames.length) {
+        for (const projectName of projectNames) {
+          const project = JSON.parse(localStorage.getItem(`#${projectName}`));
+          project.display = toDOM(project.display);
+          project.editBtn = project.display.querySelector('.edit');
+          project.deleteBtn = project.display.querySelector('.delete');
+          this.#projects.push(project);
+        }
+      }
+    }
+  }
+
+  setUpStorage() {
+    this.retrieveTasks();
+    this.retrieveProjects();
+
+    window.addEventListener('beforeunload', () => {
+      localStorage.clear();
+      this.storeTasks();
+      this.storeProjects();
+    });
   }
 
   get projects() {

@@ -9,6 +9,35 @@ const taskManager = new TaskManager();
 
 function init() {
   display.initialize();
+  setUpButtons();
+
+  taskManager.setUpStorage();
+
+  if (taskManager.tasks.length) {
+    for (const task of taskManager.tasks) {
+      // Set up button listeners for locally retrieved tasks
+      const editDelete = task.display.querySelector('.actions').children;
+      const actionButtons = {
+        checkbox: task.display.children[0],
+        delete: editDelete[1],
+        edit: editDelete[0],
+      };
+
+      actionListeners(actionButtons, task);
+    }
+
+    display.displayTasks(taskManager.tasks);
+  }
+
+  if (taskManager.projects.length) {
+    for (const project of taskManager.projects) {
+      display.addProject(project.display);
+      projectListeners(project);
+    }
+  }
+}
+
+function setUpButtons() {
   let refresher = null;
 
   let form;
@@ -29,7 +58,33 @@ function init() {
 
   const search = document.querySelector('.search');
   search.addEventListener('click', () => {
-    const { searchInput, datePicker } = display.createSearchInput();
+    display.setFilter();
+    const { searchInput, datePicker } = display.createSearchInput(search);
+
+    const callback = (textInput, date) => {
+      const trimmed = textInput === '' ? null : textInput.trimStart();
+      let inputDate;
+
+      if (date !== '') {
+        const split = date.split('-');
+        const year = Number(split[0]);
+        const month = Number(split[1]) - 1; // because month starts at 0
+        const day = Number(split[2]);
+
+        inputDate = new Date(year, month, day);
+      } else inputDate = null;
+
+      const tasks = taskManager.getTasksByQuery(trimmed, inputDate);
+      display.displayTasks(tasks);
+    };
+
+    searchInput.addEventListener('input', () =>
+      callback(searchInput.value, datePicker.value)
+    );
+
+    datePicker.addEventListener('input', () =>
+      callback(searchInput.value, datePicker.value)
+    );
   });
 
   const today = document.querySelector('.today');
@@ -52,7 +107,8 @@ function init() {
 
   const allTasks = document.querySelector('.all');
   allTasks.addEventListener('click', () => {
-    display.filterTasks(taskManager.tasks);
+    display.setFilter();
+    display.displayTasks(taskManager.tasks);
   });
 
   const newProject = document.querySelector('.add-project');
@@ -63,15 +119,19 @@ function init() {
 
 function refreshOpenPage() {
   const openFilter = display.currentOpenFilter();
-  if (openFilter) openFilter.click();
-  else display.filterTasks(taskManager.tasks);
+  if (openFilter) {
+    openFilter.click();
+  } else {
+    returnHome();
+  }
 }
 
 function handleDateFilter(currentDate, notOverdue, filter, refresher) {
   const overdueTasks = taskManager.getOverdue(currentDate);
   const filterName = filter.textContent;
 
-  display.filterTasks(overdueTasks.concat(notOverdue), filterName, filter);
+  display.setFilter(filterName, filter);
+  display.displayTasks(overdueTasks.concat(notOverdue));
 
   if (overdueTasks.length) {
     display.formatOverdue(overdueTasks, notOverdue, filterName);
@@ -124,7 +184,7 @@ function addProjectModal() {
 function handleProjectSubmission(projectName) {
   const project = new Project(projectName);
   display.addProject(project.display);
-  taskManager.addProject(project.projectName);
+  taskManager.addProject(project);
 
   projectListeners(project);
 }
@@ -193,7 +253,7 @@ function deleteProject(project) {
   }
 
   display.removeProject(project.display);
-  taskManager.removeProject(project.projectName);
+  taskManager.removeProject(project);
 }
 
 function returnHome() {
@@ -206,7 +266,8 @@ function filterByProject(project) {
   const tasksToDisplay = taskManager.getTasksByProject(project.projectName);
   const projectButton = project.display;
 
-  display.filterTasks(tasksToDisplay, project.projectName, projectButton);
+  display.setFilter(project.projectName, projectButton);
+  display.displayTasks(tasksToDisplay);
 }
 
 function editProjectModal(project) {
@@ -249,10 +310,7 @@ function confirmEditProject(project, newProjectName) {
 function editProject(project, newProjectName) {
   const updatedProject = new Project(newProjectName);
 
-  const tasksToBeUpdated = taskManager.updateProject(
-    project.projectName,
-    updatedProject.projectName
-  );
+  const tasksToBeUpdated = taskManager.updateProject(project, updatedProject);
   display.updateProject(project, updatedProject);
   projectListeners(updatedProject);
 
