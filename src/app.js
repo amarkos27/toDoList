@@ -44,6 +44,7 @@ function setUpButtons() {
   const newTask = document.querySelector('.add-task');
   newTask.addEventListener('click', () => {
     form = display.newTaskModal(taskManager.projects);
+    form.modal.scrollIntoView();
 
     if (form) {
       form.modal.addEventListener('submit', (e) => {
@@ -167,6 +168,7 @@ function addProjectModal() {
   const projectModal = display.newProjectModal();
   const input = projectModal.modal.firstChild;
 
+  projectModal.modal.scrollIntoView();
   projectModal.submit.addEventListener('click', () => {
     display.closeModal(projectModal);
     handleProjectSubmission(input.value);
