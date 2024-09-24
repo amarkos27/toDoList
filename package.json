@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.dev.js",
     "start": "webpack serve --config webpack.dev.js",
-    "prod": "webpack --config webpack.prod.js"
+    "prod": "webpack --config webpack.prod.js",
+    "predeploy": "npm run prod",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -18,10 +20,11 @@
   "bugs": {
     "url": "https://github.com/amarkos27/toDoList/issues"
   },
-  "homepage": "https://github.com/amarkos27/toDoList#readme",
+  "homepage": "https://amarkos27.github.io/toDoList",
   "devDependencies": {
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",
+    "gh-pages": "^6.1.1",
     "html-webpack-plugin": "^5.6.0",
     "mini-css-extract-plugin": "^2.9.0",
     "url-loader": "^4.1.1",
