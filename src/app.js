@@ -60,7 +60,7 @@ function setUpButtons() {
   const search = document.querySelector('.search');
   search.addEventListener('click', () => {
     display.setFilter();
-    const { searchInput, datePicker } = display.createSearchInput(search);
+    const { searchInput, datePicker } = display.createSearchInput();
 
     const callback = (textInput, date) => {
       const trimmed = textInput === '' ? null : textInput.trimStart();

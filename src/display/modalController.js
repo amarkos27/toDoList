@@ -50,14 +50,21 @@ class ModalController {
     }
   }
 
-  newTaskModal(projects) {
+  newTaskModal(projects, activeFilter) {
     const form = new TaskModal(
       this.buildDatePicker,
       this.requireInput,
       this.fillProjects
     );
 
-    form.fillProjects(projects);
+    let filter;
+    if (activeFilter) {
+      filter = activeFilter.textContent;
+    } else {
+      filter = null;
+    }
+
+    form.fillProjects(projects, filter);
     this.initializeModal(form);
 
     return form;

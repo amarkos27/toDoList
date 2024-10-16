@@ -79,7 +79,7 @@ class DisplayController {
     return dateTime;
   };
 
-  createSearchInput(searchButton) {
+  createSearchInput() {
     const container = document.createElement('div');
     container.classList.add('search-container');
 
@@ -97,14 +97,14 @@ class DisplayController {
     return { searchInput, datePicker };
   }
 
-  fillProjects(projects, existingTask = null) {
+  fillProjects(projects, activeProject) {
     const modal = this;
     projects.forEach((project) => {
       const newOption = document.createElement('option');
       newOption.textContent = project.projectName;
       newOption.value = project.projectName;
 
-      if (existingTask && existingTask.project === project.projectName) {
+      if (activeProject && activeProject === project.projectName) {
         newOption.selected = true;
       }
 
@@ -114,9 +114,10 @@ class DisplayController {
 
   newTaskModal(projects) {
     this.modalController.closeExistingModal();
-
-    const form = this.modalController.newTaskModal(projects);
-
+    const form = this.modalController.newTaskModal(
+      projects,
+      this.#activeFilter
+    );
     return form;
   }
 
@@ -156,7 +157,7 @@ class DisplayController {
       task,
       this.fillProjects
     );
-    editPane.fillProjects(projects, task);
+    editPane.fillProjects(projects, task.project);
     this.taskDisplayController.removeTaskDisplay(task.display);
 
     return editPane;
