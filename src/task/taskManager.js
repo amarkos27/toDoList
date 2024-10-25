@@ -120,7 +120,7 @@ class TaskManager {
     let taskNames = [];
     this.#tasks.forEach((task) => {
       taskNames.push(task.taskName);
-      task.display = toJSON(task.display);
+      task.JSONdisplay = toJSON(task.display);
       localStorage.setItem(`${task.taskName}`, JSON.stringify(task));
     });
     localStorage.setItem('taskNames', JSON.stringify(taskNames));
@@ -132,13 +132,19 @@ class TaskManager {
       // Do not store the button as active if it is currently clicked when the user exits the screen
       project.display.classList.remove('clicked');
 
-      project.display = toJSON(project.display);
-      project.editBtn = toJSON(project.editBtn);
-      project.deleteBtn = toJSON(project.deleteBtn);
+      project.JSONdisplay = toJSON(project.display);
+      project.JSONeditBtn = toJSON(project.editBtn);
+      project.JSONdeleteBtn = toJSON(project.deleteBtn);
       projectNames.push(project.projectName);
       localStorage.setItem(`#${project.projectName}`, JSON.stringify(project));
     });
     localStorage.setItem('projectNames', JSON.stringify(projectNames));
+  }
+
+  refreshStorage() {
+    localStorage.clear();
+    this.storeTasks();
+    this.storeProjects();
   }
 
   retrieveTasks() {
@@ -148,7 +154,7 @@ class TaskManager {
       if (taskNames.length) {
         for (const taskName of taskNames) {
           const task = JSON.parse(localStorage.getItem(`${taskName}`));
-          task.display = toDOM(task.display);
+          task.display = toDOM(task.JSONdisplay);
           this.#tasks.push(task);
         }
       }
@@ -162,9 +168,9 @@ class TaskManager {
       if (projectNames.length) {
         for (const projectName of projectNames) {
           const project = JSON.parse(localStorage.getItem(`#${projectName}`));
-          project.display = toDOM(project.display);
-          project.editBtn = project.display.querySelector('.edit');
-          project.deleteBtn = project.display.querySelector('.delete');
+          project.display = toDOM(project.JSONdisplay);
+          project.JSONeditBtn = project.display.querySelector('.edit');
+          project.JSONdeleteBtn = project.display.querySelector('.delete');
           this.#projects.push(project);
         }
       }
@@ -174,12 +180,6 @@ class TaskManager {
   setUpStorage() {
     this.retrieveTasks();
     this.retrieveProjects();
-
-    window.addEventListener('beforeunload', () => {
-      localStorage.clear();
-      this.storeTasks();
-      this.storeProjects();
-    });
   }
 
   get projects() {

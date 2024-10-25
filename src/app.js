@@ -187,6 +187,7 @@ function handleProjectSubmission(projectName) {
   const project = new Project(projectName);
   display.addProject(project.display);
   taskManager.addProject(project);
+  taskManager.refreshStorage();
 
   projectListeners(project);
 }
@@ -198,6 +199,7 @@ function handleFormSubmission(form) {
   const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
   task.display = taskDisplay;
   taskManager.storeTask(task);
+  taskManager.refreshStorage();
 
   actionListeners(actionButtons, task);
 }
@@ -256,6 +258,7 @@ function deleteProject(project) {
 
   display.removeProject(project.display);
   taskManager.removeProject(project);
+  taskManager.refreshStorage();
 }
 
 function returnHome() {
@@ -318,6 +321,8 @@ function editProject(project, newProjectName) {
 
   updateTaskDisplays(tasksToBeUpdated);
 
+  taskManager.refreshStorage();
+
   updatedProject.display.click();
 }
 
@@ -354,6 +359,7 @@ function removeTask(task) {
   task.display.addEventListener('transitionend', () => {
     display.removeTaskDisplay(task.display);
     taskManager.removeTask(task);
+    taskManager.refreshStorage();
   });
 }
 
@@ -404,6 +410,8 @@ function submitEdit(editPane, task) {
     const { taskDisplay, actionButtons } = display.createNewTaskDisplay(task);
     display.closeEdit(taskDisplay, editPane.modal);
     task.display = taskDisplay;
+
+    taskManager.refreshStorage();
     actionListeners(actionButtons, task);
   } else display.closeEdit(task.display, editPane.modal);
 }
