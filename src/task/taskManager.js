@@ -133,8 +133,6 @@ class TaskManager {
       project.display.classList.remove('clicked');
 
       project.JSONdisplay = toJSON(project.display);
-      project.JSONeditBtn = toJSON(project.editBtn);
-      project.JSONdeleteBtn = toJSON(project.deleteBtn);
       projectNames.push(project.projectName);
       localStorage.setItem(`#${project.projectName}`, JSON.stringify(project));
     });
@@ -169,8 +167,6 @@ class TaskManager {
         for (const projectName of projectNames) {
           const project = JSON.parse(localStorage.getItem(`#${projectName}`));
           project.display = toDOM(project.JSONdisplay);
-          project.JSONeditBtn = project.display.querySelector('.edit');
-          project.JSONdeleteBtn = project.display.querySelector('.delete');
           this.#projects.push(project);
         }
       }

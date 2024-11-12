@@ -31,6 +31,13 @@ function init() {
 
   if (taskManager.projects.length) {
     for (const project of taskManager.projects) {
+      const buttons = project.display.children[0];
+
+      const editBtn = buttons.children[0];
+      const deleteBtn = buttons.children[1];
+      project.editBtn = editBtn;
+      project.deleteBtn = deleteBtn;
+
       display.addProject(project.display);
       projectListeners(project);
     }
