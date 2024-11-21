@@ -149,7 +149,12 @@ class TaskDisplayController {
     editPane.appendChild(buttons);
 
     task.display.parentNode.insertBefore(editPane, task.display);
-    this.closeEditIfOutsideClick(editPane, task.display);
+
+    // Delay this function from being run so that it doesn't fire immediately and close the edit
+    // pane
+    setTimeout(() => {
+      this.closeEditIfOutsideClick(editPane, task.display);
+    }, 10);
 
     return {
       modal: editPane,
@@ -174,7 +179,7 @@ class TaskDisplayController {
       }
     };
 
-    window.addEventListener('mousedown', callback);
+    window.addEventListener('click', callback);
     this.#windowClick = callback;
   }
 
@@ -182,7 +187,7 @@ class TaskDisplayController {
     this.insertTaskDisplay(taskDisplay, editPane);
     this.removeEditPane(editPane);
 
-    window.removeEventListener('mousedown', this.#windowClick);
+    window.removeEventListener('click', this.#windowClick);
   }
 }
 
