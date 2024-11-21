@@ -17,7 +17,6 @@ class DisplayController {
       this.fillProjects
     );
     this.taskDisplayController = new TaskDisplayController(
-      this.#items,
       this.buildDatePicker
     );
   }

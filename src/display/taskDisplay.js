@@ -1,9 +1,7 @@
 class TaskDisplayController {
-  #items;
   #windowClick;
 
-  constructor(items, buildDatePicker) {
-    this.#items = items;
+  constructor(buildDatePicker) {
     this.buildDatePicker = buildDatePicker;
   }
 
